@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <!-- 메타포 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=dege">
+    <meta http-equiv="Author" content="천재교육 콘텐츠 제작팀">
+    <meta http-equiv="Publisher" content="천재교육 제작자">
+    <meta http-equiv="Copyright" content="Copyright@chunjae.ed.kr">
+
+    <!-- 검색엔진 최적화(SEO:Search Engeen) -->
+    <meta name="Subject" content="천재교육">
+    <meta name="Keyword" content="천재교육, 커뮤니티">
+    <meta name="Description" content="천재교육의 커뮤니티">
+    <meta name="Robots" content="index, follow">
+
+    <!-- 오픈그래프 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="천재교육">
+    <meta property="og:description" content="앞선 생각으로 더 큰 미래의 교육을 준비하는 기업">
+
+    <!-- 기타설정 -->
+    <!-- 트위터 -->
+    <meta name="twitter:card" content="picture">
+    <meta name="twitter:title" content="천재교육">
+    <meta name="twitter:description" content="앞선 생각으로 더 큰 미래의 교육을 준비하는 기업">
+
+    <!-- 파비콘 설정 :32X32 자주 사용 -->
+    <!-- 표준 파비콘 -->
+    <link rel="shortcut icon" th:href="@{/images/favicon/favicon-16x16.png}">
+    <!-- 애플 계열 모바일 -->
+    <link rel="apple-touch-ico-precomposed" th:href="@{/images/favicon/apple-touch-icon.png}">
+    <!-- IE 계열 브라우저 -->
+    <meta name="msapplication-TileColor" content="#fff">
+    <meta name="msapplication-TileImage" th:attr="content=@{/images/favicon/favicon-32x32.png}">
+
+    <!-- 파이어폭스, 오페라 또는 구형 크롬/사파리 -->
+    <link rel="icon" th:href="@{/images/favicon/favicon-16x16.png}" sizes="16x16">
+    <link rel="icon" th:href="@{/images/favicon/favicon-32x32.png}" sizes="32x32">
+    <link rel="icon" th:href="@{/images/favicon/favicon-48x48.png}" sizes="48x48">
+    <link rel="icon" th:href="@{/images/favicon/favicon-64x64.png}" sizes="64x64">
+    <link rel="icon" th:href="@{/images/favicon/favicon-96x96.png}" sizes="96x96">
+
+    <!--  BootStrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!--  CLEditor  -->
+    <script type="text/javascript" th:src="@{/js/cleditor/jquery.cleditor.js}"></script>
+    <link rel="stylesheet" th:href="@{/js/cleditor/jquery.cleditor.css}"/>
+    
+    <!--  skydash  -->
+    <link rel="stylesheet" th:href="@{/css/skydash-admin/css/feather/feather.css}">
+    <link rel="stylesheet" th:href="@{/css/skydash-admin/css/ti-icons/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/skydash-admin/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/css/skydash-admin/css/dataTables.bootstrap4.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/skydash-admin/js/select.dataTables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/skydash-admin/css/vertical-layout-light/style.css}">
+
+    <!-- plugins:js -->
+    <script th:src="@{/css/skydash-admin/js/vendor.bundle.base.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/Chart.min.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/jquery.dataTables.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/dataTables.bootstrap4.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/dataTables.select.min.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/off-canvas.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/hoverable-collapse.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/template.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/settings.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/todolist.js}"></script>
+    <script th:src="@{/css/skydash-admin/js/Chart.roundedBarCharts.js}"></script>
+    <!-- End custom js for this page-->
+
+    <style>
+        .sidebar-icon-only #toggle-btn {
+            transform: rotate(180deg);
+        }
+
+        #toggle-btn:not(.sidebar-icon-only) {
+            -webkit-transition: transform 0.3s linear;
+            -moz-transition: transform 0.3s linear;
+            -ms-transition: transform 0.3s linear;
+            -o-transition: transform 0.3s linear;
+            transition: transform 0.3s linear;
+        }
+
+        .navbar-toggler:focus {
+            text-decoration: none;
+            outline: 0;
+            box-shadow: none;
+        }
+    </style>
+</head>
+</html>

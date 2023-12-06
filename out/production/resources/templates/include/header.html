@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="header">
+<!--    <th:block sec:authorize="isAuthenticated()">-->
+            <th:block sec:authorize="hasAuthority('ADMIN')">
+                <div class="hasRole">
+                    <h2> 권한이 관리자입니다.</h2>
+                </div>
+            </th:block>
+<!--    </th:block>-->
+
+    <!-- ======= Top Bar ======= -->
+    <section id="topbar" class="d-flex align-items-center">
+        <div class="container ">
+            <div class="cta" style="float: right">
+                <th:block sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="scrollto header_login">로그인</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{/myPage}" class="scrollto header_login">마이페이지</a>
+                    <a th:href="@{/logout}" class="scrollto header_login">로그아웃</a>
+                </th:block>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <div class="logo">
+                <h1><a th:href="@{/}">메인으로</a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">강의소개</a></li>
+                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">교재몰</a></li>
+                    <li class="dropdown"><a href="#"><span>커뮤니티</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">나의 학습방</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+
+            <!-- .navbar -->
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var sw = true;
+            sw=!sw
+            $("#chatMenu").click(function () {
+                $("#chatList").slideToggle()
+                if(sw==true){
+                    sw = false
+                }else if(sw==false) {
+                    sw = true
+                }
+            });
+        });
+    </script>
+</th:block>
+</body>
+

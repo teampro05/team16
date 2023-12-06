@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TSellpa::회원가입</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+</head>
+<body>
+<th:block th:replace="include/header :: header"></th:block>
+                            <h2 class="text-uppercase text-center mt-3 mb-5">회원가입</h2>
+
+                            <form name="frm1" id="frm1" th:action="@{/joinPro1}" method="post" >
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="id" id="id" placeholder="영문소문자 및 숫자를 혼용하여 아이디 입력" class="form-control" maxlength="16" autofocus  />
+                                    <label class="form-label blind" for="id">아이디</label>
+                                </div>
+
+                                <div class="form-outline mb-1">
+                                    <input type="password" name="pw" id="pw" placeholder="비밀번호 입력" class="form-control" maxlength="16"  />
+                                    <label class="form-label blind" for="pw">비밀번호</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="name" id="name" placeholder="이름 입력" class="form-control"  />
+                                    <label class="form-label blind" for="name">이름</label>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn px-5 py-2 mt-4" style="font-size:20px">회원가입</button>
+                                </div>
+                            </form>
+
+</body>
+</html>
