@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="include/head :: head" ></th:block>
+    <title>휴면 해제</title>
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+
+
+<section class="login py-5 border-top-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8 align-item-center">
+                <div class="border">
+                    <h3 class="bg-gray p-4">휴면 해제</h3>
+                    <form th:action="@{/member/active}" method="post">
+                        <fieldset class="p-4">
+                            <input class="form-control mb-3" type="text" placeholder="ID" name="id" required />
+                            <input class="form-control mb-3" type="password" placeholder="Password" name="pw" required />
+                            <input class="form-control mb-3" type="text" placeholder="Email" name="email" required />
+                            <div class="loggedin-forgot">
+                                <input type="checkbox" id="keepId" name="keepId">
+                                <label for="keepId" class="pt-3 pb-2">아이디 기억하기</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary font-weight-bold mt-3">휴면 해제</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="/include/footer :: footer"></th:block>
+
+</body>
+</html>

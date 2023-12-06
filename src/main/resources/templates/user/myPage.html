@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인데스</title>
+</head>
+<body>
+    <h2>로그인 정보 보내기 페이지</h2>
+
+    <a th:href="@{/}">메인으로</a>
+
+    <br><br><br><br><br><br>
+
+<h2>principal</h2>
+<table>
+        <thead>
+            <tr>
+                <th>principal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${principal}"></td>
+            </tr>
+        </tbody>
+</table>
+
+    <form th:action="@{/out}" method="post">
+    <div class="col-2"><label for="role" class="form-label">권한 수정</label></div>
+    <div class="col-4">
+        <select name="role" id="role" class="form-select">
+            <option value="선택">선택</option>
+            <option value="ADMIN">관리자</option>
+            <option value="USER">유저</option>
+            <option value="TEACHER">선생님</option>
+        </select>
+    </div>
+        <button type="submit">권한 변경</button>
+    </form>
+
+    <h2>user</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>no</th>
+            <th>id</th>
+            <th>name</th>
+            <th>role</th>
+            <th>status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${user.no}"></td>
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.role}"></td>
+            <td th:text="${user.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--인증시 사용된 객체에 대한 정보-->
+    <b>Authenticated DTO:</b>
+    <div sec:authentication="principal"></div>
+
+    <!--인증시 사용된 객체의 Username (ID)-->
+    <b>Authenticated username:</b>
+    <div sec:authentication="name"></div>
+
+    <th:block sec:authorize="hasAuthority('ADMIN')">
+        <h2> 권한이 관리자입니다.</h2>
+    </th:block>
+    <th:block sec:authorize="hasAuthority('ROLE_USER')">
+        <h2> 권한이 유저입니다.</h2>
+    </th:block>
+    <th:block sec:authorize="hasAuthority('USER')">
+        <h2> 권한이 유저입니다.</h2>
+    </th:block>
+
+</body>
+</html>
