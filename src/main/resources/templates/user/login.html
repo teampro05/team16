@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="include/head :: head" ></th:block>
+    <title>로그인</title>
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="container-login">
+            <h1>로그인</h1>
+            <form th:action="@{/loginPro}" id="login_frm" class="frm" method="post">
+                <div class="form-login">
+                    <input type="text" class="input" name="id" id="id" required style="visibility: hidden"/>
+                    <label><span>아이디</span></label>
+                </div>
+                <div class="form-login">
+                    <input type="password" class="input" name="pw" id="pw" required style="visibility: hidden"/>
+                    <label><span>비밀번호</span></label>
+                </div>
+                <button type="submit" class="login-btn">로그인</button>
+                    <div th:if="${param.error}">
+                        <p style="color:red">아이디 또는 비밀번호가 올바르지 않거나 <br> 가입이 되지 않았습니다.</p>
+                    </div>
+                    <div th:if="${param.authError}">
+                        <p style="color:blue">토큰 정보가 만료되었습니다. 토큰을 갱신하시기 바랍니다.</p>
+                    </div>
+                <p class="login-text">회원이 아니신가요? <a th:href="@{/join1}">회원가입</a></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="/include/footer :: footer"></th:block>
+
+</body>
+</html>
+<script th:inline="javascript">
+    $(document).ready(function(){
+        $(".container-login").click(function(){
+            $(".form-login label span").css("transform", "translateY(-50px)");
+            $(".form-login input").css({"visibility": "visible", "transition-delay": "0.3s", "transition-duration": "1s"});
+        })
+    })
+</script>
