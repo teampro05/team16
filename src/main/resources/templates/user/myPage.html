@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+<section id="contact" class="contact">
+    <div class="container">
+        <h2>회원정보</h2>
+        <table class="List-table">
+            <tbody>
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="${user.id}"></td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td th:text="${user.name}"></td>
+                </tr>
+                <tr>
+                    <th>권한</th>
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <td>관리자</td>
+                    </th:block>
+                    <th:block sec:authorize="hasAuthority('USER')">
+                        <td>유저</td>
+                    </th:block>
+                    <th:block sec:authorize="hasAuthority('TEACHER')">
+                        <td>선생님</td>
+                    </th:block>
+                </tr>
+                <tr>
+                    <th>상태</th>
+                    <td th:text="${user.status}"></td>
+                </tr>
+                <tr>
+                    <form th:action="@{/role}" method="post">
+                        <th>권한 수정<br>(나중에 뺌)</th>
+                        <td>
+                            <select name="role" id="role" class="select-box">
+                                <option value="ADMIN">관리자</option>
+                                <option value="USER">유저</option>
+                                <option value="TEACHER">선생님</option>
+                            </select>
+                        </td>
+                        <td><button type="submit" class="button-btn" style="float: left;">권한 변경</button></td>
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<th:block th:replace="include/footer :: footer" ></th:block>
+
+</body>
+</html>

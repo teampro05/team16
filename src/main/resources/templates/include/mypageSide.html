@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div class="sidebar" th:fragment="side">
+    <!-- User Widget -->
+    <div class="widget user-dashboard-profile">
+        <!-- User Image -->
+        <div class="profile-thumb">
+            <img th:src="@{/images/user/user-thumb.jpg}" alt="" class="rounded-circle">
+        </div>
+        <!-- User Name -->
+        <h5 class="text-center">Samanta Doe</h5>
+        <p>Joined February 06, 2017</p>
+    </div>
+    <!-- Dashboard Links -->
+    <div class="widget user-dashboard-menu">
+        <ul>
+            <li>
+                <a th:href="@{/member/myPage}"><i class="fa fa-user"></i> 나의 정보</a></li>
+            <li>
+                <a th:href="@{/member/Reservation}"><i class="fa fa-bookmark-o"></i> 나의 예약 정보 <span>5</span></a>
+            </li>
+            <li>
+                <a th:href="@{/}"><i class="fa fa-gift"></i> 나의 상품 <span>12</span></a>
+            </li>
+            <li>
+                <a th:href="@{/member/myChat}"><i class="fa fa-comment"></i> 채팅<span id="unreadCount"></span></a>
+            </li>
+            <li>
+                <a th:href="@{/}"><i class="fa fa-cog"></i> Logout</a>
+            </li>
+            <li>
+                <a th:href="'javascript:eventRemove()'" onclick="eventRemove()" data-toggle="modal" data-target="#deleteaccount"><i class="fa fa-power-off"></i>Delete Account</a>
+            </li>
+
+        </ul>
+    </div>
+    <script th:inline="javascript">
+        function eventRemove(){
+            console.log("eventRemove activate");
+            if(confirm("탈퇴하시겠습니까?")){
+                location.href="/member/remove?id="+[[${member.id }]];
+            }
+        }
+
+        $(document).ready(function(){
+            $.ajax({
+                url: "/chat/unreadAll",
+                data: {receiver: /*[[${member.id}]]*/ 'default'},
+                type: "get",
+                success: function(response){
+                    if(response>0){
+                        $("#unreadCount").text(response);
+                    }
+                }
+            });
+        })
+    </script>
+</div>
+</html>

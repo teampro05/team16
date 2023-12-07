@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="header">
+<!--    <th:block sec:authorize="isAuthenticated()">-->
+            <th:block sec:authorize="hasAuthority('ADMIN')">
+                <div class="hasRole">
+                    <h2 style="margin: 0; padding: 0">ʕ•ᴥ•ʔ</h2>
+                        <h2 style="margin: 0; padding: 0">ㅡㅡ 관리자 ㅡㅡ</h2>
+                </div>
+            </th:block>
+<!--    </th:block>-->
+
+    <!-- ======= Top Bar ======= -->
+    <section id="topbar" class="d-flex align-items-center">
+        <div class="container ">
+            <div class="cta" style="float: right">
+                <th:block sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="scrollto header_login">로그인</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a th:href="@{/myPage}" class="scrollto header_login">마이페이지</a>
+                    <a th:href="@{/logout}" class="scrollto header_login">로그아웃</a>
+                </th:block>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <div class="logo">
+                <h1><a th:href="@{/}">메인으로</a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            </div>
+            <!-- navbar -->
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">강의소개</a></li>
+                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">교재몰</a></li>
+                    <li class="dropdown"><a href="#"><span>커뮤니티</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">공지사항</a></li>
+                            <li><a th:href="@{/faq}">FAQ</a></li>
+                            <li><a th:href="@{/oto}">1:1 문의</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">나의 학습방</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- navbar end-->
+
+            <!-- quickMenu -->
+            <th:block sec:authorize="isAuthenticated()">
+                <div class="quickMenu">
+                    <div class="quick_title">
+                        Quick
+                        <br>
+                        Menu
+                    </div>
+                    <div class="quick_btn">
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <ul>
+                                <li class="quick01">
+                                    <a th:href="@{/admin/home}">
+                                        <p>관리자페이지</p>
+                                    </a>
+                                </li>
+                                <li class="quick02">
+                                    <a th:href="@{/myPage}">
+                                    <p>마이페이지</p>
+                                    </a>
+                                </li>
+                                <li class="quick03">
+                                    <a th:href="@{/admin}">
+                                    <p>나의 강의실</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('USER') or hasAuthority('TEACHER')">
+                            <ul>
+                                <li class="quick01">
+                                    <a th:href="@{/myPage}">
+                                        <p>마이페이지</p>
+                                    </a>
+                                </li>
+                                <li class="quick02">
+                                    <a th:href="@{/admin}">
+                                        <p>나의 강의실</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </th:block>
+                    </div>
+                    <div class="quick_top">
+                        <a href="#">TOP</a>
+                    </div>
+                </div>
+            </th:block>
+            <!-- quickMenu end-->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var sw = true;
+            sw=!sw
+            $("#chatMenu").click(function () {
+                $("#chatList").slideToggle()
+                if(sw==true){
+                    sw = false
+                }else if(sw==false) {
+                    sw = true
+                }
+            });
+        });
+    </script>
+</th:block>
+</body>
+

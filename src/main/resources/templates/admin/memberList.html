@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+    <title>Tsellpa : 관리자</title>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>회원</h1>
+                <div class="card p-3">
+                    <div th:replace="/include/searchList :: fragment-search('/admin/memberList', 'id:아이디,name:이름,tel:전화번호')"></div>
+                    <table class="table text-center mb-3" th:if="${not #lists.isEmpty(memberList)}">
+                        <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>전화번호</th>
+                            <th>상태</th>
+                            <th>등록일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="member, about : ${memberList}">
+                            <td th:text="${about.count}"></td>
+                            <td><a th:text="${member.id}" th:href="@{/admin/memberGet(id=${member.id})}"></a></td>
+                            <td th:text="${member.name}"></td>
+                            <td th:text="${member.tel}"></td>
+                            <td th:text="${member.status}"></td>
+                            <td th:text="${#dates.format(member.createAt, 'yyyy-MM-dd')}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <th:block th:if="${not #lists.isEmpty(memberList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/admin/memberList')"></div></th:block>
+                    <div th:if="${#lists.isEmpty(memberList)}" class="text-center">목록이 비어있습니다.</div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
