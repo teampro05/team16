@@ -21,6 +21,7 @@ public class Book extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;   // 교재 코드
 
+    private String id; // 관리자
     private String title; // 제목
     private String content; // 내용
     private String servecontent; // 요약 내용

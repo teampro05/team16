@@ -30,6 +30,7 @@ public class BookImg extends BaseEntity{
     // 부모 Entity가 자식 Entity에 어떤 영향을 미치는지
     // Remove: 부모 Entity가 삭제되면 자식 Entity도 함께 삭제
     @JoinColumn(name = "bno", referencedColumnName = "no")
-    //  bno 컬럼은 현재 Entity에서 외래 키로 사용, 이를 통해 Book Entity의 no 컬럼과 매핑
+    // bookNumber -> bno
+    // bno 컬럼은 현재 Entity에서 외래 키로 사용, 이를 통해 Book Entity의 no 컬럼과 매핑
     private Book book;
 }
