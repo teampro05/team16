@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notice 글쓰기</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+</head>
+<body>
+    <th:block th:replace="include/header :: header"></th:block>
+    <section class="input-form">
+        <div class="container-form">
+          <h2>글쓰기</h2>
+            <form name="frm1" id="frm1" th:action="@{/noticeadd}" method="post" >
+                <div class="form-outline">
+                    <label class="form-label" for="title">제목</label>
+                    <input type="text" name="title" id="title" placeholder="제목" class="form-control" autofocus  />
+                </div>
+                <div class="form-outline">
+                    <label class="form-label" for="content">내용</label>
+                    <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" cols="100" rows="8"></textarea>
+                </div>
+            </form>
+            <button type="submit" class="btn1 right1" >글쓰기</button>
+        </div>
+    </section>
+</body>
+</html>
