@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+
+</head>
+<body>
+    <th:block th:replace="include/header :: header" ></th:block>
+    <section class="table-list">
+        <div class="container">
+            <h2>공지사항</h2>
+            <table class="List-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>등록일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="noticeList, notice : ${noticeList}">
+                    <tr>
+                        <td>[[${notice.count}]]</td>
+                        <td>[[${noticeList.title}]]</td>
+                        <td>[[${noticeList.content}]]</td>
+                        <td>[[${noticeList.createdTime}]]</td>
+                    </tr>
+                </th:block>
+                <th:block th:if="${noticeList.size() <= 0}">
+                    <tr>
+                      <td colspan="4">목록이 없습니다.</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+            <a th:href="@{/noticeadd}" class="btn1 right1">글쓰기</a>
+        </div>
+    </section>
+    <th:block th:replace="include/footer :: footer" ></th:block>
+</body>
+</html>
