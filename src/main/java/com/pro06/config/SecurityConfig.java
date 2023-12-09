@@ -1,4 +1,5 @@
 package com.pro06.config;
+import com.pro06.repository.NoticeRepository;
 import com.pro06.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,6 @@ public class SecurityConfig {
         return new SessionRegistryImpl();
     }
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+
 }

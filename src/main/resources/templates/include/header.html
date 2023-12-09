@@ -6,9 +6,14 @@
 <!--    <th:block sec:authorize="isAuthenticated()">-->
             <th:block sec:authorize="hasAuthority('ADMIN')">
                 <div class="hasRole">
-                    <h2 style="margin: 0; padding: 0">ʕ•ᴥ•ʔ</h2>
+                    <h2 style="margin: 0; padding: 0">
+                        <button id="startButton" class="fireButton">ʕ</button>
+                        •  ᴥ  •
+                        <button id="stopButton" class="fireButton">ʔ</button>
+                    </h2>
                         <h2 style="margin: 0; padding: 0">ㅡㅡ 관리자 ㅡㅡ</h2>
                 </div>
+
             </th:block>
 <!--    </th:block>-->
 
@@ -43,7 +48,7 @@
                     <li><a class="nav-link scrollto active" th:href="@{/mypage}">교재몰</a></li>
                     <li class="dropdown"><a href="#"><span>커뮤니티</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#">공지사항</a></li>
+                            <li><a th:href="@{/notice}">공지사항</a></li>
                             <li><a th:href="@{/faq}">FAQ</a></li>
                             <li><a th:href="@{/oto}">1:1 문의</a></li>
                         </ul>
@@ -108,20 +113,7 @@
     </header>
     <!-- End Header -->
 
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            var sw = true;
-            sw=!sw
-            $("#chatMenu").click(function () {
-                $("#chatList").slideToggle()
-                if(sw==true){
-                    sw = false
-                }else if(sw==false) {
-                    sw = true
-                }
-            });
-        });
-    </script>
+
 </th:block>
 </body>
 

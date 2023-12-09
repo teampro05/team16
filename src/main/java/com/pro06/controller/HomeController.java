@@ -1,12 +1,14 @@
 package com.pro06.controller;
 
-import com.pro06.entity.Role;
-import com.pro06.entity.User;
+import com.pro06.entity.*;
+import com.pro06.service.FaqService;
+import com.pro06.service.NoticeService;
 import com.pro06.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -25,6 +29,12 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FaqService faqService;
+
+    @Autowired
+    private NoticeService noticeService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -49,10 +59,6 @@ public class HomeController {
         return "/user/active";
     }
 
-    @GetMapping("/faq")
-    public String faq(Model model){
-        return "/board/faq";
-    }
 
     @GetMapping("/oto")
     public String oto(Model model){
@@ -115,4 +121,48 @@ public class HomeController {
         return "redirect:/";
     }
 
+    // Faq
+
+    @GetMapping("/faq")
+    public String Faq(Model model) {
+        List<Faq> faqList = faqService.faqList();
+        model.addAttribute("faqList", faqList);
+        return "/board/faq";
+    }
+
+    @GetMapping("/faqadd")
+    public String FaqForm(Model model) {
+        return "/board/faqadd";
+    }
+
+    @PostMapping("/faqadd")
+    public String FaqInsert(Faq faq){
+        faqService.faqInsert(faq);
+        return "redirect:/faq";
+    }
+
+
+    // Notice
+
+    @GetMapping("/notice")
+    public String notice(Model model) {
+        List<Notice> noticeList = noticeService.NoticeList();
+        model.addAttribute("noticeList", noticeList);
+        log.info("noticeListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + noticeList);
+        return "/board/notice";
+    }
+
+    @GetMapping("/noticeadd")
+    public String noticeForm(Model model) {
+        model.addAttribute("boardDTO", new BoardDTO());
+        return "/board/noticeadd";
+    }
+
+    @PostMapping("/noticeadd")
+    public String noticeInsert(BoardDTO boardDTO){
+        Notice notice = Notice.create(boardDTO);
+        noticeService.NoticeInsert(notice);
+        log.info("noticeㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + notice);
+        return "redirect:/notice";
+    }
 }
