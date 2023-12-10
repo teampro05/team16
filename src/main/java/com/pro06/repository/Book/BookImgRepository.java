@@ -11,6 +11,9 @@ import java.util.List;
 
 @Repository
 public interface BookImgRepository extends JpaRepository<BookImg, Integer> {
-    @Query("select i.savefile from BookImg i where i.book.no = :bno")
-    List<String> bookImgList(@Param("bno") Integer bno);
+    @Query("select i from BookImg i where i.book.no = :bno")
+    List<BookImg> bookImgList(@Param("bno") Integer bno);
+
+    @Query("select i from BookImg i where i.no = :no")
+    BookImg getBookImg(@Param("no") Integer no);
 }

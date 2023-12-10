@@ -1,9 +1,7 @@
 package com.pro06.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +12,9 @@ import java.util.Date;
 @Setter
 @Table(name = "book")
 @ToString
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book extends BaseEntity{
 
     @Id
@@ -27,4 +27,5 @@ public class Book extends BaseEntity{
     private String servecontent; // 요약 내용
     private BigDecimal price; // 가격
     private LocalDate publish; // 출간일
+
 }

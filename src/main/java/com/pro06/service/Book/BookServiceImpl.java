@@ -10,29 +10,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class BookServiceImpl {
+public class BookServiceImpl implements BookService{
+
     @Autowired
     private BookRepository bookRepository;
 
     @Autowired
     private BookImgRepository bookImgRepository;
 
-    public void BookVoInsert(BookVO bookVO) throws Exception {
-        Book book = bookVO.getBook();
-        List<BookImg> fileList = bookVO.getFileList();
-
-        for (BookImg bookImg: fileList) {
-            bookImg.setBook(book);
-            bookImgRepository.save(bookImg);
-        }
+    @Override
+    public List<Book> bookList() {
+        return bookRepository.bookList();
     }
 
-    public List<Book> bookList1(Integer bno) { return bookRepository. bookList1(bno); }
-
+    @Override
     public Book getBook(Integer bno) {
-        return bookRepository.bookList2(bno);
+        return bookRepository.getBook(bno);
+    }
+
+    @Override
+    public void insertBook(Book book) {
+        bookRepository.save(book);
+    }
+
+    @Override
+    public void updateBook(Book book) {
+        Book bookOptional = bookRepository.getBook(book.getNo());
+        Book updatebook = Book.builder()
+                .no(bookOptional.getNo())
+                .id(bookOptional.getId())
+                .title(book.getTitle())
+                .content(book.getContent())
+                .servecontent(book.getServecontent())
+                .price(book.getPrice())
+                .publish(book.getPublish())
+                .build();
+        bookRepository.save(updatebook);
     }
 }
 

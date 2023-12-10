@@ -2,20 +2,27 @@ package com.pro06.repository.Book;
 
 import com.pro06.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    // 교재 전체 목록
-    @Query("select b from Book b")
-    List<Book> bookList1(Integer bno);
+    // Optional<Book> findAllBy();
+    // Optional<Book> findBookById(@Param("bno") Integer bno);
 
-    // 해당 교재 파일 정보
+    // 교재 목록 - 전체
+    @Query("select b from Book b")
+    List<Book> bookList();
+
+    // 교재 상세
     @Query("select b from Book b where b.no = :bno")
-    Book bookList2(@Param("bno") Integer bno);
+    Book getBook(@Param("bno") Integer bno);
+
 }

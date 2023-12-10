@@ -26,4 +26,4 @@ public class Notice extends BaseEntity {
         notice.setContent(boardDTO.getContent());
         return notice;
     }
-    }
+}

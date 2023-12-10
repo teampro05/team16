@@ -21,6 +21,14 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+@font-face {
+  font-family: 'EASTARJET-Medium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
 body {
   font-family: "Open Sans", sans-serif;
   color: var(--sub);

@@ -15,5 +15,5 @@ import java.util.List;
 @ToString
 public class BookVO {
     private Book book;
-    private List<BookImg> fileList;
+    private BookImg fileList;
 }

@@ -1,9 +1,7 @@
 package com.pro06.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,7 +10,9 @@ import org.hibernate.annotations.DynamicUpdate;
 @Setter
 @Table(name = "bookImg")
 @ToString
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 public class BookImg extends BaseEntity{
