@@ -1,3 +1,4 @@
+/*
 package com.pro06.repository.Book;
 
 import com.pro06.entity.Book;
@@ -26,3 +27,4 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Book getBook(@Param("bno") Integer bno);
 
 }
+*/

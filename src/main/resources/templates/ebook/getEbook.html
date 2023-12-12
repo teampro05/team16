@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>중고상세보기</title>
+    <th:block th:replace="~{layout/head :: headFragment}"></th:block>
+    <style>
+        .title-img {
+            width: 540px;
+            height: 540px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<!--================ Start Header Menu Area =================-->
+<th:block th:replace="layout/header :: headerFragment"></th:block>
+<!--================ End Header Menu Area =================-->
+
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="blog">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>중고상품</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">원하는 물건을 찾거나 파는 즐거움을 느껴보세요!</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ end banner area ================= -->
+
+
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6 swiper mySwiper">
+                <div class="owl-carousel owl-theme s_Product_carousel swiper-wrapper">
+                    <div class="swiper-slide" th:each="file, status : ${fileList}">
+                        <img class="title-img"
+                             th:src="${'/team15/common/image?savefile='+file.getSavefile()+'&originfile='+file.getOriginfile()}"
+                             th:alt="이미지+${status.count}" th:style="${#strings.equals(product.act, 'DSBLD') ? 'filter: brightness(0.5)' : ''}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+					<span class="badge badge-warning" style="font-size: 11pt">[[${product.cate}]]</span>
+                    <h3 class="mt-2">[[${product.title}]]</h3>
+                    <h5>[[${product.price}]]원</h5>
+                    <th:block th:if="${#strings.equals(product.act, 'DSBLD')}">
+                        <p class="text-danger"> 판매완료된 상품입니다 :)</p>
+                    </th:block>
+                    <th:block sec:authorize="isAnonymous()">
+						<p class="text-danger"> 로그인 후 판매자와 채팅해보세요 :) </p>
+					</th:block>
+                    <ul>
+                        <li>
+                            <div class="d-flex justify-content-end mt-5"
+									th:if="${product.act eq 'JOIN' and (#authentication.principal eq product.id or #authorization.expression('hasAuthority(''ADMIN'')'))}">
+                                <a th:href="@{/product/productUpdate(no=${product.no})}" class="btn btn-outline-dark" style="margin-right: 10px">수정</a>
+                                <a th:href="@{/product/productDelete(no=${product.no})}" class="btn btn-danger">삭제</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <th:block th:if="${(#authentication.principal ne product.id) && (#strings.equals(product.act, 'JOIN'))}">
+                            <ul class="mt-5 d-flex justify-content-end">
+                                <li>
+                                    <form th:action="@{/chat/createRoom}" method="post">
+                                        <input type="hidden" th:name="${_csrf.parameterName}"
+                                               th:value="${_csrf.token}"/>
+                                        <input type="hidden" name="buyer" id="buyer"
+                                               th:value="${#authentication.principal}">
+                                        <input type="hidden" name="seller" id="seller" th:value="${product.id}">
+                                        <input type="hidden" name="pno" id="pno" th:value="${product.no}">
+                                        <input type="hidden" name="name" th:value="${product.title}">
+                                        <button type="submit" class="btn btn-primary">판매자와 채팅</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </th:block>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
+
+<!--================Product Description Area =================-->
+<section class="product_description_area">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                   aria-selected="false"> 상품 내용 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                   aria-selected="false"> 상세 정보 </a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <p th:text="${product.content}"></p>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+						<tr>
+							<td>
+								<h5>거래장소</h5>
+							</td>
+							<td>
+								<h5 th:text="${product.addr}"></h5>
+							</td>
+						</tr>
+                        <tr>
+                            <td>
+                                <h5>작성자</h5>
+                            </td>
+                            <td>
+                                <h5 th:text="${product.id}"></h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>작성일</h5>
+                            </td>
+                            <td>
+                                <h5 th:text="${product.resdate}"></h5>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h5>조회수</h5>
+                            </td>
+                            <td>
+                                <h5 th:text="|${product.cnt}회|"></h5>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+		</div>
+    </div>
+</section>
+<!--================End Product Description Area =================-->
+
+<!--================ Start footer Area  =================-->
+<th:block th:replace="layout/footer :: footerFragment"></th:block>
+<!--================ End footer Area  =================-->
+</body>
+</html>

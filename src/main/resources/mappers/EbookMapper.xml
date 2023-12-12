@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro06.repository.Book.EbookRepository">
+
+<!--
+    List<Ebook> EbookList(); // 초등 교재 리스트
+    Ebook getEbook(Integer no); // 초등 교재 상세
+    int insertEbook(Ebook ebook); // 초등 교재 추가
+    int updateEbook(Ebook ebook); // 초등 교재 수정
+    int deleteEbook(Ebook ebook); // 초등 교재 삭제
+
+    /////////////////////////////////////////////
+
+    Integer fileBoardInsert(Ebook fileboard) throws Exception;
+    Integer fileInsert(EbookImg file) throws Exception;
+    List<EbookImg> getFileGroupList(int postNo) throws Exception;
+    int fileBoardDelete(int no) throws Exception;
+    void fileBoardUpdate(Ebook ebook) throws Exception;
+    void fileUpdate(EbookImg ebookImg) throws Exception;
+    void removeFileAll(int postNO) throws Exception;
+    EbookImg thmbn(int no) throws Exception;
+-->
+    <select id="EbookList" resultType="com.pro06.entity.Ebook">
+        select * from ebook order by no desc
+    </select>
+
+    <select id="getEbook" resultType="com.pro06.entity.Ebook">
+        select * from ebook no =#{no}
+    </select>
+
+    <insert id="insertEbook">
+        insert into ebook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <update id="updateEbook">
+        update ebook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <delete id="deleteEbook">
+        delete from ebook where no=#{no}
+    </delete>
+
+<!--    //////////////////////////////////////////////////////     -->
+
+    <insert id="fileBoardInsert">
+        insert into ebook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <insert id="fileInsert">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into fileobj values (default, #{Ebno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="getFileGroupList" resultType="com.pro06.entity.EbookImg">
+        select * from ebookImg where Ebno=#{Ebno}
+    </select>
+
+    <delete id="fileBoardDelete">
+        delete from ebook where no=#{no}
+    </delete>
+
+    <update id="fileBoardUpdate">
+        update ebook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <insert id="fileUpdate">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into fileobj values (default, #{Ebno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="removeFileAll">
+        delete from ebookImg where Ebno=#{Ebno}
+    </delete>
+
+    <select id="thmbn" resultType="com.pro06.entity.EbookImg">
+        select * from ebookImg where Ebno={no} limit 1
+    </select>
+
+</mapper>

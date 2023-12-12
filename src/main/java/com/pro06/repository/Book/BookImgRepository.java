@@ -1,3 +1,4 @@
+/*
 package com.pro06.repository.Book;
 
 import com.pro06.entity.Book;
@@ -17,3 +18,4 @@ public interface BookImgRepository extends JpaRepository<BookImg, Integer> {
     @Query("select i from BookImg i where i.no = :no")
     BookImg getBookImg(@Param("no") Integer no);
 }
+*/
