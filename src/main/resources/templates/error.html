@@ -6,8 +6,12 @@
     <title>에러</title>
 </head>
 <body>
-    <h2>에러다 ~~~~~~~~~~~~~~~~~!</h2>
-    <h2>뭔가 이상함</h2>
+    <h1>에러다 ~~~~~~~~~~~~~~~~~!</h1>
 
+    <div>
+        Error code : <span th:text="${code}"></span>
+        <br>
+        Error msg : <span th:text="${msg}"></span>
+    </div>
 </body>
 </html>

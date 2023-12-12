@@ -7,6 +7,7 @@ import com.pro06.service.NoticeService;
 import com.pro06.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,7 +140,7 @@ public class HomeController {
     // Notice
 
     @GetMapping("/notice")
-    public String notice(Model model) {
+    public String notice(Model model, Principal principal) {
         List<Notice> noticeList = noticeService.NoticeList();
         model.addAttribute("noticeList", noticeList);
         return "/board/notice";
@@ -149,7 +150,6 @@ public class HomeController {
     public String noticeGet(Model model, Long no) {
         Notice notice = noticeService.NoticeGet(no);
         model.addAttribute("notice", notice);
-        log.info("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + notice);
         return "/board/noticeGet";
     }
 
@@ -168,13 +168,13 @@ public class HomeController {
         return "redirect:/notice";
     }
 
-    @GetMapping("/noticeUpdate")
+    @GetMapping("/noticeEdit")
     public String noticeEditForm(Model model, Notice notice) {
         model.addAttribute("notice", notice);
-        return "/board/noticeUpdate";
+        return "/board/noticeEdit";
     }
 
-    @PostMapping("noticeUpdate")
+    @PostMapping("noticeEdit")
     public String noticeEdit(BoardDTO boardDTO){
         Notice notice = Notice.create(boardDTO);
         noticeService.NoticeInsert(notice);
