@@ -1,7 +1,9 @@
 package com.pro06;
 
+import com.pro06.entity.Notice;
 import com.pro06.entity.Role;
 import com.pro06.entity.User;
+import com.pro06.repository.NoticeRepository;
 import com.pro06.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -22,6 +24,9 @@ public class pro06Tests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private NoticeRepository noticeRepository;
 //
 //    @Test
 //    public void Userinsert(){
@@ -33,12 +38,13 @@ public class pro06Tests {
 //            userRepository.save(user);
 //    }
 
-//
+
 //    @Test
 //    public void userget(){
-//        User user = userRepository.getId1("admin");
-//        logger.info("11ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + user);
-//        System.out.println(user);
+//        Long no = 100L;
+//        List<Notice> notice = noticeRepository.findById(no);
+//        logger.info("11ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + notice);
+//        System.out.println(notice);
 //    }
 
 
