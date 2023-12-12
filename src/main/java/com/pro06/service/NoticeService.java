@@ -7,7 +7,10 @@ import java.util.List;
 public interface NoticeService {
     public Notice NoticeInsert(Notice notice);
     public Notice NoticeUpdate(Notice notice);
-    public void NoticeDelete(Integer no);
+    public void NoticeDelete(Long no);
     public List<Notice> NoticeList();
+    public Notice NoticeGet(Long no);
+
+
 
 }

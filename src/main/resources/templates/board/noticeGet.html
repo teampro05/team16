@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 글</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+<section id="contact" class="contact">
+    <div class="container">
+        <h2>글 정보</h2>
+        <table class="List-table">
+            <tbody>
+                <tr>
+                    <th>제목</th>
+                    <td th:text="${notice.title}"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td th:text="${notice.content}"></td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td th:text="${notice.author}"></td>
+                </tr>
+                <tr>
+                    <th>작성날짜</th>
+                    <td th:text="${#temporals.format(notice.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
+                </tr>
+            </tbody>
+        </table>
+<!--        <th:block th:if="principal.name == ${notice.author}">-->
+            <a th:href="@{/noticeUpdate(notice=${notice})}" class="btn1 right1">수정하기</a>
+            <a type="button" onclick="eventremove()" class="btn1 right1"> 삭제하기 </a>
+
+<!--        </th:block>-->
+    </div>
+</section>
+<th:block th:replace="include/footer :: footer" ></th:block>
+<script>
+    function eventremove(){
+        if(confirm("삭제하시겠습니까?")){
+            location.href="/noticeDelete?no=[[${notice.no }]]"
+        }
+    }
+</script>
+</body>
+</html>

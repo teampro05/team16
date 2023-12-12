@@ -613,24 +613,50 @@
 
 <th:block th:replace="include/footer :: footer" ></th:block>
 <div id="chatMenu" >
+</div>
+<div id="chatList" >
+    <div class="chatList-in">
+        <div class="chatList-List-tap">
+            <input type="radio" class="chat-tap" id="chat-tap1" name="chat-tap" checked>
+            <label for="chat-tap1" class="tab-label">탭 1번</label>
+            <div class="chat-content" id="tapin1">
+                <ul>
+                    <li> 리스트 1번 </li>
+                    <br>
+                    <li> 리스트 2번 </li>
+                    <br>
+                    <li> 리스트 3번 </li>
+                    <br>
+                    <li> 리스트 4번 </li>
+                    <br>
+                    <li> 리스트 5번 </li>
+                </ul>
+            </div>
+        </div>
+        <div class="chatList-List-tap">
+            <input type="radio" class="chat-tap" id="chat-tap2" name="chat-tap">
+            <label for="chat-tap2" class="tab-label">탭 2번</label>
+            <div class="chat-content" id="tapin2">
+                <ul>
+                    <li> 탭 1번 </li>
+                    <br>
+                    <li> 탭 1번 </li>
+                    <br>
+                    <li> 탭 1번 </li>
+                    <br>
+                    <li> 탭 1번 </li>
+                    <br>
+                    <li> 탭 1번 </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div id="chatList" style="display: none;">
-        <ul>
-            <li> 리스트 1번 </li>
-            <br>
-            <li> 리스트 2번 </li>
-            <br>
-            <li> 리스트 3번 </li>
-            <br>
-            <li> 리스트 4번 </li>
-            <br>
-            <li> 리스트 5번 </li>
-        </ul>
-    </div>
+</div>
 </body>
 </html>
 
 
+<!--꽃가루 임펙트-->
 <script th:inline="javascript">
 
     $(document).ready(function () {
@@ -858,18 +884,22 @@
     })();
 </script>
 
+
+<!--채팅바-->
 <script th:inline="javascript">
     $(document).ready(function () {
         var sw = true;
         sw=!sw
         $("#chatMenu").click(function () {
             if(sw==true){
-                $("#chatList").slideUp()
+                $(this).css("background-image", "url('../static/images/mang.png')")
                 sw = false
             }else if(sw==false) {
-                $("#chatList").slideDown()
+                $(this).css("background-image", "url('../static/images/mang2.png')")
                 sw = true
             }
         });
+        $("#chatMenu").click(function () {
+            $("#chatList").toggle("fade");});
     });
 </script>

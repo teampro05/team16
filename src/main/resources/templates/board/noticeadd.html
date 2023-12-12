@@ -14,13 +14,14 @@
                 <div class="form-outline">
                     <label class="form-label" for="title">제목</label>
                     <input type="text" name="title" id="title" placeholder="제목" class="form-control" autofocus  />
+                    <input type="hidden" name="author" id="author" th:value="${principal}"/>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="content">내용</label>
-                    <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" cols="100" rows="8"></textarea>
+                    <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" cols="10" rows="8"></textarea>
                 </div>
+                <button type="submit" class="btn1 right1" >글쓰기</button>
             </form>
-            <button type="submit" class="btn1 right1" >글쓰기</button>
         </div>
     </section>
 </body>
