@@ -1,8 +1,5 @@
 package com.pro06.dto;
 
-import com.pro06.entity.LecTest;
-import com.pro06.entity.Lecture;
-import com.pro06.entity.Video;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class LectureVO {
-    private Lecture lecture;
-    private List<Video> fileList;
-    private LecTest lecTest;
+    private LectureDto lecture;
+    private List<VideoDto> fileList;
+    private LecTestDto lecTest;
     private Integer cno;
 }

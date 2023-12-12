@@ -50,4 +50,9 @@ public class Course extends BaseEntity{
 
     @Column(nullable = false)
     private Integer peo_max;    // 최대 수강인원
+
+    public void peoUp(){
+        this.peo = this.peo + 1;
+    }
+
 }

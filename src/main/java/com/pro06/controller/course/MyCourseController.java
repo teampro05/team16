@@ -1,9 +1,9 @@
 package com.pro06.controller.course;
 
-import com.pro06.entity.Course;
-import com.pro06.entity.Lecture;
-import com.pro06.entity.MyCourse;
-import com.pro06.entity.MyVideo;
+import com.pro06.dto.CourseDto;
+import com.pro06.dto.LectureDto;
+import com.pro06.dto.MyCourseDto;
+import com.pro06.dto.MyVideoDto;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
@@ -48,7 +48,7 @@ public class MyCourseController {
         String id = principal.getName();
         
         // 내가 수강 신청한 강좌 목록 추출
-        List<MyCourse> myCourseList = myCourseService.myCourseList(id);
+        List<MyCourseDto> myCourseList = myCourseService.myCourseList(id);
         
         // 테스트
 /*        for (MyCourse mc: myCourseList) {
@@ -80,18 +80,18 @@ public class MyCourseController {
         }
 
         // 강좌 상세
-        Course course = courseService.getCourse(no);
+        CourseDto course = courseService.getCourse(no);
         model.addAttribute("course", course);
 
         // 강의 목록
-        List<Lecture> lectureList = lectureService.lectureCnoList(no);
+        List<LectureDto> lectureList = lectureService.lectureCnoList(no);
         model.addAttribute("lectureList", lectureList);
         
         // 수강상태
         // 동영상을 다 봤는지 안봤는지 검사
         List<String> stateList = new ArrayList<>();
-        for (Lecture lec: lectureList) {
-            MyVideo myVideo = myVideoService.getMyVideo(id, no, lec.getNo());
+        for (LectureDto lec: lectureList) {
+            MyVideoDto myVideo = myVideoService.getMyVideo(id, no, lec.getNo());
             if(myVideo != null && myVideo.getState().equals("y")) {
                 stateList.add("수강완료");
             } else {
