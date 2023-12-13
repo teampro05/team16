@@ -1,9 +1,6 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.CourseDto;
-import com.pro06.dto.LectureDto;
-import com.pro06.dto.MyCourseDto;
-import com.pro06.dto.MyVideoDto;
+import com.pro06.dto.*;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +60,8 @@ public class MyCourseController {
 
     // 강좌 상세
     @GetMapping("detail")
-    public String courseDetail(Principal principal, @RequestParam("no") Integer no, Model model) throws IOException {
-
-        if(principal == null) {
+    public String courseDetail(Principal principal, @RequestParam("no") Integer no, Model model) throws Exception {
+        if (principal == null) {
             log.error("로그인을 해야 강의를 들을 수 있습니다.");
             return "redirect:/";
         }
@@ -74,7 +69,7 @@ public class MyCourseController {
         String id = principal.getName();
 
         Integer ck = myCourseService.getMyCourseCnt(id, no);
-        if(ck == 0) {
+        if (ck == 0) {
             log.error("해당 강좌를 듣는 수강생이 아닙니다.");
             return "redirect:/";
         }
@@ -86,18 +81,43 @@ public class MyCourseController {
         // 강의 목록
         List<LectureDto> lectureList = lectureService.lectureCnoList(no);
         model.addAttribute("lectureList", lectureList);
-        
-        // 수강상태
+
+        // 수강상태, 시험상태 확인
         // 동영상을 다 봤는지 안봤는지 검사
+        // 시험을 통과했는지 안했는지 검사
         List<String> stateList = new ArrayList<>();
-        for (LectureDto lec: lectureList) {
+        List<String> ansList = new ArrayList<>();
+        int yCnt = 0;
+        int i = 0;
+        log.warn("lectureList : " + lectureList.toString());
+        for (LectureDto lec : lectureList) {
+            // 수강상태
             MyVideoDto myVideo = myVideoService.getMyVideo(id, no, lec.getNo());
-            if(myVideo != null && myVideo.getState().equals("y")) {
-                stateList.add("수강완료");
+            if (myVideo != null && myVideo.getState().equals("y")) {
+                stateList.add("y");
             } else {
-                stateList.add("수강중");
+                stateList.add("n");
             }
+
+            LecAnsDto lecAnsDto = lectureService.getLecAns(no, lec.getNo(), id);
+            if (lecAnsDto != null && lecAnsDto.getAnsCnt() >= 3) {
+                ansList.add("y");
+            } else {
+                ansList.add("n");
+            }
+
+            // 수강 완료인 거 카운트
+            if(stateList.get(i).equals("y") && ansList.get(i).equals("y")) {
+                yCnt++;
+            }
+            i++;
         }
+
+        log.warn("ansList : " + ansList.toString());
+        log.warn("stateList : " + stateList.toString());
+
+        model.addAttribute("yCnt", yCnt);
+        model.addAttribute("ansList", ansList);
         model.addAttribute("stateList", stateList);
         return "mycourse/myCourseDetail";
     }

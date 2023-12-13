@@ -25,6 +25,7 @@
                                 <th>수강현황</th>
                                 <th>작성자</th>
                                 <th>등록일</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,7 @@
                                     <td th:text="${course.title} + ' ' + ${course.peo} + '/' + ${course.peo_max}"></td>
                                     <td th:text="${course.id}"></td>
                                     <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
+                                    <td><a th:href="@{/admin/courseUpdate(no=${course.no})}">강좌수정</a></td>
                                 </tr>
                             </th:block>
                             <th:block th:if="${courseList.size() <= 0}">
@@ -46,7 +48,7 @@
                     </table>
                     <div>
                         <th:block sec:authorize="hasAuthority('ADMIN')">
-                            <li><a th:href="@{/admin/courseInsert}">강좌 등록</a></li>
+                            <a th:href="@{/admin/courseInsert}">강좌 등록</a>
                         </th:block>
                     </div>
                 </div>

@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface LecAnsRepository extends JpaRepository<LecAns, Integer> {
     // 제출된 정보 가져오기
     @Query("select la from LecAns la where la.lecture.no = :lno and la.course.no = :cno and la.id = :id")
-    LecAns getLecAns(@Param("cno") Integer cno, @Param("lno") Integer lno, @Param("id") String id);
+    Optional<LecAns> getLecAns(@Param("cno") Integer cno, @Param("lno") Integer lno, @Param("id") String id);
 
     // 제출된 정보 수정
     @Modifying

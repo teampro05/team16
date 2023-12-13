@@ -16,17 +16,30 @@
 </ul>
 <hr>
 <h3>강의 목록</h3>
+<div th:text="'강의 수 : ' + ${lectureList.size()}"></div>
+<div th:text="'수강완료 : ' + ${yCnt}"></div>
+<div th:text="'수강중 : ' + ${lectureList.size() - yCnt}"></div>
 <ol>
     <th:block th:each="lecture, status : ${lectureList}">
     <li>
         <span class="title" th:text="${lecture.title}"></span>
         <a href="javascript:void(0);"
            th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a>
-        <span class="state" th:text="${stateList.get(status.index)}"></span>
 
-        <th:block th:if="${stateList.get(status.index) eq '수강완료'}">
+        <!-- 강의를 다 보고 시험을 보지않은 경우 -->
+        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'n'}">
             <a href="javascript:void(0);"
                th:onclick="'openLecTest(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">시험보기</a>
+        </th:block>
+
+        <!-- 강의를 다 보지 않았거나 시험을 보지않은 경우 -->
+        <th:block th:if="${stateList.get(status.index) eq 'n' or ansList.get(status.index) eq 'n'}">
+            <span>수강중</span>
+        </th:block>
+
+        <!-- 강의와 시험을 다 한 경우 -->
+        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'y'}">
+            <span>수강완료</span>
         </th:block>
     </li>
     </th:block>
@@ -62,7 +75,7 @@
         }
 
         let windowname = "강의 플레이어";
-        let intWidth = 1080;
+        let intWidth = 1150;
         let intHeight = 720;
         let intXOffset = 0;
         let intYOffset = 0;
@@ -104,7 +117,7 @@
 
         let windowname = "시험";
         let intWidth = 1080;
-        let intHeight = 720;
+        let intHeight = 900;
         let intXOffset = 0;
         let intYOffset = 0;
 

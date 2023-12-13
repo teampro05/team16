@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강좌수정</title>
+</head>
+<body>
+<h1>강좌수정</h1>
+<form th:action="@{/admin/courseUpdate}" method="post">
+    <div>
+        <input type="hidden" name="no" id="no" th:value="${dto.no}">
+    </div>
+    <div>
+        <label for="id">아이디</label>
+        <input type="text" name="id" id="id" th:value="${dto.id}" readonly>
+    </div>
+    <div>
+        <label for="level">학년</label>
+        <select name="level" id="level">
+            <th:block th:if="${dto.level eq '초등'}">
+                <option value="초등" selected>초등</option>
+            </th:block>
+            <th:block th:if="${dto.level ne '초등'}">
+                <option value="초등">초등</option>
+            </th:block>
+
+            <th:block th:if="${dto.level eq '중학'}">
+                <option value="중학" selected>중학</option>
+            </th:block>
+            <th:block th:if="${dto.level ne '중학'}">
+                <option value="중학">중학</option>
+            </th:block>
+
+            <th:block th:if="${dto.level eq '수능'}">
+                <option value="수능" selected>수능</option>
+            </th:block>
+            <th:block th:if="${dto.level ne '수능'}">
+                <option value="수능">수능</option>
+            </th:block>
+
+            <th:block th:if="${dto.level eq '토익'}">
+                <option value="토익" selected>토익</option>
+            </th:block>
+            <th:block th:if="${dto.level ne '토익'}">
+                <option value="토익">토익</option>
+            </th:block>
+        </select>
+    </div>
+    <div>
+        <label for="title">제목</label>
+        <input type="text" name="title" id="title" maxlength="100" th:value="${dto.title}" required>
+    </div>
+    <div>
+        <label for="content">내용</label>
+        <input type="text" name="content" id="content" maxlength="1000" th:value="${dto.content}" required>
+    </div>
+    <div>
+        <label for="peo_max">최대 수강인원</label>
+        <input type="text" name="peo_max" id="peo_max" value="10" maxlength="3" readonly>
+    </div>
+    <div>
+        <input type="submit" value="등록">
+        <input type="reset" value="초기화">
+    </div>
+</form>
+</body>
+</html>

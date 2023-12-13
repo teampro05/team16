@@ -12,110 +12,133 @@
         */
         .video-js .vjs-time-control{display:block;}
         .video-js .vjs-remaining-time{display: none;}
+        .complete {display: none;}
+        .vdo-btn {float: left; margin-right: 15px;}
     </style>
 </head>
 <body>
 <div>
+    <div style="width: 700px; float: left">
+        <video
+                id="my-video"
+                class="video-js"
+                controls
+                preload="auto"
+                width="640"
+                height="360"
+                data-setup="{}"
+        >
+            <source th:src="@{/shop/} + ${savefile}" type="video/mp4" />
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a
+                web browser that
+                <a href="https://videojs.com/html5-video-support/" target="_blank">
+                    supports HTML5 video
+                </a>
+            </p>
+        </video>
 
-    <video
-            id="my-video"
-            class="video-js"
-            controls
-            preload="auto"
-            width="640"
-            height="360"
-            data-setup="{}"
-    >
-<!--        <source th:src="@{/upload/video/test.mp4}" type="video/mp4" />-->
-        <source th:src="@{/shop/} + ${savefile}" type="video/mp4" />
-<!--        <source th:src="${'/common/file?savefile='+savefile}" type="video/mp4" />-->
-        <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a
-            web browser that
-            <a href="https://videojs.com/html5-video-support/" target="_blank"
-            >supports HTML5 video</a
-            >
-        </p>
-    </video>
+<!--        <div>
+            <p id="video-duration"></p>
+        </div>
 
-    <div>
-        <p id="video-duration"></p>
+        <div>
+            <span th:text="${page + 1} + ' 번 영상'"></span>
+        </div>-->
+
+        <div style="margin: 20px 0 0 10px;">
+            <!-- 이전 영상으로 넘어가기 -->
+            <th:block th:if="${page > 0}">
+                <form th:action="@{/video/player}" method="post" onsubmit="return videoBack()">
+                    <input type="hidden" name="cno" id="cno1" th:value="${cno}">
+                    <input type="hidden" name="lno" id="lno1" th:value="${lno}">
+                    <input type="hidden" name="page" id="page1" th:value="${page - 1}">
+                    <input type="submit" class="vdo-btn" value="이전 영상">
+                </form>
+            </th:block>
+
+            <!-- 다음 영상으로 넘어가기 -->
+            <th:block th:if="${page < total_size - 1 and user_page <= page}">
+                <form th:action="@{/video/player}" method="post" onsubmit="return videoNext()">
+                    <input type="hidden" name="cno" id="cno2" th:value="${cno}">
+                    <input type="hidden" name="lno" id="lno2" th:value="${lno}">
+                    <input type="hidden" name="page" id="page2" th:value="${page + 1}">
+                    <input type="submit" class="complete vdo-btn" value="다음 영상">
+                </form>
+            </th:block>
+
+            <!-- 다음 영상으로 넘어가기 -->
+            <!-- 이미 해당 영상을 수강한 경우 -->
+            <th:block th:if="${page < total_size - 1 and user_page > page}">
+                <form th:action="@{/video/player}" method="post">
+                    <input type="hidden" name="cno" id="cno4" th:value="${cno}">
+                    <input type="hidden" name="lno" id="lno4" th:value="${lno}">
+                    <input type="hidden" name="page" id="page4" th:value="${page + 1}">
+                    <input type="submit" class="vdo-btn" value="다음 영상">
+                </form>
+            </th:block>
+
+            <!-- 수강 완료 해당 영상을 처음듣는 경우 -->
+            <th:block th:if="${page == total_size - 1 and user_page <= page}">
+                <form th:action="@{/video/complete}" method="post" onsubmit="return videoNext()">
+                    <input type="hidden" name="cno" id="cno5" th:value="${cno}">
+                    <input type="hidden" name="lno" id="lno5" th:value="${lno}">
+                    <input type="hidden" name="page" id="page5" th:value="${page+1}">
+                    <input type="submit" class="complete vdo-btn" value="수강 완료">
+                </form>
+            </th:block>
+
+            <!-- 수강 완료 해당 영상을 이미 수강한 경우 -->
+            <th:block th:if="${page == total_size - 1 and user_page > page}">
+                <form th:action="@{/video/complete}" method="post">
+                    <input type="hidden" name="cno" id="cno6" th:value="${cno}">
+                    <input type="hidden" name="lno" id="lno6" th:value="${lno}">
+                    <input type="hidden" name="page" id="page6" th:value="${page + 1}">
+                    <input type="submit" class="vdo-btn" value="수강 완료">
+                </form>
+            </th:block>
+        </div>
     </div>
-</div>
-<div>
-    <span th:text="${page + 1} + ' 번 영상'"></span>
-</div>
-<div>
-    <span id="war" style="color: red"></span>
-</div>
-<div>
-    <!-- 이전 영상으로 넘어가기 -->
-    <th:block th:if="${page > 0}">
-        <form th:action="@{/video/player}" method="post" onsubmit="return videoBack()">
-            <input type="hidden" name="cno" id="cno1" th:value="${cno}">
-            <input type="hidden" name="lno" id="lno1" th:value="${lno}">
-            <input type="hidden" name="page" id="page1" th:value="${page - 1}">
-            <input type="submit" value="이전 영상">
-        </form>
-    </th:block>
 
-    <!-- 다음 영상으로 넘어가기 -->
-    <th:block th:if="${page < total_size - 1 and user_page <= page}">
-        <form th:action="@{/video/player}" method="post" onsubmit="return videoNext()">
-            <input type="hidden" name="cno" id="cno2" th:value="${cno}">
-            <input type="hidden" name="lno" id="lno2" th:value="${lno}">
-            <input type="hidden" name="page" id="page2" th:value="${page + 1}">
-            <input type="submit" value="다음 영상">
-        </form>
-    </th:block>
-
-    <!-- 다음 영상으로 넘어가기 -->
-    <th:block th:if="${page < total_size - 1 and user_page > page}">
-        <form th:action="@{/video/player}" method="post">
-            <input type="hidden" name="cno" id="cno4" th:value="${cno}">
-            <input type="hidden" name="lno" id="lno4" th:value="${lno}">
-            <input type="hidden" name="page" id="page4" th:value="${page + 1}">
-            <input type="submit" value="다음 영상">
-        </form>
-    </th:block>
-
-    <!-- 수강 완료 해당 영상을 처음듣는 경우 -->
-    <th:block th:if="${page == total_size - 1 and user_page <= page}">
-        <form th:action="@{/video/complete}" method="post" onsubmit="return videoNext()">
-            <input type="hidden" name="cno" id="cno5" th:value="${cno}">
-            <input type="hidden" name="lno" id="lno5" th:value="${lno}">
-            <input type="hidden" name="page" id="page5" th:value="${page+1}">
-            <input type="submit" value="수강 완료">
-        </form>
-    </th:block>
-
-    <!-- 수강 완료 해당 영상을 이미 수강한 경우 -->
-    <th:block th:if="${page == total_size - 1 and user_page > page}">
-        <form th:action="@{/video/complete}" method="post">
-            <input type="hidden" name="cno" id="cno6" th:value="${cno}">
-            <input type="hidden" name="lno" id="lno6" th:value="${lno}">
-            <input type="hidden" name="page" id="page6" th:value="${page + 1}">
-            <input type="submit" value="수강 완료">
-        </form>
-    </th:block>
+    <div style="width: 200px; float: left">
+        <h3>인덱스</h3>
+        <ul>
+            <th:block th:each="i : ${#numbers.sequence(0, total_size - 1)}">
+                <li th:id="'li' + ${i}">
+                    <th:block th:if="${user_page >= i and i != page}">
+                        <form th:action="@{/video/player}" method="post">
+                            <input type="hidden" name="cno" th:value="${cno}">
+                            <input type="hidden" name="lno" th:value="${lno}">
+                            <input type="hidden" name="page" th:value="${i}">
+                            <input type="submit" th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
+                        </form>
+                    </th:block>
+                    <th:block th:if="${user_page < i or i == page}">
+                        <span th:id="'btn' + ${i}" th:text="${i + 1} + '번 영상'"></span>
+                    </th:block>
+                </li>
+            </th:block>
+        </ul>
+    </div>
 </div>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
     let video = document.getElementById('my-video');
-    let videoDurationDisplay = document.getElementById('video-duration');
-    let time = [[${time}]];
-    let user_page = [[${user_page}]];
-    let page = [[${page}]];
-    let sec = [[${sec}]];
-    let cno = [[${cno}]];
-    let lno = [[${lno}]];
+    // let videoDurationDisplay = document.getElementById('video-duration');
+    let user_page = [[${user_page}]];       // db에 저장된 해당 이용자가 본 영상 위치
+    let page = [[${page}]];                 // 현재 듣는 강의 페이지
+    let sec = [[${sec}]];                   // db에 저장된 해당 이용자가 본 시간
+    let cno = [[${cno}]];                   // 강좌 번호
+    let lno = [[${lno}]];                   // 강의 번호
 
     console.log('user_page : ' + user_page);
     console.log('page : ' + page);
     console.log('sec : ' + sec);
     console.log('cno : ' + cno);
     console.log('lno : ' + lno);
+
+    $("#btn" + page).css({"color" : "red", "font-weight" : "bold"});
 
     // 총 시간
     let totalSeconds = 0;
@@ -124,20 +147,12 @@
     video.addEventListener('loadedmetadata', function() {
         // 시간 구하기
         totalSeconds = Math.floor(video.duration); // 비디오의 총 시간 구하기, 올림 연산
-        const hours = Math.floor(totalSeconds / 3600); // 시간
+/*        const hours = Math.floor(totalSeconds / 3600); // 시간
         const minutes = Math.floor((totalSeconds % 3600) / 60); // 분
         const seconds = Math.floor(totalSeconds % 60); // 초
         videoDurationDisplay.innerHTML = `총 길이: ${hours}시간 ${minutes}분 ${seconds}초<br>
-                                                ${totalSeconds}초`;
+                                                ${totalSeconds}초`;*/
     });
-
-    // db에 저장된 시간이 있으면
-    // 특정 시간부터 재생
-    if(time > 0)  {
-        const specificTimeInSeconds = time;
-        video.currentTime = specificTimeInSeconds; // 특정 시간으로 비디오 이동
-        video.play();
-    }
 
     // 이전으로 넘어가기
     function videoBack() {
@@ -193,6 +208,17 @@
         }
     });
 
+    // 영상을 다 들은 경우 다음 강의 영상으로 넘어가는 버튼이 생성
+    complete = () => {
+        console.log('inter : ' + Math.floor(video.duration) + ' = ' + Math.floor(video.currentTime));
+        if(Math.floor(video.duration) === Math.floor(video.currentTime)) {
+            setTimeout(()=> {
+                $(".complete").css("display", "block");
+            }, 500);
+            clearInterval(intervalID);
+        }
+    }
+    const intervalID = setInterval(complete, 1000);
     /*]]>*/
 </script>
 <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>

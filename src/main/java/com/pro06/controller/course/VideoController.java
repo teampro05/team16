@@ -133,6 +133,7 @@ public class VideoController {
         // 동영상 플레이어 창 닫기
         res.setContentType("text/html; charset=UTF-8");
         PrintWriter out = res.getWriter();
+        out.println("<script>alert('시험을 안보신 분은 시험을 봐야 수강처리가 인정됩니다.')</script>");
         out.println("<script>window.close();</script>");
         out.flush();
     }

@@ -91,6 +91,30 @@ public class AdminController {
         return "redirect:/admin/courseList";
     }
 
+    // 강좌 수정폼 이동
+    @GetMapping("courseUpdate")
+    public String courseUpdate(Principal principal, @RequestParam("no") Integer no, Model model) {
+        String id = principal.getName();
+        CourseDto courseDto = courseService.getCourse(no);
+        model.addAttribute("dto", courseDto);
+        model.addAttribute("id", id);
+        return "admin/course/courseUpdate";
+    }
+
+    // 강좌 생성
+    @PostMapping("courseUpdate")
+    public String courseUpdate(CourseDto courseDto) {
+        courseService.courseUpdate(courseDto);
+        return "redirect:/admin/courseList";
+    }
+
+    // 강좌 삭제
+    @GetMapping("courseDelete")
+    public String courseDelete(@RequestParam("no") Integer no) {
+        courseService.courseDelete(no);
+        return "redirect:/admin/courseList";
+    }
+
 
     // lecture
     // 강의 생성폼 이동

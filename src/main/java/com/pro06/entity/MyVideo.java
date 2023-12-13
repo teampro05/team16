@@ -10,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Setter
 @Table(name="myvideo")
 @ToString
 @Builder

@@ -35,9 +35,8 @@ public class MyVideoServiceImpl {
     // 해당 강의 영상정보가 있는지 확인
     public MyVideoDto getMyVideo(String id, Integer cno, Integer lno) {
         Optional<MyVideo> myVideo = myVideoRepository.getMyVideo(id, cno, lno);
-        if(myVideo != null) {
-            MyVideoDto dto = modelMapper.map(myVideo, MyVideoDto.class);
-            return dto;
+        if(myVideo.isPresent()) {   // Optional 에서 null 비교할 때 사용
+            return modelMapper.map(myVideo, MyVideoDto.class);
         } else {
             return null;
         }

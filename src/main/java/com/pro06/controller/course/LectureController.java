@@ -110,9 +110,13 @@ public class LectureController {
         // 아이디
         lecAns.setId(id);
 
-        lectureService.lecAnsInsUpd(lecAns);
+        if(lecAns1 != null) { // 값이 존재하면 update
+            lectureService.lecAnsUpdate(lecAns);
+        } else {    // 값이 존재하지 않으면 insert
+            lectureService.lecAnsInsert(lecAns);
+        }
 
-        // 동영상 플레이어 창 닫기
+        // 현재 창 닫기
         res.setContentType("text/html; charset=UTF-8");
         PrintWriter out = res.getWriter();
         out.println("<script>window.close();</script>");

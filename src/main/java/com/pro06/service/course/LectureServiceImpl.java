@@ -82,24 +82,39 @@ public class LectureServiceImpl {
     // 시험 정보 가져오기
     public LecTestDto getLecTest(Integer cno, Integer lno) {
         LecTest opt = lecTestRepository.getLecTest(cno, lno);
-        LecTestDto dto = modelMapper.map(opt, LecTestDto.class);
-        return dto;
+        if(opt != null) {
+            return modelMapper.map(opt, LecTestDto.class);
+        } else {
+            return null;
+        }
     }
     
     // 시험 제출 답안 입력, 수정
-    public void lecAnsInsUpd(LecAnsDto lecAnsDto) {
+    public void lecAnsInsert(LecAnsDto lecAnsDto) {
         LecAns lecAns = modelMapper.map(lecAnsDto, LecAns.class);
         lecAnsRepository.save(lecAns);
 //        lecAnsRepository.findById();
     }
     
     // 제출된 답안 수정
-    public LecAns lecAnsUpdate(LecAns lecAns) {return lecAnsRepository.save(lecAns);}
+    public void lecAnsUpdate(LecAnsDto lecAnsDto) {
+        Optional<LecAns> lec = lecAnsRepository.getLecAns(lecAnsDto.getCourse().getNo(),
+                lecAnsDto.getLecture().getNo(), lecAnsDto.getId());
+        LecAns lecAns = lec.orElseThrow();
+        lecAns.answerChange(lecAnsDto.getAnswer1(), lecAnsDto.getAnswer2(), lecAnsDto.getAnswer3(),
+                lecAnsDto.getAnswer4(), lecAnsDto.getAnswer5(), lecAnsDto.getAnsCnt());
+        lecAnsRepository.save(lecAns);
+    }
     
     // 답안 정보 추출
     public LecAnsDto getLecAns(Integer cno, Integer lno, String id) {
-        LecAns lecAns = lecAnsRepository.getLecAns(cno, lno, id);
-        LecAnsDto dto = modelMapper.map(lecAns, LecAnsDto.class);
-        return dto;
+        Optional<LecAns> lecAns = lecAnsRepository.getLecAns(cno, lno, id);
+        log.warn("lecAns.isPresent() : " + lecAns.isPresent());
+        if(lecAns.isPresent()) { // Optional 에서 null 비교할 때 사용
+            LecAnsDto lecAnsDto = modelMapper.map(lecAns, LecAnsDto.class);
+            return lecAnsDto;
+        } else {
+            return null;
+        }
     }
 }
