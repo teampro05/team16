@@ -5,45 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강좌 상세</title>
+    <th:block th:replace="include/head :: head" ></th:block>
 </head>
 <body>
-<h1>강좌 상세</h1>
-<ul>
-    <li>강좌 이름 : [[${course.title}]]</li>
-    <li>작성자 : [[${course.id}]]</li>
-    <li>현재수강인원 : [[${course.peo}]]</li>
-    <li>최대수강인원 : [[${course.peo_max}]]</li>
-</ul>
-<hr>
-<h3>강의 목록</h3>
-<div th:text="'강의 수 : ' + ${lectureList.size()}"></div>
-<div th:text="'수강완료 : ' + ${yCnt}"></div>
-<div th:text="'수강중 : ' + ${lectureList.size() - yCnt}"></div>
-<ol>
-    <th:block th:each="lecture, status : ${lectureList}">
-    <li>
-        <span class="title" th:text="${lecture.title}"></span>
-        <a href="javascript:void(0);"
-           th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a>
+<th:block th:replace="include/header :: header" ></th:block>
+<section class="table-list">
+    <div class="container">
+        <h2>강좌 상세</h2>
+        <ul>
+            <li>강좌 이름 : [[${course.title}]]</li>
+            <li>작성자 : [[${course.id}]]</li>
+            <li>현재수강인원 : [[${course.peo}]]</li>
+            <li>최대수강인원 : [[${course.peo_max}]]</li>
+        </ul>
+        <br>
 
-        <!-- 강의를 다 보고 시험을 보지않은 경우 -->
-        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'n'}">
-            <a href="javascript:void(0);"
-               th:onclick="'openLecTest(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">시험보기</a>
-        </th:block>
+        <h2>강의 목록</h2>
+        <ul>
+            <li th:text="'강의 수 : ' + ${lectureList.size()}"></li>
+            <li th:text="'수강완료 : ' + ${yCnt}"></li>
+            <li th:text="'수강중 : ' + ${lectureList.size() - yCnt}"></li>
+        </ul>
+        <table class="List-table">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>제목</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="lecture, status : ${lectureList}">
+                <tr>
+                    <td th:text="${status.count}"></td>
+                    <td><span class="title" th:text="${lecture.title}"></span></td>
+                    <td><a href="javascript:void(0);"
+                           th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a></td>
+                    <td>
+                        <!-- 강의를 다 보고 시험을 보지않은 경우 -->
+                        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'n'}">
+                            <a href="javascript:void(0);"
+                               th:onclick="'openLecTest(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">시험보기</a>
+                        </th:block>
+                    </td>
+                    <td>
+                        <!-- 강의를 다 보지 않았거나 시험을 보지않은 경우 -->
+                        <th:block th:if="${stateList.get(status.index) eq 'n' or ansList.get(status.index) eq 'n'}">
+                            <span>수강중</span>
+                        </th:block>
+                    </td>
+                    <td>
+                        <!-- 강의와 시험을 다 한 경우 -->
+                        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'y'}">
+                            <span>수강완료</span>
+                        </th:block>
+                    </td>
+                </tr>
+            </th:block>
+            <th:block th:if="${lectureList.size() <= 0}">
+                <tr>
+                    <td colspan="4">목록이 없습니다.</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</section>
 
-        <!-- 강의를 다 보지 않았거나 시험을 보지않은 경우 -->
-        <th:block th:if="${stateList.get(status.index) eq 'n' or ansList.get(status.index) eq 'n'}">
-            <span>수강중</span>
-        </th:block>
-
-        <!-- 강의와 시험을 다 한 경우 -->
-        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'y'}">
-            <span>수강완료</span>
-        </th:block>
-    </li>
-    </th:block>
-</ol>
+<th:block th:replace="include/footer :: footer" ></th:block>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
