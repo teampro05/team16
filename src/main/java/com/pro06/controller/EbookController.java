@@ -35,15 +35,21 @@ public class EbookController {
     @GetMapping("EbookList")
     public String EbookList(Model model) throws Exception{
         List<Ebook> ebookList = eBookService.EbookList();
-//        List<EbookImg> fileList = new ArrayList<>();
-//        for (Ebook ebook:ebookList) {
-//            EbookImg ebookImg = eBookService.thmbn(ebook.getNo());
-//            fileList.add(ebookImg);
-//        }
-        model.addAttribute("EbookList", ebookList);
-//        model.addAttribute("fileList", fileList);
+
+        List<EbookVO> voList = new ArrayList<>();
+        for (Ebook ebook:ebookList) {
+            EbookVO vo = new EbookVO();
+            vo.setFileBoard(ebook);
+            EbookImg ebookImg = eBookService.thmbn(ebook.getNo());
+            List<EbookImg> fileList = new ArrayList<>();
+            fileList.add(ebookImg);
+            vo.setFileList(fileList);
+            voList.add(vo);
+        }
+        model.addAttribute("EbookList", voList);
+
         log.info(" ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + ebookList);
-        return "/ebook/EbookList";
+        return "Ebook/EbookList";
     }
 
     @GetMapping("getEbook")
@@ -62,8 +68,8 @@ public class EbookController {
     }
 
     @GetMapping("EbookInsert")
-    public String EbookInsertForm(@RequestParam("no") int no, Model model) throws Exception {
-        model.addAttribute("no", no);
+    public String EbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
+        model.addAttribute("name", name);
         return "Ebook/EbookInsert";
     }
 
@@ -85,7 +91,10 @@ public class EbookController {
         ebook.setTitle(params.get("title"));
         ebook.setContent(params.get("content"));
         ebook.setServecontent(params.get("servecontent"));
+        ebook.setPrice(Integer.valueOf(params.get("price")));
+        ebook.setPublish(params.get("publish"));
 
+/*
         // 가격에 대한 String 값을 BigDecimal로 변환
         String priceString = params.get("price");
         BigDecimal price = new BigDecimal(priceString);
@@ -95,6 +104,7 @@ public class EbookController {
         String publishString = params.get("publish");
         LocalDate publish = LocalDate.parse(publishString);
         ebook.setPublish(publish);
+*/
 
 
         File folder = new File(uploadFolder);
@@ -123,8 +133,8 @@ public class EbookController {
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
                 data.setFilesize(file.getSize());
-                // Date today = new Date();
-                // data.setUploaddate(today.toString());
+                Date today = new Date();
+                data.setUploaddate(today.toString());
                 fileList.add(data);
 
                 // 파일 저장
@@ -187,7 +197,10 @@ public class EbookController {
         ebook.setTitle(params.get("title"));
         ebook.setContent(params.get("content"));
         ebook.setServecontent(params.get("servecontent"));
+        ebook.setPrice(Integer.valueOf(params.get("price")));
+        ebook.setPublish(params.get("publish"));
 
+/*
         // 가격에 대한 String 값을 BigDecimal로 변환
         String priceString = params.get("price");
         BigDecimal price = new BigDecimal(priceString);
@@ -197,7 +210,7 @@ public class EbookController {
         String publishString = params.get("publish");
         LocalDate publish = LocalDate.parse(publishString);
         ebook.setPublish(publish);
-
+*/
 
         File folder = new File(uploadFolder);
         if (!folder.exists())

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pro06.repository.Book.EbookRepository">
+<mapper namespace="com.pro06.repository.EbookRepository">
 
 <!--
     List<Ebook> EbookList(); // 초등 교재 리스트
@@ -51,7 +51,7 @@
     <insert id="fileInsert">
         <choose>
             <when test="originfile != null and originfile.trim() != ''">
-                insert into fileobj values (default, #{Ebno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize})
+                insert into ebookImg values (default, #{Ebno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
             </when>
             <otherwise>
                 -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
@@ -89,7 +89,11 @@
     </delete>
 
     <select id="thmbn" resultType="com.pro06.entity.EbookImg">
-        select * from ebookImg where Ebno={no} limit 1
+        select * from ebookImg where Ebno=#{no} limit 1
+    </select>
+
+    <select id="latestFileboard" resultType="com.pro06.entity.Ebook">
+        select * from ebook order by no desc limit 0,1
     </select>
 
 </mapper>

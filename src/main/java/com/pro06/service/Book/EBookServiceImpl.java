@@ -3,7 +3,7 @@ package com.pro06.service.Book;
 import com.pro06.dto.EbookVO;
 import com.pro06.entity.Ebook;
 import com.pro06.entity.EbookImg;
-import com.pro06.repository.Book.EbookRepository;
+import com.pro06.repository.EbookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +45,11 @@ public class EBookServiceImpl implements EBookService {
         Ebook ebook = fileboard.getFileBoard();
         List<EbookImg> fileList = fileboard.getFileList();
         ebookRepository.fileBoardInsert(ebook);
+        Ebook latestBoard = ebookRepository.latestFileboard();
+        for (EbookImg file:fileList) {
+            file.setEbno(latestBoard.getNo());
+            ebookRepository.fileInsert(file);
+        }
     }
 
     @Override

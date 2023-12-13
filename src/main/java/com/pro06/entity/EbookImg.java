@@ -17,4 +17,5 @@ public class EbookImg {
     private String originfile;
     private String savefile;
     private Long filesize;
+    private String uploaddate;
 }

@@ -20,6 +20,6 @@ public class Ebook {
     private String title; // 제목
     private String content; // 내용
     private String servecontent; // 요약 내용
-    private BigDecimal price; // 가격
-    private LocalDate publish; // 출간일
+    private Integer price; // 가격
+    private String publish; // 출간일
 }

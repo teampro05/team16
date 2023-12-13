@@ -1,4 +1,4 @@
-package com.pro06.repository.Book;
+package com.pro06.repository;
 
 import com.pro06.entity.Ebook;
 import com.pro06.entity.EbookImg;
@@ -26,5 +26,6 @@ public interface EbookRepository {
     void fileUpdate(EbookImg ebookImg) throws Exception;
     void removeFileAll(int postNO) throws Exception;
     EbookImg thmbn(int no) throws Exception;
+    Ebook latestFileboard() throws Exception;
 
 }
