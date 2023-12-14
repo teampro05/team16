@@ -10,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Setter
 @Table(name="myvideo")
 @ToString
 @Builder
@@ -48,4 +47,15 @@ public class MyVideo extends BaseEntity{
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "lno", referencedColumnName = "no")
     private Lecture lecture;        // 강의 번호 외래키 지정
+
+    public void secPageState(Integer sec, Integer page, String state){
+        this.sec = sec;
+        this.page = page;
+        this.state = state;
+    }
+
+    public void secPage(Integer sec, Integer page){
+        this.sec = sec;
+        this.page = page;
+    }
 }

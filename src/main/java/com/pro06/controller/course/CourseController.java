@@ -1,8 +1,8 @@
 package com.pro06.controller.course;
 
-import com.pro06.entity.Course;
-import com.pro06.entity.Lecture;
-import com.pro06.entity.MyCourse;
+import com.pro06.dto.CourseDto;
+import com.pro06.dto.LectureDto;
+import com.pro06.dto.MyCourseDto;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
@@ -43,14 +43,14 @@ public class CourseController {
     // 강좌 목록
     @GetMapping("list")
     public String courseList(Principal principal, Model model) {
-        List<Course> courseList = courseService.courseList();
+        List<CourseDto> courseList = courseService.courseList();
 
         List<String> checkList = new ArrayList<>();
         
         // 로그인한 사람이면 강좌마다 수강신청 했는지 안했는지 검사
         if(principal != null) {
             String id = principal.getName();
-            for (Course course: courseList) {
+            for (CourseDto course: courseList) {
                 Integer cnt = myCourseService.getMyCourseCnt(id, course.getNo());
                 if(cnt > 0) {
                     checkList.add("y");
@@ -70,11 +70,11 @@ public class CourseController {
     public String courseDetail(@RequestParam("no") Integer no, Model model) throws IOException {
 
         // 강좌 상세
-        Course course = courseService.getCourse(no);
+        CourseDto course = courseService.getCourse(no);
         model.addAttribute("course", course);
         
         // 강의 목록
-        List<Lecture> lectureList = lectureService.lectureCnoList(no);
+        List<LectureDto> lectureList = lectureService.lectureCnoList(no);
         model.addAttribute("lectureList", lectureList);
         return "course/courseDetail";
     }
@@ -98,17 +98,17 @@ public class CourseController {
         }
         
         // 수강 신청 하기전에 인원이 다 찼는지 안 찼는지 확인
-        Course course1 = courseService.getCourse(cno);
+        CourseDto course1 = courseService.getCourse(cno);
 
         if(course1.getPeo() >= course1.getPeo_max() ) {
             log.error("이미 수강생이 다 찼습니다.");
             return "redirect:/";
         }
 
-        Course course = new Course();
+        CourseDto course = new CourseDto();
         course.setNo(cno);
 
-        MyCourse myCourse = new MyCourse();
+        MyCourseDto myCourse = new MyCourseDto();
         myCourse.setId(id);
         myCourse.setCourse(course);
 

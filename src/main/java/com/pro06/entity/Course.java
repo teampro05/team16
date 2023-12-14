@@ -13,7 +13,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Setter
 @Table(name="course")
 @ToString
 @Builder
@@ -50,4 +49,17 @@ public class Course extends BaseEntity{
 
     @Column(nullable = false)
     private Integer peo_max;    // 최대 수강인원
+
+    public void peoUp(){
+        this.peo = this.peo + 1;
+    }
+
+    public void change(String id, String level,
+                       String title, String content) {
+        this.id = id;
+        this.level = level;
+        this.title = title;
+        this.content = content;
+    }
+
 }
