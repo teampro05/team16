@@ -35,7 +35,7 @@ public class SecurityConfig {
                 // 특정 URL에 대한 권한 설정.
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests
-                            .requestMatchers("/course/**", "/ebook/**", "/error/**").permitAll()
+                            .requestMatchers("/course/**", "/error/**", "/Ebook/**").permitAll()
                             .requestMatchers("/user/**", "/board/**", "/mycourse/**", "/video/**", "/myvideo/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
                             .requestMatchers("/admin/**").hasAuthority("ADMIN") // admin만 접근 가능
                             .requestMatchers("/css/**", "/js/**", "/upload/**", "/cleditor/**", "/scss/**",

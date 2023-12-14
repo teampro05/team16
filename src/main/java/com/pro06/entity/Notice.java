@@ -34,4 +34,4 @@ public class Notice extends BaseEntity {
         notice.setAuthor(boardDTO.getAuthor());
         return notice;
     }
-    }
+}

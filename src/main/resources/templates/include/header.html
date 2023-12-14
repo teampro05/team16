@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <th:block th:fragment="header">
+<!--    <th:block sec:authorize="isAuthenticated()">-->
             <th:block sec:authorize="hasAuthority('ADMIN')">
                 <div class="hasRole">
                     <h2 style="margin: 0; padding: 0">
@@ -10,23 +11,25 @@
                         •  ᴥ  •
                         <button id="stopButton" class="fireButton">ʔ</button>
                     </h2>
-                    <h2 style="margin: 0; padding: 0">ㅡㅡ 관리자 ㅡㅡ</h2>
+                        <h2 style="margin: 0; padding: 0">ㅡㅡ 관리자 ㅡㅡ</h2>
                 </div>
+
             </th:block>
+<!--    </th:block>-->
 
     <!-- ======= Top Bar ======= -->
-    <section id="topBar" class="d-flex align-items-center">
+    <section id="topbar" class="d-flex align-items-center">
         <div class="container ">
-            <div class="cta">
+            <div class="cta" style="float: right">
                 <th:block sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}" class="header_login">로그인</a>
+                    <a th:href="@{/login}" class="scrollto header_login">로그인</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
-                    <p class="topBar-name">반갑습니다.</p>
-                    <p class="topBar-name" sec:authentication="principal"></p>
-                    <p class="topBar-name"> 님</p>
-                    <a th:href="@{/myPage}" class="header_login">마이페이지</a>
-                    <a th:href="@{/logout}" class="header_login">로그아웃</a>
+                    <a th:href="@{/myPage}" class="scrollto header_login">마이페이지</a>
+                    <a th:href="@{/logout}" class="scrollto header_login">로그아웃</a>
+                </th:block>
+                <th:block sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/admin/home}" class="scrollto header_login">관리자페이지</a>
                 </th:block>
             </div>
         </div>
@@ -44,12 +47,14 @@
             <!-- navbar -->
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" th:href="@{/course/list}">강좌소개</a></li>
+                    <li><a class="nav-link scrollto active" th:href="@{Ebook}">강의소개</a></li>
                     <li class="dropdown"><a href="#"><span>교재</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a th:href="@{/EbookList}">초등</a></li>
-                            <li><a th:href="@{/ebook/EbookList}">중등</a></li>
-                            <li><a th:href="@{/ebook/EbookList}">수능</a></li>
+                            <li><a th:href="@{/Ebook/EbookList}">초등</a></li>
+                            <li><a th:href="@{/faq}">중학</a></li>
+                            <li><a th:href="@{/oto}">수능</a></li>
+                            <li><a th:href="@{/oto}">토익</a></li>
+
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#"><span>커뮤니티</span> <i class="bi bi-chevron-down"></i></a>
@@ -59,7 +64,9 @@
                             <li><a th:href="@{/oto}">1:1 문의</a></li>
                         </ul>
                     </li>
+                    <li><a class="nav-link scrollto active" th:href="@{/mycourse/list}">나의 학습방</a></li>
                 </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
             <!-- navbar end-->
 
@@ -81,12 +88,12 @@
                                 </li>
                                 <li class="quick02">
                                     <a th:href="@{/myPage}">
-                                        <p>마이페이지</p>
+                                    <p>마이페이지</p>
                                     </a>
                                 </li>
                                 <li class="quick03">
-                                    <a th:href="@{/mycourse/list}">
-                                        <p>나의 학습방</p>
+                                    <a th:href="@{/admin}">
+                                    <p>나의 강의실</p>
                                     </a>
                                 </li>
                             </ul>
@@ -99,8 +106,8 @@
                                     </a>
                                 </li>
                                 <li class="quick02">
-                                    <a th:href="@{/mycourse/list}">
-                                        <p>나의 학습방</p>
+                                    <a th:href="@{/admin}">
+                                        <p>나의 강의실</p>
                                     </a>
                                 </li>
                             </ul>
