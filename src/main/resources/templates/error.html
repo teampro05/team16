@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>에러</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+
 </head>
 <body>
-    <h1>에러다 ~~~~~~~~~~~~~~~~~!</h1>
-
-    <div>
-        Error code : <span th:text="${code}"></span>
+<section>
+    <div class="container">
+        <h1>에러입니다!!!</h1>
         <br>
-        Error msg : <span th:text="${msg}"></span>
+        <br>
+        <h4 th:text="'Error code : ' + ${code}"></h4>
+        <br>
+        <h4 th:text="${msg}"></h4>
     </div>
+</section>
+
 </body>
 </html>

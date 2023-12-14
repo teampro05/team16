@@ -5,20 +5,27 @@ import com.pro06.entity.*;
 import com.pro06.service.FaqService;
 import com.pro06.service.NoticeService;
 import com.pro06.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.List;
 
 @Log4j2
 @Controller
+//@RequestMapping("/")
 public class HomeController {
 
 
@@ -33,6 +40,7 @@ public class HomeController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/")
     public String Home(Model model){
@@ -50,7 +58,11 @@ public class HomeController {
     }
 
     @GetMapping("/active")
-    public String active(Model model){
+    public String active(Model model, HttpServletRequest request, HttpServletResponse response){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null){
+            new SecurityContextLogoutHandler().logout(request,response,authentication);
+        }
         return "/user/active";
     }
 
@@ -70,7 +82,7 @@ public class HomeController {
             return "/alert";
         } else if (pass == 2) {
             model.addAttribute("msg", "해당 계정은 휴면계정입니다. 휴면을 풀어주세요.");
-            model.addAttribute("url", "/logout");
+            model.addAttribute("url", "/active");
             return "/alert";
         } else if (pass==3){
             model.addAttribute("msg", "해당 계정은 탈퇴한 계정입니다.");
@@ -84,37 +96,35 @@ public class HomeController {
     }
 
 
-    @GetMapping("/join1")
+    @GetMapping("/join")
     public String JoinForm(Model model){
-        return "/user/join1";
+        return "/user/join";
     }
 
-    @PostMapping("/joinPro1")
+    @PostMapping("/joinPro")
     public String Join(Model model, User user){
         userService.userInsert(user);
         return "redirect:/";
     }
 
-    @GetMapping("/error")
-    public String error(Model model){
-        return "/index";
-    }
-
     @GetMapping("/myPage")
     public String Exindex(Model model, Principal principal){
         User user = userService.getId(principal.getName());
-        model.addAttribute("principal", principal);
         model.addAttribute("user", user);
         return "/user/myPage";
     }
 
-    @PostMapping("/role")
-    public String out1(Principal principal, Model model, Role role){
-        User user = userService.getId(principal.getName());
-        user.setRole(role);
+    @PostMapping("/remove")
+    public String remove(String id, Model model){
+        User user = userService.getId(id);
+        user.setStatus(Status.OUT);
         userService.userUpdate(user);
-        return "redirect:/";
+        model.addAttribute("msg", "지금까지 감사합니다.");
+        model.addAttribute("url", "/logout");
+        return "/alert";
     }
+
+
 
     // Faq
 
@@ -157,7 +167,7 @@ public class HomeController {
     @GetMapping("/noticeadd")
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
-        model.addAttribute("principal", principal.getName());
+        model.addAttribute("prin", principal.getName());
         return "/board/noticeadd";
     }
 
@@ -169,7 +179,8 @@ public class HomeController {
     }
 
     @GetMapping("/noticeEdit")
-    public String noticeEditForm(Model model, Notice notice) {
+    public String noticeEditForm(Model model, Long no) {
+        Notice notice = noticeService.NoticeGet(no);
         model.addAttribute("notice", notice);
         return "/board/noticeEdit";
     }
@@ -186,4 +197,5 @@ public class HomeController {
         noticeService.NoticeDelete(no);
         return "redirect:/notice";
     }
+
 }

@@ -18,11 +18,45 @@
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="content">내용</label>
-                    <textarea type="text" name="content" id="content" class="form-control" cols="10" rows="8">[[${notice.content}]]</textarea>
+                    <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" cols="100" rows="10" maxlength="500" >[[${notice.content}]]</textarea>
+                    <div class="textCount"><span>0</span>/500</div>
                 </div>
-                <button type="submit" class="btn1 right1" >글쓰기</button>
+                <br>
+                <br>
+                <br>
+                <button type="submit" class="btn1 right1" >수정하기</button>
             </form>
+            <button type="button" onclick="back()" class="btn1 right1" >뒤로가기</button>
+
         </div>
     </section>
 </body>
 </html>
+<script>
+    $('#content').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length == 0 || content == '') {
+            $('.textCount span').text('0');
+        } else {
+            $('.textCount span').text(content.length);
+        }
+
+        if (content.length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            alert('글자수는 500자까지 입력 가능합니다.');
+        }
+    });
+
+    $('#title').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length > 50) {
+            alert('글자수는 50자까지 입력 가능합니다.');
+        }
+    });
+
+    function back(){
+        window.history.back();
+    }
+</script>

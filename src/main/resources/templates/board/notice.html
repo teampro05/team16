@@ -18,7 +18,6 @@
                     <tr>
                         <th>No</th>
                         <th>제목</th>
-                        <th>내용</th>
                         <th>작성자</th>
                         <th>등록일</th>
                     </tr>
@@ -28,7 +27,6 @@
                     <tr>
                         <td>[[${notice.count}]]</td>
                         <td><a th:href="@{/noticeGet(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
-                        <td>[[${noticeList.content}]]</td>
                         <td>[[${noticeList.author}]]</td>
                         <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                     </tr>

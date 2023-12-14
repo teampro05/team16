@@ -20,10 +20,6 @@
                     <td th:text="${notice.title}"></td>
                 </tr>
                 <tr>
-                    <th>내용</th>
-                    <td th:text="${notice.content}"></td>
-                </tr>
-                <tr>
                     <th>작성자</th>
                     <td th:text="${notice.author}"></td>
                 </tr>
@@ -31,11 +27,18 @@
                     <th>작성날짜</th>
                     <td th:text="${#temporals.format(notice.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                 </tr>
+                <tr>
+                    <th colspan="4" >내용</th>
+                </tr>
+                <tr>
+                    <td colspan="4" th:text="${notice.content}"></td>
+                </tr>
             </tbody>
         </table>
+        <a th:href="@{/notice}" class="btn1 right1">목록으로</a>
         <th:block sec:if="${principal == notice.author }">
-            <a th:href="@{/noticeEdit(notice=${notice})}" class="btn1 right1">수정하기</a>
             <a type="button" onclick="eventremove()" class="btn1 right1"> 삭제하기 </a>
+            <a th:href="@{/noticeEdit(no=${notice.no})}" class="btn1 right1">수정하기</a>
         </th:block>
 
     </div>

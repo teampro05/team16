@@ -1,20 +1,49 @@
 package com.pro06.controller;
 
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Log4j2
 @Controller
+@RequestMapping("/error/*")
 public class ErrorController implements org.springframework.boot.web.servlet.error.ErrorController {
 
-//    @GetMapping("/error")
-//    public String handleError(HttpServletRequest request, Model model) {
-//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//        model.addAttribute("code", status.toString());
-//        model.addAttribute("msg", HttpStatus.valueOf(Integer.valueOf(status.toString())));
-//        return "/error";
-//    }
+    @GetMapping("/")
+    public String handleError(HttpServletRequest request, Model model) {
+
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+
+        if (status != null) {
+            int statusCode = Integer.valueOf(status.toString());
+
+            if (statusCode == HttpStatus.NOT_FOUND.value()) {
+                model.addAttribute("code", "404");
+                model.addAttribute("msg", "해당 주소를 찾을 수 없습니다.");
+                return "/error";
+            } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+                model.addAttribute("code", "403");
+                model.addAttribute("msg", "허용되지 않는 메소드입니다.");
+                return "/error";
+            } else if (statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
+                model.addAttribute("code", "405");
+                model.addAttribute("msg", "해당 원인을 찾을 수 없습니다.");
+                return "/error";
+            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                model.addAttribute("code", "500");
+                model.addAttribute("msg", "해당 원인을 찾을 수 없습니다.");
+                return "/error";
+            } else {
+                model.addAttribute("code", "이유를 알 수 없습니다.");
+                return "/error";
+            }
+        }
+        model.addAttribute("code", "이유를 알 수 없습니다.");
+        return "/error";
+    }
 }
+

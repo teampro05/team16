@@ -17,11 +17,31 @@
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="content">내용</label>
-                    <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" ></textarea>
+                    <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" cols="100" rows="10" maxlength="500"></textarea>
+                    <div class="textCount"><span>0</span>/500</div>
                 </div>
+                <br>
+                <br>
+                <br>
                 <button type="submit" class="btn1 right1" >글쓰기</button>
             </form>
         </div>
     </section>
 </body>
 </html>
+<script>
+    $('#content').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length == 0 || content == '') {
+            $('.textCount span').text('0');
+        } else {
+            $('.textCount span').text(content.length);
+        }
+
+        if (content.length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            alert('글자수는 500자까지 입력 가능합니다.');
+        }
+    });
+</script>

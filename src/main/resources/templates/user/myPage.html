@@ -36,27 +36,24 @@
                     </th:block>
                 </tr>
                 <tr>
-                    <th>상태</th>
-                    <td th:text="${user.status}"></td>
-                </tr>
-                <tr>
-                    <form th:action="@{/role}" method="post">
-                        <th>권한 수정<br>(나중에 뺌)</th>
-                        <td>
-                            <select name="role" id="role" class="select-box">
-                                <option value="ADMIN">관리자</option>
-                                <option value="USER">유저</option>
-                                <option value="TEACHER">선생님</option>
-                            </select>
-                        </td>
-                        <td><button type="submit" class="button" style="float: left;">권한 변경</button></td>
-                    </form>
+                    <th>권한</th>
+                    <td th:text="${user.role}"></td>
                 </tr>
             </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+            <button type="button" onclick="eventremove()" class="btn1"> 탈퇴하기 </button>
+        </div>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>
 
 </body>
 </html>
+<script>
+    function eventremove(){
+        if(confirm("정말 탈퇴하시겠습니까?")){
+            location.href="/remove?id=[[${user.id }]]"
+        }
+    }
+</script>
