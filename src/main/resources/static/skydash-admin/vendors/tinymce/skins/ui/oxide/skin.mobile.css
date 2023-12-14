@@ -105,7 +105,7 @@
 }
 .tinymce-mobile-icon-small-heading::before,
 .tinymce-mobile-icon-large-heading::before {
-  font-family: sans-serif;
+  font-family: 'EASTARJET-Medium'; 
   font-size: 80%;
 }
 .tinymce-mobile-mask-edit-icon::before {
@@ -117,7 +117,7 @@
 .tinymce-mobile-icon-heading::before {
   /* TODO: Translate */
   content: "Headings";
-  font-family: sans-serif;
+  font-family: 'EASTARJET-Medium'; 
   font-size: 80%;
   font-weight: bold;
 }
@@ -148,7 +148,7 @@
   border-radius: 50%;
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
+  font-family: 'EASTARJET-Medium'; 
   font-size: 1em;
   justify-content: space-between;
 }
@@ -184,7 +184,7 @@
 }
 .tinymce-mobile-outer-container .tinymce-mobile-disabled-mask .tinymce-mobile-content-container .tinymce-mobile-content-tap-section .tinymce-mobile-mask-tap-icon::before {
   content: "\e900";
-  font-family: 'tinymce-mobile', sans-serif;
+  font-family: 'EASTARJET-Medium';
 }
 .tinymce-mobile-outer-container .tinymce-mobile-disabled-mask .tinymce-mobile-content-container .tinymce-mobile-content-tap-section:not(.tinymce-mobile-mask-tap-icon-selected) .tinymce-mobile-mask-tap-icon {
   z-index: 2;
@@ -307,7 +307,7 @@
   width: 100%;
 }
 .tinymce-mobile-toolstrip .tinymce-mobile-toolbar.tinymce-mobile-context-toolbar .tinymce-mobile-toolbar-group .tinymce-mobile-serialised-dialog .tinymce-mobile-serialised-dialog-chain .tinymce-mobile-serialised-dialog-screen input {
-  font-family: Sans-serif;
+  font-family: 'EASTARJET-Medium'; 
 }
 .tinymce-mobile-toolstrip .tinymce-mobile-toolbar.tinymce-mobile-context-toolbar .tinymce-mobile-toolbar-group .tinymce-mobile-serialised-dialog .tinymce-mobile-serialised-dialog-chain .tinymce-mobile-serialised-dialog-screen .tinymce-mobile-input-container {
   display: flex;
@@ -526,7 +526,7 @@
 }
 /* styles menu */
 .tinymce-mobile-styles-menu {
-  font-family: sans-serif;
+  font-family: 'EASTARJET-Medium'; 
   outline: 4px solid black;
   overflow: hidden;
   position: relative;
@@ -553,19 +553,19 @@
 .tinymce-mobile-styles-menu .tinymce-mobile-styles-collapser .tinymce-mobile-styles-collapse-icon::before {
   color: #455a64;
   content: "\e314";
-  font-family: 'tinymce-mobile', sans-serif;
+  font-family: 'EASTARJET-Medium'; 
 }
 .tinymce-mobile-styles-menu .tinymce-mobile-styles-item.tinymce-mobile-styles-item-is-menu::after {
   color: #455a64;
   content: "\e315";
-  font-family: 'tinymce-mobile', sans-serif;
+  font-family: 'EASTARJET-Medium'; 
   padding-left: 1em;
   padding-right: 1em;
   position: absolute;
   right: 0;
 }
 .tinymce-mobile-styles-menu .tinymce-mobile-styles-item.tinymce-mobile-format-matches::after {
-  font-family: 'tinymce-mobile', sans-serif;
+  font-family: 'EASTARJET-Medium'; 
   padding-left: 1em;
   padding-right: 1em;
   position: absolute;
@@ -595,7 +595,7 @@
   transform: translate(100%);
 }
 @font-face {
-  font-family: 'tinymce-mobile';
+  font-family: 'EASTARJET-Medium';
   font-style: normal;
   font-weight: normal;
   src: url('fonts/tinymce-mobile.woff?8x92w3') format('woff');
@@ -613,7 +613,7 @@
   }
 }
 .tinymce-mobile-icon {
-  font-family: 'tinymce-mobile', sans-serif;
+  font-family: 'EASTARJET-Medium'; 
 }
 .mixin-flex-and-centre {
   align-items: center;

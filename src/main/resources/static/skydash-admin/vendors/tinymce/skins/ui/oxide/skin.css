@@ -9,7 +9,7 @@
   box-sizing: content-box;
   color: #222f3e;
   cursor: auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: 'EASTARJET-Medium';
   font-size: 16px;
   font-style: normal;
   font-weight: normal;
@@ -26,8 +26,7 @@
   color: inherit;
   cursor: inherit;
   direction: inherit;
-  font-family: inherit;
-  font-size: inherit;
+  font-family: 'EASTARJET-Medium';
   font-style: inherit;
   font-weight: inherit;
   line-height: inherit;
@@ -68,7 +67,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: 'EASTARJET-Medium', BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   overflow: hidden;
   position: relative;
   visibility: inherit !important;
@@ -84,7 +83,7 @@
   box-shadow: none;
 }
 .tox-tinymce-aux {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: 'EASTARJET-Medium', BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   z-index: 1300;
 }
 .tox-tinymce *:focus,
@@ -241,7 +240,7 @@ button::-moz-focus-inner {
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: 'EASTARJET-Medium', BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: bold;
@@ -349,7 +348,7 @@ button::-moz-focus-inner {
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: 'EASTARJET-Medium', BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 16px;
   font-weight: normal;
   line-height: 1.3;

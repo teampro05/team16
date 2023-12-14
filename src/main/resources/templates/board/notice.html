@@ -33,11 +33,6 @@
                         <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                     </tr>
                 </th:block>
-                <th:block th:if="${noticeList.size() <= 0}">
-                    <tr>
-                      <td colspan="4">목록이 없습니다.</td>
-                    </tr>
-                </th:block>
                 </tbody>
             </table>
             <th:block sec:authorize="isAuthenticated()">
