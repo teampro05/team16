@@ -17,7 +17,7 @@
                 <h1>관리자페이지</h1>
                 <h2>강좌관리</h2>
                 <div class="card p-3">
-                    <table class="table text-center mb-3">
+                    <table id="myTable" class="table text-center mb-3">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -25,16 +25,21 @@
                                 <th>수강현황</th>
                                 <th>작성자</th>
                                 <th>등록일</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <th:block th:each="course, status : ${courseList}">
                                 <tr>
                                     <td th:text="${status.count}"></td>
-                                    <td><a th:href="@{/admin/courseDetail(no=${course.no})}" th:text="${course.title}"></a></td>
-                                    <td th:text="${course.title} + ' ' + ${course.peo} + '/' + ${course.peo_max}"></td>
+                                    <td th:text="${course.title}"></td>
+                                    <td th:text="${course.peo} + '/' + ${course.peo_max}"></td>
                                     <td th:text="${course.id}"></td>
                                     <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
+                                    <td>
+                                        <a th:href="@{/admin/courseDetail(no=${course.no})}" class="btn btn-primary">강좌상세</a>
+                                        <a th:href="@{/admin/courseUpdate(no=${course.no})}" class="btn btn-primary">강좌수정</a>
+                                    </td>
                                 </tr>
                             </th:block>
                             <th:block th:if="${courseList.size() <= 0}">
@@ -46,7 +51,7 @@
                     </table>
                     <div>
                         <th:block sec:authorize="hasAuthority('ADMIN')">
-                            <li><a th:href="@{/admin/courseInsert}">강좌 등록</a></li>
+                            <a th:href="@{/admin/courseInsert}" class="btn btn-primary">강좌 등록</a>
                         </th:block>
                     </div>
                 </div>
@@ -57,6 +62,8 @@
                     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
                     <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
                 </div>
+
+                <script th:src="@{/js/datatables.js}"></script>
             </footer>
         </div>
     </div>

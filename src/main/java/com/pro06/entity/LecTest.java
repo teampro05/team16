@@ -7,7 +7,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Setter
 @Table(name="lectest")
 @ToString
 @Builder

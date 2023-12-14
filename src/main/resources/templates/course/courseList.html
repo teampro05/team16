@@ -12,7 +12,7 @@
 <section class="table-list">
     <div class="container">
         <h2>강좌목록</h2>
-        <table class="List-table">
+        <table id="myTable" class="List-table">
             <thead>
             <tr>
                 <th>No</th>
@@ -49,19 +49,6 @@
         </table>
     </div>
 </section>
-<ul>
-    <th:block th:each="course, status : ${courseList}">
-        <li>
-            <span th:text="${course.title} + ' ' + ${course.peo} + '/' + ${course.peo_max}"></span>
-            <th:block sec:authorize="isAuthenticated()">
-                <th:block th:if="${checkList.get(status.index)} eq 'n'">
-                    <a th:href="@{/course/apply(cno=${course.no})}">수강신청</a>
-                </th:block>
-            </th:block>
-            <a th:href="@{/course/detail(no=${course.no})}">강좌 상세 보기</a>
-        </li>
-    </th:block>
-</ul>
 <th:block th:replace="include/footer :: footer" ></th:block>
 </body>
 </html>
