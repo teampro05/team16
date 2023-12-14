@@ -18,18 +18,18 @@
 <!--    </th:block>-->
 
     <!-- ======= Top Bar ======= -->
-    <section id="topbar" class="d-flex align-items-center">
+    <section id="topBar" class="d-flex align-items-center">
         <div class="container ">
-            <div class="cta" style="float: right">
+            <div class="cta">
                 <th:block sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}" class="scrollto header_login">로그인</a>
+                    <a th:href="@{/login}" class="header_login">로그인</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
-                    <a th:href="@{/myPage}" class="scrollto header_login">마이페이지</a>
-                    <a th:href="@{/logout}" class="scrollto header_login">로그아웃</a>
-                </th:block>
-                <th:block sec:authorize="hasAuthority('ADMIN')">
-                    <a th:href="@{/admin/home}" class="scrollto header_login">관리자페이지</a>
+                    <p class="topBar-name">반갑습니다.</p>
+                    <p class="topBar-name" sec:authentication="principal"></p>
+                    <p class="topBar-name"> 님</p>
+                    <a th:href="@{/myPage}" class="header_login">마이페이지</a>
+                    <a th:href="@{/logout}" class="header_login">로그아웃</a>
                 </th:block>
             </div>
         </div>
