@@ -27,7 +27,7 @@
     </select>
 
     <select id="getEbook" resultType="com.pro06.entity.Ebook">
-        select * from ebook no =#{no}
+        select * from ebook where no =#{no}
     </select>
 
     <insert id="insertEbook">

@@ -61,7 +61,7 @@ public class EbookController {
         fileboard.setFileBoard(ebook);
         fileboard.setFileList(fileList);
 
-        model.addAttribute("ebook", fileboard.getFileBoard());
+        model.addAttribute("Ebook", fileboard);
         model.addAttribute("fileList", fileboard.getFileList());
 
         return "Ebook/getEbook";
