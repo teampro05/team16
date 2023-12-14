@@ -15,7 +15,7 @@
  
 [data-icon]:before {
   display: inline-block;
-  font-family: "feather";
+  font-family: 'EASTARJET-Medium';
   content: attr(data-icon);
   font-style: normal;
   font-weight: normal;
@@ -32,7 +32,7 @@
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
-  font-family: "feather";
+  font-family: 'EASTARJET-Medium';
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

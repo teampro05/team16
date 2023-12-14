@@ -1,5 +1,5 @@
 @font-face {
-	font-family: 'themify';
+	font-family: 'EASTARJET-Medium';
 	src:url('themify.eot');
 	src:url('themify.eot?#iefix') format('embedded-opentype'),
 		url('themify.woff') format('woff'),
@@ -10,7 +10,7 @@
 }
 
 [class^="ti-"], [class*=" ti-"] {
-	font-family: 'themify';
+	font-family: 'EASTARJET-Medium';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
