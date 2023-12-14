@@ -11,21 +11,6 @@
 <body>
 <th:block th:replace="~{layout/header :: headerFragment}"></th:block>
 
-<section class="blog-banner-area" id="category">
-    <div class="container h-100">
-        <div class="blog-banner">
-            <div class="text-center">
-                <h1>중고상품</h1>
-                <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">원하는 물건을 찾거나 파는 즐거움을 느껴보세요!</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</section>
-
 <div class="section properties">
     <div class="container">
         <form th:action="@{/product/productUpdate}" method="post" onsubmit="return textCheck(this)" class="mt-4 mb-5" enctype="multipart/form-data">

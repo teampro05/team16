@@ -29,6 +29,7 @@
                 <th>내용</th>
                 <th>가격</th>
                 <th>출간일</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +37,7 @@
                 <td style="width: 250px;">
                     <th:block th:if="${Ebook != null}">
 <!--                        <img class="pro-img" th:src="${Ebook.fileList[0].savefolder + '\' + Ebook.fileList[0].savefile}">-->
-                        <img style="width: 300px;" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
+                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
                     </th:block>
 
                 </td>
@@ -65,7 +66,8 @@
 <!--        </th:block>-->
     </div>
 </div>
-
+<!-- datatables -->
+<script th:src="@{/js/datatables.js}"></script>
 <th:block th:replace="include/footer :: footer" ></th:block>
 </body>
 </html>
