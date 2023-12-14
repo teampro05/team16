@@ -4,34 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강좌 상세</title>
+    <title>강좌상세</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
 </head>
 <body>
-<h1>관리자 페이지</h1>
-<h2>강좌 상세</h2>
-<ul>
-    <li>강좌 이름 : [[${course.title}]]</li>
-    <li>작성자 : [[${course.id}]]</li>
-    <li>현재수강인원 : [[${course.peo}]]</li>
-    <li>최대수강인원 : [[${course.peo_max}]]</li>
-</ul>
-<hr>
-<h3>강의 목록</h3>
-<ul>
-    <th:block th:each="lecture, status : ${lectureList}">
-    <li>
-        <div>
-            <span th:text="${status.count} + '. ' +  ${lecture.title}"></span>
-            <a th:href="@{/admin/lectureUpdate(cno=${course.no}, lno=${lecture.no})}">수정</a>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>관리자페이지</h1>
+                <h2>강좌상세</h2>
+                <hr style="border-top: 1px solid #333">
+
+                <ul>
+                    <li><span th:text="'강좌 이름 : ' + ${course.title}"></span></li>
+                    <li><span th:text="'작성자 :  ' + ${course.id}"></span></li>
+                    <li><span th:text="'현재수강인원 : ' + ${course.peo}"></span></li>
+                    <li><span th:text="'최대수강인원 : ' + ${course.peo_max}"></span></li>
+                </ul>
+                <hr style="border-top: 1px solid #333">
+
+                <div class="card p-3">
+                    <table id="myTable" class="table text-center mb-3">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>제목</th>
+                            <th>키워드</th>
+                            <th>작성자</th>
+                            <th>등록일</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="lecture, status : ${lectureList}">
+                            <tr>
+                                <td th:text="${status.count}"></td>
+                                <td th:text="${lecture.title}"></td>
+                                <td th:text="${lecture.keyword}"></td>
+                                <td th:text="${lecture.id}"></td>
+                                <td th:text="${#temporals.format(lecture.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
+                                <td><a th:href="@{/admin/lectureUpdate(cno=${course.no}, lno=${lecture.no})}" class="btn btn-primary">강의수정</a></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <div>
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
+                            <a th:href="@{/admin/lectureInsert(cno=${course.no})}" class="btn btn-primary">강의등록</a>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+
+                <script th:src="@{/js/datatables.js}"></script>
+            </footer>
         </div>
-    </li>
-    </th:block>
-</ul>
-<div>
-    <th:block sec:authorize="hasAuthority('ADMIN')">
-        <a th:href="@{/admin/lectureInsert(cno=${course.no})}">강의등록</a>
-    </th:block>
+    </div>
 </div>
 </body>
 </html>
