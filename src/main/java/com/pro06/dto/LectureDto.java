@@ -3,14 +3,14 @@ package com.pro06.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 // 강의 테이블
 // 강좌에 속해있으며 여러개의 동영상을 하나로 묶는 역할
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class LectureDto extends BaseDto {

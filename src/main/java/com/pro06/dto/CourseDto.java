@@ -3,16 +3,15 @@ package com.pro06.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 // 강좌 테이블
 // 여기에 나중에 선생님 관련 컬럼 하나 추가
 // validation을 이용해 size, notnull 을 써도 되고 아니면 
 // column을 이용해 length랑 null able 지정해줘도 됨
 
-@Data
+@Getter @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseDto extends BaseDto {
