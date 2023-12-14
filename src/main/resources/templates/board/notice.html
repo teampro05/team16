@@ -19,6 +19,7 @@
                         <th>No</th>
                         <th>제목</th>
                         <th>내용</th>
+                        <th>작성자</th>
                         <th>등록일</th>
                     </tr>
                 </thead>
@@ -26,9 +27,10 @@
                 <th:block th:each="noticeList, notice : ${noticeList}">
                     <tr>
                         <td>[[${notice.count}]]</td>
-                        <td>[[${noticeList.title}]]</td>
+                        <td><a th:href="@{/noticeGet(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
                         <td>[[${noticeList.content}]]</td>
-                        <td>[[${noticeList.createdTime}]]</td>
+                        <td>[[${noticeList.author}]]</td>
+                        <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                     </tr>
                 </th:block>
                 <th:block th:if="${noticeList.size() <= 0}">
@@ -38,7 +40,9 @@
                 </th:block>
                 </tbody>
             </table>
-            <a th:href="@{/noticeadd}" class="btn1 right1">글쓰기</a>
+            <th:block sec:authorize="isAuthenticated()">
+                <a th:href="@{/noticeadd}" class="btn1 right1">글쓰기</a>
+            </th:block>
         </div>
     </section>
     <th:block th:replace="include/footer :: footer" ></th:block>

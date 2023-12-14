@@ -1,5 +1,6 @@
 package com.pro06.entity;
 
+import com.pro06.dto.BoardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,17 +14,24 @@ public class Notice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer no;
-    @Column(length = 20)
+    private Long no;
+
+//    @Column(length = 20)
     private String title;
-    @Column(length = 1000)
+
+//    @Column(length = 1000)
     private String content;
+
+    @Column(nullable = false)
+    private String author;
+
 
 
     public static Notice create(BoardDTO boardDTO) {
         Notice notice = new Notice();
         notice.setTitle(boardDTO.getTitle());
         notice.setContent(boardDTO.getContent());
+        notice.setAuthor(boardDTO.getAuthor());
         return notice;
     }
 }

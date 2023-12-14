@@ -2641,29 +2641,88 @@ canvas {
 
 /* chatMenu */
 #chatMenu {
-  background-color: var(--main);
   margin: 0;
   position: fixed;
-  top: 2%;
+  top: 94%;
   right: 2%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  border: 1px solid black;
+  border: none;
   border-radius: 50%;
   z-index: 1000;
+  background-image: url("../../images/mang.png");
 }
 
 #chatList {
-  background-color: var(--main);
+  background-color: white;
   margin: 0;
   position: fixed;
-  top: 8%;
+  top: 50%;
   right: 2%;
   width: 300px;
   height: 400px;
-  text-align: center;
-  border: 0.5px solid black;
   border-radius: 5%;
-  z-index: 1000
+  z-index: 1000;
+  border: 1px solid black;
+  display: none;
+  clear: both;
+  overflow: hidden;
+
+}
+
+.chatList-in {
+  display: flex;
+  height: 500px;
+  clear: both;
+  padding: 6px 15px 0;
+  overflow: hidden;
+}
+
+.chatList-List-tap {
+  float: left;
+}
+.chatList-List-tap input[type="radio"] {
+  display: none;
+}
+.chatList-List-tap input[type="radio"]:checked ~ .tab-label {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+  color: #2a2b39;
+  z-index: 55;
+}
+.chatList-List-tap input[type="radio"]:checked ~ .chat-content {
+  display: block;
+}
+
+.tab-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 2px;
+  height: 36px;
+  padding-right: 48px;
+  padding-left: 48px;
+  background: #d9dbe6;
+  border: 1px solid #caccdb;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.chat-content {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 15px;
+  background: #fff;
+  border-top: 1px solid #caccdb;
+  overflow: auto;
+  display: none;
 }

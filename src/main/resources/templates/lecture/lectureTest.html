@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>시험</title>
+  <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<h1>시험</h1>
+<div>
+  <form th:action="@{/lecture/lecAns}" method="post" onsubmit="return sbmsn();">
+
+    <input type="hidden" name="cno" id="cno" th:value="${cno}" readonly>
+    <input type="hidden" name="lno" id="lno" th:value="${lno}" readonly>
+    <input type="hidden" name="ansCnt" id="ansCnt" value="" readonly>
+
+    <!-- 해당 문제 동안 반복 -->
+    <th:block th:each="exam, status : ${examList}">
+      <div>
+        <h3 th:text="${status.count} + '번 문제'"></h3>
+        <p th:text="${exam}"></p>
+        <fieldset>
+          <legend>정답 선택</legend>
+
+          <div>
+            <input type="radio" th:id="'answer' + ${status.count} + '1'" th:name="'answer' + ${status.count}" th:value="${itemList.get(0)}" />
+            <label th:for="'answer' + ${status.count} + '1'" th:text="${itemList.get(0)}"></label>
+          </div>
+
+          <div>
+            <input type="radio" th:id="'answer' + ${status.count} + '2'" th:name="'answer' + ${status.count}" th:value="${itemList.get(1)}" />
+            <label th:for="'answer' + ${status.count} + '2'" th:text="${itemList.get(1)}"></label>
+          </div>
+
+          <div>
+            <input type="radio" th:id="'answer' + ${status.count} + '3'" th:name="'answer' + ${status.count}" th:value="${itemList.get(2)}" />
+            <label th:for="'answer' + ${status.count} + '3'" th:text="${itemList.get(2)}"></label>
+          </div>
+
+          <div>
+            <input type="radio" th:id="'answer' + ${status.count} + '4'" th:name="'answer' + ${status.count}" th:value="${itemList.get(3)}" />
+            <label th:for="'answer' + ${status.count} + '4'" th:text="${itemList.get(3)}"></label>
+          </div>
+
+          <div>
+            <input type="radio" th:id="'answer' + ${status.count} + '5'" th:name="'answer' + ${status.count}" th:value="${itemList.get(4)}" />
+            <label th:for="'answer' + ${status.count} + '5'" th:text="${itemList.get(4)}"></label>
+          </div>
+        </fieldset>
+      </div>
+    </th:block>
+
+    <input type="submit" value="답안 제출">
+  </form>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    let cno = [[${lecTest.getCourse().no}]];
+    let lno = [[${lecTest.getLecture().no}]];
+    /*]]>*/
+
+    let answers = [];
+
+    // 해당 파일의 답안 받기
+    $.ajax({
+      type : 'post',
+      url : '/lecture/answers',
+      dataType : "json",
+      async: false,
+      data: {
+        'cno' : cno,
+        'lno' : lno
+      },
+      success : function (result) {
+        console.log(result);
+        answers = result;
+      }
+    })
+
+    // 답안 제출
+    function sbmsn() {
+
+      let selectArr = []; // 선택된 값들을 저장할 배열
+      let undi = 0;
+      let checkedRadio;
+      // 각 fieldset 내에서 선택된 라디오 버튼의 값을 추출하여 배열에 저장합니다.
+      $('fieldset').each(function(index) {
+        checkedRadio = $(this).find('input[type="radio"]:checked');
+
+        let str = checkedRadio.val();
+        if (typeof str == "undefined" || str == null || str == "") {
+          undi++;
+        }
+        selectArr.push(checkedRadio.val()); // 선택된 값을 배열에 추가합니다.
+      });
+
+      // 추출된 선택된 값들을 콘솔에 출력합니다.
+      // console.log("선택된 값들:", selectArr);
+      // console.log('정답 : ', answers);
+
+      if(undi > 0) {
+        alert('풀지 않은 문제가 존재합니다.')
+        return false;
+      }
+
+      // 여기서 미리 몇 개를 맞았는지 계산해서 출력
+      // 지금 상태는 예시 코드 상태
+      let answerCnt = 0;
+
+      // 맞은 개수 세기
+      for(var i=0; i<5; i++) {
+        if(answers[i] == selectArr[i]) {
+          answerCnt++;
+        }
+      }
+
+      $("#ansCnt").val(answerCnt);
+
+      let hint = '과반수 이상 맞히지 못해서 아직 수정을 더 해야 합니다.' +
+              '\n통과하지 못할 경우 해당 강의를 처음부터 다시 공부해야 합니다.\n';
+      if(answerCnt >= 3) {
+        hint = '과반수 이상 맞아서 통과가 가능합니다.\n';
+        return confirm(hint + `답안을 제출하시겠습니까? \n맞은 답안의 개수 : ${answerCnt} \n선택 : ${selectArr} \n정답 : ${answers}`);
+      } else if(selectArr.length === 5 && answerCnt <=2) {
+        alert(`아직 과반수 이상 맞추지 못 했습니다. \n맞은 답안의 개수 : ${answerCnt}`)
+        return false;
+      }
+    }
+  </script>
+</div>
+</body>
+</html>

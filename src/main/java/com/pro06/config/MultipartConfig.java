@@ -3,6 +3,7 @@ package com.pro06.config;
 import jakarta.servlet.MultipartConfigElement;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,17 +14,13 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 // spring boot 3 이상부터 multipart를 사용할때 이걸 만들어줘야 한다.
 @Configuration
 public class MultipartConfig {
+
+    @Value("${spring.servlet.multipart.location}")
+    String uploadPath;
+    
     @Bean
     public MultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
-    }
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation("c:\\shop");
-        factory.setMaxRequestSize(DataSize.ofMegabytes(100L));
-        factory.setMaxFileSize(DataSize.ofMegabytes(20L));
-        return factory.createMultipartConfig();
     }
 
     @Bean
@@ -35,5 +32,15 @@ public class MultipartConfig {
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
 
         return modelMapper;
+    }
+    
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setLocation(uploadPath);
+        factory.setMaxRequestSize(DataSize.ofMegabytes(100L));
+        factory.setMaxFileSize(DataSize.ofMegabytes(100L));
+
+        return factory.createMultipartConfig();
     }
 }

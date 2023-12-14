@@ -1,23 +1,17 @@
 package com.pro06.controller;
 
+import com.pro06.dto.BoardDTO;
 import com.pro06.entity.*;
 import com.pro06.service.FaqService;
 import com.pro06.service.NoticeService;
 import com.pro06.service.UserService;
-import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.security.Principal;
 import java.util.List;
@@ -148,13 +142,22 @@ public class HomeController {
     public String notice(Model model) {
         List<Notice> noticeList = noticeService.NoticeList();
         model.addAttribute("noticeList", noticeList);
-        log.info("noticeListㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + noticeList);
         return "/board/notice";
     }
 
+    @GetMapping("/noticeGet")
+    public String noticeGet(Model model, Long no) {
+        Notice notice = noticeService.NoticeGet(no);
+        model.addAttribute("notice", notice);
+        log.info("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + notice);
+        return "/board/noticeGet";
+    }
+
+
     @GetMapping("/noticeadd")
-    public String noticeForm(Model model) {
+    public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
+        model.addAttribute("principal", principal.getName());
         return "/board/noticeadd";
     }
 
@@ -162,7 +165,25 @@ public class HomeController {
     public String noticeInsert(BoardDTO boardDTO){
         Notice notice = Notice.create(boardDTO);
         noticeService.NoticeInsert(notice);
-        log.info("noticeㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + notice);
+        return "redirect:/notice";
+    }
+
+    @GetMapping("/noticeUpdate")
+    public String noticeEditForm(Model model, Notice notice) {
+        model.addAttribute("notice", notice);
+        return "/board/noticeUpdate";
+    }
+
+    @PostMapping("noticeUpdate")
+    public String noticeEdit(BoardDTO boardDTO){
+        Notice notice = Notice.create(boardDTO);
+        noticeService.NoticeInsert(notice);
+        return "redirect:/notice";
+    }
+
+    @GetMapping("/noticeDelete")
+    public String noticeDelete(Model model, Long no) {
+        noticeService.NoticeDelete(no);
         return "redirect:/notice";
     }
 }

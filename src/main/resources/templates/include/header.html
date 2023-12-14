@@ -28,6 +28,9 @@
                     <a th:href="@{/myPage}" class="scrollto header_login">마이페이지</a>
                     <a th:href="@{/logout}" class="scrollto header_login">로그아웃</a>
                 </th:block>
+                <th:block sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/admin/home}" class="scrollto header_login">관리자페이지</a>
+                </th:block>
             </div>
         </div>
     </section>
@@ -61,7 +64,7 @@
                             <li><a th:href="@{/oto}">1:1 문의</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto active" th:href="@{/mypage}">나의 학습방</a></li>
+                    <li><a class="nav-link scrollto active" th:href="@{/mycourse/list}">나의 학습방</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>

@@ -14,6 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Log4j2
 @Configuration
@@ -29,11 +34,11 @@ public class SecurityConfig {
                 // 특정 URL에 대한 권한 설정.
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests
-                            .requestMatchers("/video/**", "/Ebook/**").permitAll()
-                            .requestMatchers("/user/**", "/board/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
+                            .requestMatchers("/course/**", "/Ebook/**").permitAll()
+                            .requestMatchers("/user/**", "/board/**", "/mycourse/**", "/video/**", "/myvideo/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
                             .requestMatchers("/admin/**").hasAuthority("ADMIN") // admin만 접근 가능
                             .requestMatchers("/css/**", "/js/**", "/upload/**", "/cleditor/**", "/scss/**",
-                                    "/vendors/**", "/ckeditor/**", "/webfonts/**", "/resource/**", "/assets/**")
+                                    "/vendors/**", "/ckeditor/**", "/webfonts/**", "/resource/**", "/assets/**", "/shop/**")
                             .permitAll() // 모두 접근 가능
                             .anyRequest().permitAll();
                 })
@@ -45,8 +50,7 @@ public class SecurityConfig {
                             .failureUrl("/login?error=true")
                             .defaultSuccessUrl("/status")
                             .usernameParameter("id")
-                            .passwordParameter("pw")
-                            ;
+                            .passwordParameter("pw");
                 })
                 // 로그아웃
                 .logout((logout) -> {
@@ -74,5 +78,15 @@ public class SecurityConfig {
     }
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
-
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

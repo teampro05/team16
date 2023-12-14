@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강좌 상세</title>
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+</head>
+<body>
+<h1>관리자 페이지</h1>
+<h2>강좌 상세</h2>
+<ul>
+    <li>강좌 이름 : [[${course.title}]]</li>
+    <li>작성자 : [[${course.id}]]</li>
+    <li>현재수강인원 : [[${course.peo}]]</li>
+    <li>최대수강인원 : [[${course.peo_max}]]</li>
+</ul>
+<hr>
+<h3>강의 목록</h3>
+<ul>
+    <th:block th:each="lecture, status : ${lectureList}">
+    <li>
+        <div>
+            <span th:text="${status.count} + '. ' +  ${lecture.title}"></span>
+        </div>
+    </li>
+    </th:block>
+</ul>
+<div>
+    <th:block sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/admin/lectureInsert(cno=${course.no})}">강의등록</a>
+    </th:block>
+</div>
+</body>
+</html>

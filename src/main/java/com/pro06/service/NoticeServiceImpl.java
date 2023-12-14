@@ -15,7 +15,7 @@ public class NoticeServiceImpl implements NoticeService{
     private NoticeRepository noticeRepository;
 
     @Override
-    public void NoticeDelete(Integer no) {
+    public void NoticeDelete(Long no) {
         noticeRepository.deleteById(no);
     }
 
@@ -33,4 +33,7 @@ public class NoticeServiceImpl implements NoticeService{
     public Notice NoticeUpdate(Notice notice) {
         return noticeRepository.save(notice);
     }
+
+    @Override
+    public Notice NoticeGet(Long no) { return noticeRepository.get(no); }
 }

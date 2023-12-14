@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강좌 등록</title>
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>관리자페이지</h1>
+                <h2>강좌 등록</h2>
+                <div class="card p-3">
+                    <form th:action="@{/admin/courseInsert}" method="post" class="text-center mb-3">
+                        <div>
+                            <label for="id" class="form-label">아이디</label>
+                            <input type="text" name="id" id="id" th:value="${id}" readonly>
+                        </div>
+                        <div>
+                            <label for="level" class="form-label">학년</label>
+                            <select name="level" id="level" class="form-select-sm">
+                                <option value="초등" selected>초등</option>
+                                <option value="중학">중학</option>
+                                <option value="수능">수능</option>
+                                <option value="토익">토익</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="title" class="form-label" >제목</label>
+                            <input type="text" name="title" id="title" maxlength="100" required>
+                        </div>
+                        <div>
+                            <label for="content" class="form-label">내용</label>
+                            <input type="text" name="content" id="content" maxlength="1000" required>
+                        </div>
+                        <div>
+                            <label for="peo_max" class="form-label">최대 수강인원</label>
+                            <input type="text" name="peo_max" id="peo_max" value="10" maxlength="3" required>
+                        </div>
+                        <div>
+                            <input type="submit" value="등록">
+                            <input type="reset" value="초기화">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>
