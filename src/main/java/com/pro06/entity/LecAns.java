@@ -24,7 +24,7 @@ public class LecAns extends BaseEntity{
     private Integer no;         // 시험 번호
 
     @Column(length = 20, nullable = false)
-    private String id;
+    private String id;          // 시험을 본 유저의 아이디
     
     // 제출된 답안
     @Column(length = 100, nullable = false)

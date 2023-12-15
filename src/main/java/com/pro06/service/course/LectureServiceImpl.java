@@ -33,6 +33,9 @@ public class LectureServiceImpl {
     private LecAnsRepository lecAnsRepository;
 
     @Autowired
+    private LecQueRepository lecQueRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     // 강의 정보 + 파일 등록
@@ -88,12 +91,13 @@ public class LectureServiceImpl {
             return null;
         }
     }
-    
+
+
+    // region lecAns
     // 시험 제출 답안 입력, 수정
     public void lecAnsInsert(LecAnsDto lecAnsDto) {
         LecAns lecAns = modelMapper.map(lecAnsDto, LecAns.class);
         lecAnsRepository.save(lecAns);
-//        lecAnsRepository.findById();
     }
     
     // 제출된 답안 수정
@@ -117,4 +121,57 @@ public class LectureServiceImpl {
             return null;
         }
     }
+    // endregion
+
+
+    // region lecQue
+    // admin 에서 사용할 list
+    // 모든 질문 목록
+    public List<LecQueDto> lecQueDtoFindByAll() {
+        List<LecQue> lst = lecQueRepository.findAll();
+        List<LecQueDto> dtoList = lst.stream().map(lecQue ->
+                        modelMapper.map(lecQue, LecQueDto.class))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
+    // video 에서 사용할 list
+    // 해당 강좌, 강의, 영상에서 유저가 질문한 목록
+    public List<LecQueDto> lecQueList(LecQueDto lecQueDto) {
+        List<LecQue> lst = lecQueRepository.lecQueList(lecQueDto.getId(), lecQueDto.getPage(),
+                lecQueDto.getCourse().getNo(), lecQueDto.getLecture().getNo());
+        List<LecQueDto> dtoList = lst.stream().map(lecQue ->
+                        modelMapper.map(lecQue, LecQueDto.class))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
+    // 질문 입력
+    public LecQueDto lecQueInsert(LecQueDto lecQueDto) {
+        LecQue lecQue = modelMapper.map(lecQueDto, LecQue.class);
+        LecQue lec = lecQueRepository.save(lecQue);
+        LecQueDto dto = modelMapper.map(lec, LecQueDto.class);
+        return dto;
+    }
+
+    // 질문 보기
+    public LecQueDto getLecQue(Integer no) {
+        Optional<LecQue> lecQue = lecQueRepository.findById(no);
+        LecQueDto dto = modelMapper.map(lecQue, LecQueDto.class);
+        return dto;
+    }
+
+    // 질문 삭제
+    public void lecQueDelete(Integer no) {
+        lecQueRepository.deleteById(no);
+    }
+
+    // 질문에 대한 답변 입력, 수정
+    public void lecQueAnsInsUpd(LecQueDto lecQueDto) {
+        Optional<LecQue> lecQue = lecQueRepository.findById(lecQueDto.getNo());
+        LecQue lecQue1 = lecQue.orElseThrow();
+        lecQue1.answer(lecQueDto.getAns());
+        lecQueRepository.save(lecQue1);
+    }
+    // endregion
 }

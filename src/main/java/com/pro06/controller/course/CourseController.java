@@ -123,7 +123,7 @@ public class CourseController {
         courseService.setCoursePeo(cno);
         myCourseService.myCourseInsert(myCourse);
 
-        return "redirect:/"; // 인덱스 이동
+        return "redirect:/mycourse/list"; // 인덱스 이동
     }
 
 

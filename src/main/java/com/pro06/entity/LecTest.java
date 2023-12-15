@@ -22,7 +22,7 @@ public class LecTest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;         // 시험 번호
     
-    // 문제 + 4지선다
+    // 문제
     @Column(length = 100, nullable = false)
     private String exam1;
 
