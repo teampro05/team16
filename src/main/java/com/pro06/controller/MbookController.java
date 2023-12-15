@@ -1,81 +1,82 @@
 package com.pro06.controller;
 
 
-import com.pro06.dto.EbookVO;
-import com.pro06.entity.Ebook;
-import com.pro06.entity.EbookImg;
-import com.pro06.service.Book.EBookServiceImpl;
+import com.pro06.dto.MbookVO;
+import com.pro06.entity.Mbook;
+import com.pro06.entity.MbookImg;
+import com.pro06.service.Book.MBookServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.*;
 
 @Controller
 @Slf4j
 //@CrossOrigin("http://localhost:8085")
-@RequestMapping("/Ebook/*")
-public class EbookController {
+@RequestMapping("/Mbook/*")
+public class MbookController {
 
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
     @Autowired
-    private EBookServiceImpl eBookService;
+    private MBookServiceImpl mBookService;
 
-    @GetMapping("EbookList")
-    public String EbookList(Model model) throws Exception{
-        List<Ebook> ebookList = eBookService.EbookList();
+    @GetMapping("MbookList")
+    public String MbookList(Model model) throws Exception{
+        List<Mbook> mbookList = mBookService.MbookList();
 
-        List<EbookVO> voList = new ArrayList<>();
-        for (Ebook ebook:ebookList) {
-            EbookVO vo = new EbookVO();
-            vo.setFileBoard(ebook);
-            EbookImg ebookImg = eBookService.thmbn(ebook.getNo());
-            List<EbookImg> fileList = new ArrayList<>();
-            fileList.add(ebookImg);
+        List<MbookVO> voList = new ArrayList<>();
+        for (Mbook mbook:mbookList) {
+            MbookVO vo = new MbookVO();
+            vo.setFileBoard(mbook);
+            MbookImg mbookImg = mBookService.thmbn(mbook.getNo());
+            List<MbookImg> fileList = new ArrayList<>();
+            fileList.add(mbookImg);
             vo.setFileList(fileList);
             voList.add(vo);
         }
-        model.addAttribute("EbookList", voList);
+        model.addAttribute("MbookList", voList);
 
-        log.info(" ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + ebookList);
-        return "Ebook/EbookList";
+        log.info(" ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + mbookList);
+        return "Mbook/MbookList";
     }
 
-    @GetMapping("getEbook")
+    @GetMapping("getMbook")
     public String getFileboard(@RequestParam("no") int no, Model model) throws Exception{
-        EbookVO fileboard = new EbookVO();
+        MbookVO fileboard = new MbookVO();
 
-        Ebook ebook = eBookService.getEbook(no);
-        List<EbookImg> fileList = eBookService.getFileGroupList(no);
-        fileboard.setFileBoard(ebook);
+        Mbook mbook = mBookService.getMbook(no);
+        List<MbookImg> fileList = mBookService.getFileGroupList(no);
+        fileboard.setFileBoard(mbook);
         fileboard.setFileList(fileList);
 
-        model.addAttribute("Ebook", fileboard);
+        model.addAttribute("Mbook", fileboard);
         model.addAttribute("fileList", fileboard.getFileList());
 
-        return "Ebook/getEbook";
+        return "Mbook/getMbook";
     }
 
-    @GetMapping("EbookInsert")
-    public String EbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
+    @GetMapping("MbookInsert")
+    public String MbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
         model.addAttribute("name", name);
-        return "Ebook/EbookInsert";
+        return "Mbook/MbookInsert";
     }
 
     @GetMapping("fileUpload")
     public String fileUploadForm() {
-        return "Ebook/EbookInsert";
+        return "Mbook/MbookInsert";
     }
 
     @PostMapping("fileUpload")
@@ -85,14 +86,14 @@ public class EbookController {
                              Model model) throws Exception {
 
         // Create the 'board' object
-        Ebook ebook = new Ebook();
-        // ebook.setNo(params.get("no"));
-        ebook.setId(params.get("id"));
-        ebook.setTitle(params.get("title"));
-        ebook.setContent(params.get("content"));
-        ebook.setServecontent(params.get("servecontent"));
-        ebook.setPrice(Integer.valueOf(params.get("price")));
-        ebook.setPublish(params.get("publish"));
+        Mbook mbook = new Mbook();
+        // mbook.setNo(params.get("no"));
+        mbook.setId(params.get("id"));
+        mbook.setTitle(params.get("title"));
+        mbook.setContent(params.get("content"));
+        mbook.setServecontent(params.get("servecontent"));
+        mbook.setPrice(Integer.valueOf(params.get("price")));
+        mbook.setPublish(params.get("publish"));
 
 /*
         // 가격에 대한 String 값을 BigDecimal로 변환
@@ -117,7 +118,7 @@ public class EbookController {
         log.info(" 프로젝트 저장 경로 : " + uploadFolder);
 
         //여러 파일 반복 저장
-        List<EbookImg> fileList = new ArrayList<>();
+        List<MbookImg> fileList = new ArrayList<>();
         // 파일 리스트를 순회하며 각 파일 처리
         for (MultipartFile file : files) {
             if (!file.getOriginalFilename().isEmpty()) {
@@ -128,7 +129,7 @@ public class EbookController {
                 String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
 
                 // ... (기존 파일 처리 로직)
-                EbookImg data = new EbookImg();
+                MbookImg data = new MbookImg();
                 data.setSavefolder(uploadFolder);
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
@@ -148,57 +149,57 @@ public class EbookController {
             }
         }
 
-        EbookVO fileboard = new EbookVO();
+        MbookVO fileboard = new MbookVO();
         fileboard.setFileList(fileList);
-        fileboard.setFileBoard(ebook);
-        eBookService.insertFileboard(fileboard);
-        return "redirect:/Ebook/EbookList";
+        fileboard.setFileBoard(mbook);
+        mBookService.insertFileboard(fileboard);
+        return "redirect:/Mbook/MbookList";
     }
 
-    @GetMapping("EbookDelete")
-    public String EbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
+    @GetMapping("MbookDelete")
+    public String MbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
 
         //실제 파일 삭제 로직
         //파일 경로 지정
 
-        List<EbookImg> fileList = eBookService.getFileGroupList(postNo);
-        for (EbookImg ebookImg : fileList) {
-            File file = new File(uploadFolder + "/" + ebookImg.getSavefile());
+        List<MbookImg> fileList = mBookService.getFileGroupList(postNo);
+        for (MbookImg mbookImg : fileList) {
+            File file = new File(uploadFolder + "/" + mbookImg.getSavefile());
             if (file.exists()) { // 해당 파일이 존재하면
                 file.delete(); // 파일 삭제
             }
         }
         //데이터베이스의 파일 자료실과 파일의 내용 삭제
-        int ck = eBookService.removeFileboard(postNo);
-        return "redirect:/Ebook/EbookList";
+        int ck = mBookService.removeFileboard(postNo);
+        return "redirect:/Mbook/MbookList";
     }
 
     // 거래글 수정폼 이동
-    @GetMapping("EbookUpdate")
+    @GetMapping("MbookUpdate")
     public String modifyFileboard(@RequestParam("no") Integer postNo, Model model) throws Exception {
-        Ebook ebook = eBookService.getEbook(postNo);
-        List<EbookImg> fileList = eBookService.getFileGroupList(postNo);
-        model.addAttribute("Ebook", ebook);
+        Mbook mbook = mBookService.getMbook(postNo);
+        List<MbookImg> fileList = mBookService.getFileGroupList(postNo);
+        model.addAttribute("Mbook", mbook);
         model.addAttribute("fileList", fileList);
-        return "Ebook/EbookUpdate";
+        return "Mbook/MbookUpdate";
     }
 
-    @PostMapping("EbookUpdate")
-    public String fileUpload(@RequestParam("Ebno") Integer postNo,
+    @PostMapping("MbookUpdate")
+    public String fileUpload(@RequestParam("Mbno") Integer postNo,
                              @RequestParam("files") List<MultipartFile> files,
                              @RequestParam Map<String, String> params,
                              HttpServletRequest req,
                              Model model) throws Exception {
 
         // Create the 'board' object
-        Ebook ebook = new Ebook();
-        // ebook.setNo(params.get("no"));
-        ebook.setId(params.get("id"));
-        ebook.setTitle(params.get("title"));
-        ebook.setContent(params.get("content"));
-        ebook.setServecontent(params.get("servecontent"));
-        ebook.setPrice(Integer.valueOf(params.get("price")));
-        ebook.setPublish(params.get("publish"));
+        Mbook mbook = new Mbook();
+        // mbook.setNo(params.get("no"));
+        mbook.setId(params.get("id"));
+        mbook.setTitle(params.get("title"));
+        mbook.setContent(params.get("content"));
+        mbook.setServecontent(params.get("servecontent"));
+        mbook.setPrice(Integer.valueOf(params.get("price")));
+        mbook.setPublish(params.get("publish"));
 
 /*
         // 가격에 대한 String 값을 BigDecimal로 변환
@@ -222,7 +223,7 @@ public class EbookController {
         log.info(" 프로젝트 저장 경로 : " + uploadFolder);
 
         //여러 파일 반복 저장
-        List<EbookImg> fileList = new ArrayList<>();
+        List<MbookImg> fileList = new ArrayList<>();
         // 파일 리스트를 순회하며 각 파일 처리
         for (MultipartFile file : files) {
             if (!file.getOriginalFilename().isEmpty()) {
@@ -233,7 +234,7 @@ public class EbookController {
                 String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
 
                 // ... (기존 파일 처리 로직)
-                EbookImg data = new EbookImg();
+                MbookImg data = new MbookImg();
                 data.setSavefolder(uploadFolder);
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
@@ -253,12 +254,12 @@ public class EbookController {
             }
         }
 
-        EbookVO fileboard = new EbookVO();
+        MbookVO fileboard = new MbookVO();
         fileboard.setFileList(fileList);
-        fileboard.setFileBoard(ebook);
-        eBookService.insertFileboard(fileboard);
+        fileboard.setFileBoard(mbook);
+        mBookService.insertFileboard(fileboard);
 
-        return "redirect:/Ebook/getEbook?no=" + postNo;
+        return "redirect:/Mbook/getMbook?no=" + postNo;
     }
 
 }

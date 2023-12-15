@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중학 교재</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+<div style="min-height: 100vh">
+    <div class="container con-tb">
+        <div class="search_from">
+            <select name="select_filter" class="select_filter">
+                <option value="1">제목</option>
+                <option value="2">내용</option>
+                <option value="3">가격</option>
+                <option value="4">출간일</option>
+            </select>
+            <input type="text" name="search_filter" class="search_filter">
+        </div>
+        <table class="table" id="myTable">
+            <thead class="thead-light">
+            <tr>
+                <th>교재</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>가격</th>
+                <th>출간일</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="Mbook, status : ${MbookList}">
+                <td style="width: 250px;">
+                    <th:block th:if="${Mbook != null}">
+                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Mbook.fileList[0].savefile}">
+                    </th:block>
+
+                </td>
+                <td>
+                    <p><a th:href="@{/Mbook/getMbook(no=${Mbook.fileBoard.no})}">[[${Mbook.fileBoard.title}]]</a></p>
+                </td>
+                <td>
+                    <p>[[${Mbook.fileBoard.servecontent}]]</p>
+                </td>
+
+                <td>
+                    <p>[[${Mbook.fileBoard.price}]]</p>
+                </td>
+                <td>
+                    <p>[[${Mbook.fileBoard.publish}]]</p>
+                </td>
+                <td>
+                    <a th:href="@{/Mbook/MbookUpdate(no=${Mbook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                    <a th:href="@{/Mbook/MbookDelete(no=${Mbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+<!--        <th:block th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">-->
+                <a th:href="@{/Mbook/fileUpload}" class="btn btn-primary">작성</a>
+<!--        </th:block>-->
+    </div>
+</div>
+<!-- datatables -->
+<script th:src="@{/js/datatables.js}"></script>
+<th:block th:replace="include/footer :: footer" ></th:block>
+</body>
+</html>
