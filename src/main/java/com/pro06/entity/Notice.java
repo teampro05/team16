@@ -16,10 +16,10 @@ public class Notice extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
-//    @Column(length = 20)
+    @Column(length = 100)
     private String title;
 
-//    @Column(length = 1000)
+    @Column(length = 1000)
     private String content;
 
     @Column(nullable = false)

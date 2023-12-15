@@ -6,31 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="include/head :: head" ></th:block>
     <title>휴면 해제</title>
+    <style>
+        label {
+            transform: translateY(-50px);
+        }
+    </style>
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
-
-
-<section class="login py-5 border-top-1">
+<section id="contact" class="contact">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-8 align-item-center">
-                <div class="border">
-                    <h3 class="bg-gray p-4">휴면 해제</h3>
-                    <form th:action="@{/member/active}" method="post">
-                        <fieldset class="p-4">
-                            <input class="form-control mb-3" type="text" placeholder="ID" name="id" required />
-                            <input class="form-control mb-3" type="password" placeholder="Password" name="pw" required />
-                            <input class="form-control mb-3" type="text" placeholder="Email" name="email" required />
-                            <div class="loggedin-forgot">
-                                <input type="checkbox" id="keepId" name="keepId">
-                                <label for="keepId" class="pt-3 pb-2">아이디 기억하기</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary font-weight-bold mt-3">휴면 해제</button>
-                        </fieldset>
-                    </form>
+        <div class="container-login">
+        <h1>휴면 해제</h1>
+            <form th:action="@{/active}" method="post">
+                <div class="form-login">
+                    <input type="text" class="input" name="id" id="id" required />
+                    <label><span>아이디</span></label>
                 </div>
-            </div>
+                <div class="form-login">
+                    <input type="password" class="input" name="pw" id="pw" required />
+                    <label><span>비밀번호</span></label>
+                </div>
+                <div class="form-login">
+                    <input type="email" class="input" name="email" id="email" required />
+                    <label><span>이메일</span></label>
+                </div>
+                    <button type="submit" class="login-btn">휴면 해제</button>
+                <div th:if="${param.error}">
+                    <p style="color:red">아이디 또는 비밀번호가 올바르지 않거나 <br> 가입이 되지 않았습니다.</p>
+                </div>
+            </form>
         </div>
     </div>
 </section>

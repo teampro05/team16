@@ -5,6 +5,7 @@ import com.pro06.entity.*;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ import java.util.UUID;
 
 @Log4j2
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/*")
 public class AdminController {
 
     // 실제 업로드 디렉토리
@@ -228,5 +230,36 @@ public class AdminController {
         lectureService.LectureVoInsert(lectureVO); // 강의와 비디오를 같이 저장
 
         return "redirect:/admin/courseDetail?no=" + cno;
+    }
+
+    // 회원 관리
+    @GetMapping("userList")
+    public String memberList(Model model){
+        List<User> userList = userService.userList();
+        model.addAttribute("userList", userList);
+        return "/admin/userList";
+    }
+
+    @GetMapping("/userGet")
+    public String userGet(String id, Model model){
+        User user = userService.getId(id);
+        model.addAttribute("user", user);
+        return "/admin/userGet";
+    }
+
+    @PostMapping("/changeStatus_list")
+    public String out1(String id, Model model, Status status){
+        User user = userService.getId(id);
+        user.setStatus(status);
+        userService.userUpdate(user);
+        return "redirect:/admin/userList";
+    }
+
+    @PostMapping("/changeStatus_get")
+    public String out2(String id, Model model, Status status){
+        User user = userService.getId(id);
+        user.setStatus(status);
+        userService.userUpdate(user);
+        return "redirect:/admin/userGet?id="+id;
     }
 }

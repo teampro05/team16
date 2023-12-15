@@ -1,11 +1,14 @@
 package com.pro06.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 // 강좌 테이블
 // 여기에 나중에 선생님 관련 컬럼 하나 추가
@@ -43,4 +46,8 @@ public class CourseDto extends BaseDto {
 
     @NotBlank
     private Integer peo_max;    // 최대 수강인원
+
+    private LocalDateTime copendate;    // 개강날짜
+
+    private Integer copen;    // 오픈여부   open=1, close=0
 }

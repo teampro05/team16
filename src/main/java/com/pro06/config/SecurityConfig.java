@@ -1,4 +1,5 @@
 package com.pro06.config;
+import com.pro06.controller.ErrorController;
 import com.pro06.repository.NoticeRepository;
 import com.pro06.service.UserService;
 import lombok.extern.log4j.Log4j2;
@@ -29,12 +30,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // stateless한 rest api를 개발할 것이므로 csrf 공격에 대한 옵션은 꺼둔다.
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .cors(AbstractHttpConfigurer::disable)
                 // 특정 URL에 대한 권한 설정.
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests
-                            .requestMatchers("/course/**", "/Ebook/**").permitAll()
+                            .requestMatchers("/course/**", "/error/**", "/Ebook/**").permitAll()
                             .requestMatchers("/user/**", "/board/**", "/mycourse/**", "/video/**", "/myvideo/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
                             .requestMatchers("/admin/**").hasAuthority("ADMIN") // admin만 접근 가능
                             .requestMatchers("/css/**", "/js/**", "/upload/**", "/cleditor/**", "/scss/**",

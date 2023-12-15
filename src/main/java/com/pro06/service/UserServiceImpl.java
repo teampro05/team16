@@ -13,6 +13,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Log4j2
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +25,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void userDelete(Integer id) {
+        userRepository.deleteById(id);
+    }
 
     @Override
     public User userInsert(User user) {

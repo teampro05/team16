@@ -11,11 +11,11 @@
   --sub: #757430;
   --sub1: #D0B987;
   --sub2: #AFB3BC;
+  --sub3: #39312f;
   --white: white;
   --black: black;
-  --admin: #757430;
-  --admin2: white;
   --hover: #ff6b3b;
+  --admin: #4B49AC;
 
 }
 /*--------------------------------------------------------------
@@ -44,35 +44,6 @@ a:hover {
   color: var(--hover);
 }
 
-.btn1 {
-  color: #fff;
-  background: var(--main);
-  padding: 10px 20px;
-  display: inline-block;
-  transition: 0.3s;
-  text-shadow: 0.1px 0.1px 0.5px black;
-  border: none;
-  margin: 20px;
-}
-
-.button {
-  color: #fff;
-  background: var(--main);
-  padding: 10px 20px;
-  display: inline-block;
-  transition: 0.3s;
-  text-shadow: 0.1px 0.1px 0.5px black;
-  border: none;
-}
-
-.button:hover {
-  background: var(--hover);
-}
-
-.right1{
-  float: right;
-}
-
 h1,
 h2,
 h3,
@@ -91,7 +62,7 @@ ul, li{
 
 table {
   width: 60%;
-  margin: 5rem auto;
+  margin: 4rem auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   border-radius: 8px;
@@ -104,7 +75,9 @@ select {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
-
+textarea {
+  resize: none;
+}
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -151,45 +124,55 @@ select {
 /*--------------------------------------------------------------
 # Top Bar
 --------------------------------------------------------------*/
-#topbar {
-  background: #39312f;
+#topBar {
+  background: var(--sub3);
   font-size: 14px;
   padding: 0;
   color: rgba(255, 255, 255, 0.8);
   height: 40px;
 }
 
-#topbar .contact-info i {
+#topBar .contact-info i {
   font-style: normal;
   color: var(--main);
 }
 
-#topbar .contact-info i a,
-#topbar .contact-info i span {
+#topBar .contact-info i a,
+#topBar .contact-info i span {
   padding-left: 5px;
   color: #fff;
 }
 
-#topbar .contact-info i a {
+#topBar .contact-info i a {
   line-height: 0;
   transition: 0.3s;
 }
 
-#topbar .contact-info i a:hover {
+#topBar .contact-info i a:hover {
   color: var(--main);
 }
-
+.cta {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  float: right;
+}
 .cta a {
-  color: #fff;
+  color: var(--white);
   background: var(--main);
   padding: 10px 20px;
+  height: auto;
   display: inline-block;
-  transition: 0.3s;
   text-shadow: 0.1px 0.1px 0.5px black;
 }
 
-#topbar .cta a:hover {
+#topBar .cta a:hover {
   background: var(--hover);
+}
+
+.topBar-name {
+  display: inline-block;
+  margin: 0 10px 0 0;
 }
 
 /*--------------------------------------------------------------
@@ -265,7 +248,7 @@ select {
   font-size: 16px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
-  color: #635551;
+  color: var(--black);
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -297,8 +280,8 @@ select {
 
 .navbar .getstarted:hover,
 .navbar .getstarted:focus:hover {
-  color: #fff;
-  background: #ff6b3b;
+  color: var(--white);
+  background: var(--hover);
 }
 
 .navbar .dropdown ul {
@@ -311,7 +294,7 @@ select {
   z-index: 99;
   opacity: 0;
   visibility: hidden;
-  background: #fff;
+  background: var(--white);
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
   transition: 0.3s;
   border-radius: 4px;
@@ -2373,9 +2356,9 @@ section {
    position: sticky;
    top: 0;
    text-align: center;
-   background-color: var(--admin);
+   background-color: var(--sub);
    background-size: cover;
-   color: var(--admin2);
+   color: var(--black);
    font-weight: bold;
    z-index: 1000;
  }
@@ -2458,11 +2441,10 @@ section {
   color:var(--sub1);
 }
 
-
 /*Login Style*/
 
 .container-login {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 20px 40px;
   border-radius: 5px;
   width: 550px;
@@ -2489,6 +2471,7 @@ section {
   padding: 15px;
   font-family: inherit;
   font-size: 16px;
+  font-weight: bold;
   border: 0;
   border-radius: 5px;
 }
@@ -2576,35 +2559,33 @@ form p {
 /* List-table Style */
 
 
-.table-list {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: var(--white);
-    border-radius: 8px;
-  }
-.table-list th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
+/*.table-list {*/
+/*    border-collapse: collapse;*/
+/*    width: 100%;*/
+/*    margin: 20px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*    background-color: var(--white);*/
+/*    border-radius: 8px;*/
+/*  }*/
+/*.table-list th, td {*/
+/*    padding: 12px;*/
+/*    text-align: left;*/
+/*    border-bottom: 1px solid #ddd;*/
+/*  }*/
 
-.table-list th {
-    background-color: var(--white);
-  }
+/*.table-list th {*/
+/*    background-color: var(--white);*/
+/*  }*/
 
-.table-list tr:hover {
-    background-color: var(--white);
-  }
+/*.table-list tr:hover {*/
+/*    background-color: var(--white);*/
+/*  }*/
 
 
 .List-table table {
-  width: 100%;
-  margin: 20px 20px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  border-radius: 8px;
+  text-align: center;
+  width: 60%;
+  margin: 4rem auto;
 }
 
 .List-table th, td {
@@ -2619,7 +2600,7 @@ form p {
 }
 
 
-/* Fire Event */
+/* 꽃가루 이벤트 */
 
 canvas {
   position: fixed;
@@ -2635,11 +2616,11 @@ canvas {
   font-size: 30px;
   background: none;
   border: none;
-  color: var(--white);
+  color: var(--black);
 }
 
 
-/* chatMenu */
+/* 채팅메뉴 */
 #chatMenu {
   margin: 0;
   position: fixed;
@@ -2726,3 +2707,67 @@ canvas {
   overflow: auto;
   display: none;
 }
+
+
+.textCount{
+  float: right;
+}
+
+.form-button{
+  display: block;
+}
+
+/* 버튼 */
+.btn1 {
+  color: #fff;
+  background: var(--main);
+  padding: 10px 20px;
+  display: inline-block;
+  text-shadow: 0.1px 0.1px 0.5px black;
+  border: none;
+  margin-left: 20px;
+}
+
+.button {
+  color: #fff;
+  background: var(--main);
+  padding: 10px 20px;
+  display: inline-block;
+  transition: 0.3s;
+  text-shadow: 0.1px 0.1px 0.5px black;
+  border: none;
+}
+
+.button:hover {
+  background: var(--hover);
+}
+
+.right1{
+  float: right;
+}
+.center1{
+  float: right;
+  margin-right: 16rem;
+}
+
+/* 폼 */
+.form-outline input{
+  border: 0.5px solid var(--sub);
+}
+.form-outline textarea{
+  border: 0.5px solid var(--sub);
+}
+
+/* breadcrumb */
+.breadcrumb {
+  clear:both;
+  width:1200px;
+  margin: 0 auto;
+  text-align: right;
+  color:var(--sub);
+  padding-top: 27px;
+  padding-bottom: 27px;
+}
+
+.breadcrumb a { color: var(--sub);
+  }
