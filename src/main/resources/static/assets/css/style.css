@@ -30,7 +30,7 @@
 
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'EASTARJET-Medium';
   color: var(--sub);
 }
 
@@ -50,7 +50,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: 'EASTARJET-Medium';
   text-align: center;
 }
 
@@ -194,7 +194,7 @@ textarea {
   margin: 0;
   line-height: 0;
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'EASTARJET-Medium';
 }
 
 #header .logo h1 a,
@@ -247,8 +247,8 @@ textarea {
   padding: 10px 10px 10px 30px;
   font-size: 16px;
   font-weight: bold;
-  font-family: "Poppins", sans-serif;
-  color: var(--black);
+  font-family: 'EASTARJET-Medium';
+  color: #635551;
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -511,7 +511,7 @@ textarea {
 }
 
 #hero .btn-get-started {
-  font-family: "Raleway", sans-serif;
+  font-family: 'EASTARJET-Medium';
   font-weight: 400;
   font-size: 16px;
   letter-spacing: 1px;
@@ -589,7 +589,7 @@ section {
   font-weight: 500;
   margin-bottom: 20px;
   padding-bottom: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'EASTARJET-Medium';
   color: #635551;
 }
 

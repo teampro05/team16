@@ -30,8 +30,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 // stateless한 rest api를 개발할 것이므로 csrf 공격에 대한 옵션은 꺼둔다.
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .cors(AbstractHttpConfigurer::disable)
+               .csrf(AbstractHttpConfigurer::disable)
+               .cors(AbstractHttpConfigurer::disable)
                 // 특정 URL에 대한 권한 설정.
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests

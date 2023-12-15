@@ -3,14 +3,14 @@ package com.pro06.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 // 나의 학습방 테이블
 // 사용자가 수강신청을 하면 여기에 저장되며 강의를 수강할 수 있다.
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyCourseDto extends BaseDto {

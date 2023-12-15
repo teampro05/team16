@@ -26,12 +26,17 @@
             <li th:text="'수강완료 : ' + ${yCnt}"></li>
             <li th:text="'수강중 : ' + ${lectureList.size() - yCnt}"></li>
         </ul>
+        <div class="search_from" style="text-align: center">
+            <select name="select_filter" class="select_filter">
+                <option value="1">제목</option>
+            </select>
+            <input type="text" name="search_filter" class="search_filter">
+        </div>
         <table class="List-table">
             <thead>
             <tr>
                 <th>No</th>
                 <th>제목</th>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -56,18 +61,12 @@
                         <th:block th:if="${stateList.get(status.index) eq 'n' or ansList.get(status.index) eq 'n'}">
                             <span>수강중</span>
                         </th:block>
-                    </td>
-                    <td>
+
                         <!-- 강의와 시험을 다 한 경우 -->
                         <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'y'}">
                             <span>수강완료</span>
                         </th:block>
                     </td>
-                </tr>
-            </th:block>
-            <th:block th:if="${lectureList.size() <= 0}">
-                <tr>
-                    <td colspan="4">목록이 없습니다.</td>
                 </tr>
             </th:block>
             </tbody>
