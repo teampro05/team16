@@ -10,6 +10,9 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{notice}"> 공지사항 </a> > <span> 글쓰기 </span></p>
+</div>
 <section id="contact" class="contact">
     <div class="container">
         <h2>글 정보</h2>

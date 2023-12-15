@@ -10,6 +10,9 @@
 </head>
 <body>
     <th:block th:replace="include/header :: header" ></th:block>
+    <div class="breadcrumb">
+        <p><a th:href="@{/}"> HOME </a> &gt; <span> 공지사항 </span></p>
+    </div>
     <section class="table-list">
         <div class="container">
             <h2>공지사항</h2>
@@ -39,7 +42,7 @@
                 </tbody>
             </table>
             <th:block sec:authorize="isAuthenticated()">
-                <a th:href="@{/noticeadd}" class="btn1 right1">글쓰기</a>
+                <a th:href="@{/noticeadd}" class="btn1 center1">글쓰기</a>
             </th:block>
         </div>
     </section>

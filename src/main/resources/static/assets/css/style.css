@@ -62,7 +62,7 @@ ul, li{
 
 table {
   width: 60%;
-  margin: 5rem auto;
+  margin: 4rem auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   border-radius: 8px;
@@ -172,7 +172,7 @@ textarea {
 
 .topBar-name {
   display: inline-block;
-  margin: 0 0 0 10px;
+  margin: 0 10px 0 0;
 }
 
 /*--------------------------------------------------------------
@@ -2356,7 +2356,7 @@ section {
    position: sticky;
    top: 0;
    text-align: center;
-   background-color: var(--admin);
+   background-color: var(--sub);
    background-size: cover;
    color: var(--black);
    font-weight: bold;
@@ -2559,35 +2559,33 @@ form p {
 /* List-table Style */
 
 
-.table-list {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: var(--white);
-    border-radius: 8px;
-  }
-.table-list th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
+/*.table-list {*/
+/*    border-collapse: collapse;*/
+/*    width: 100%;*/
+/*    margin: 20px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*    background-color: var(--white);*/
+/*    border-radius: 8px;*/
+/*  }*/
+/*.table-list th, td {*/
+/*    padding: 12px;*/
+/*    text-align: left;*/
+/*    border-bottom: 1px solid #ddd;*/
+/*  }*/
 
-.table-list th {
-    background-color: var(--white);
-  }
+/*.table-list th {*/
+/*    background-color: var(--white);*/
+/*  }*/
 
-.table-list tr:hover {
-    background-color: var(--white);
-  }
+/*.table-list tr:hover {*/
+/*    background-color: var(--white);*/
+/*  }*/
 
 
 .List-table table {
-  width: 100%;
-  margin: 20px 20px auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  border-radius: 8px;
+  text-align: center;
+  width: 60%;
+  margin: 4rem auto;
 }
 
 .List-table th, td {
@@ -2618,7 +2616,7 @@ canvas {
   font-size: 30px;
   background: none;
   border: none;
-  color: var(--white);
+  color: var(--black);
 }
 
 
@@ -2725,7 +2723,6 @@ canvas {
   background: var(--main);
   padding: 10px 20px;
   display: inline-block;
-  transition: 0.3s;
   text-shadow: 0.1px 0.1px 0.5px black;
   border: none;
   margin-left: 20px;
@@ -2748,6 +2745,10 @@ canvas {
 .right1{
   float: right;
 }
+.center1{
+  float: right;
+  margin-right: 16rem;
+}
 
 /* 폼 */
 .form-outline input{
@@ -2756,3 +2757,17 @@ canvas {
 .form-outline textarea{
   border: 0.5px solid var(--sub);
 }
+
+/* breadcrumb */
+.breadcrumb {
+  clear:both;
+  width:1200px;
+  margin: 0 auto;
+  text-align: right;
+  color:var(--sub);
+  padding-top: 27px;
+  padding-bottom: 27px;
+}
+
+.breadcrumb a { color: var(--sub);
+  }

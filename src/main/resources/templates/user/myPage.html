@@ -13,37 +13,45 @@
 <section id="contact" class="contact">
     <div class="container">
         <h2>회원정보</h2>
-        <table class="List-table">
-            <tbody>
-                <tr>
-                    <th>아이디</th>
-                    <td th:text="${user.id}"></td>
-                </tr>
-                <tr>
-                    <th>이름</th>
-                    <td th:text="${user.name}"></td>
-                </tr>
-                <tr>
-                    <th>권한</th>
-                    <th:block sec:authorize="hasAuthority('ADMIN')">
-                        <td>관리자</td>
-                    </th:block>
-                    <th:block sec:authorize="hasAuthority('USER')">
-                        <td>유저</td>
-                    </th:block>
-                    <th:block sec:authorize="hasAuthority('TEACHER')">
-                        <td>선생님</td>
-                    </th:block>
-                </tr>
-                <tr>
-                    <th>권한</th>
-                    <td th:text="${user.role}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-end">
-            <button type="button" onclick="eventremove()" class="btn1"> 탈퇴하기 </button>
+        <div class="List-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>아이디</th>
+                        <td th:text="${user.id}"></td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td th:text="${user.name}"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td th:text="${user.email}"></td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td th:text="${user.tel}"></td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td th:text="${user.addr1} + ${user.addr2} + ${user.postcode}"></td>
+                    </tr>
+                    <tr>
+                        <th>권한</th>
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
+                            <td>관리자</td>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('USER')">
+                            <td>유저</td>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('TEACHER')">
+                            <td>선생님</td>
+                        </th:block>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <button type="button" onclick="eventremove()" class="btn1 center1"> 탈퇴하기 </button>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>

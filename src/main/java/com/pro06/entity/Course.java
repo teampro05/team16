@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDateTime;
+
 // 강좌 테이블
 // 여기에 나중에 선생님 관련 컬럼 하나 추가
 // validation을 이용해 size, notnull 을 써도 되고 아니면 
@@ -50,16 +52,22 @@ public class Course extends BaseEntity{
     @Column(nullable = false)
     private Integer peo_max;    // 최대 수강인원
 
+    @Column(nullable = true)
+    private LocalDateTime copendate;    // 개강날짜
+
+    private Integer copen;    // 오픈여부
+
     public void peoUp(){
         this.peo = this.peo + 1;
     }
 
     public void change(String id, String level,
-                       String title, String content) {
+                       String title, String content, Integer copen) {
         this.id = id;
         this.level = level;
         this.title = title;
         this.content = content;
+        this.copen = copen;
     }
 
 }
