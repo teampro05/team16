@@ -16,5 +16,6 @@ public class BoardDTO {
     @NotEmpty(message = "내용은 필수 입력 값입니다.")
     private String content;
 
+    @NotEmpty(message = "저자는 필수 입력 값입니다.")
     private String author;
 }

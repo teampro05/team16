@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+    <title>관리자페이지: 회원목록</title>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>회원</h1>
+                <div class="card p-3">
+<!--                    <div th:replace="/include/searchList :: fragment-search('/admin/userList', 'id:아이디,name:이름,tel:전화번호')"></div>-->
+                    <table class="table text-center mb-3" th:if="${not #lists.isEmpty(userList)}">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>이메일</th>
+                                <th>가입날짜</th>
+                                <th>최종로그인</th>
+                                <th>상태</th>
+                                <th>권한변경</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user, about : ${userList}">
+                                <td th:text="${about.count}"></td>
+                                <td><a th:text="${user.id}" th:href="@{/admin/userGet(id=${user.id})}"></a></td>
+                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${#temporals.format(user.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
+                                <td th:text="${#temporals.format(user.loginAt, 'yyyy-MM-dd hh:mm')}"></td>
+                                <form th:action="@{/admin/changeStatus_list(id=${user.getId()})}" method="post">
+                                    <td>
+                                        <select name="status" id="status" class="select-box" >
+                                            <option value="[[${user.getStatus()}]]">현재: [[${user.getStatus()}]]</option>
+                                            <option value="ACTIVE">ACTIVE</option>
+                                            <option value="REST">REST</option>
+                                            <option value="OUT">OUT</option>
+                                        </select>
+                                        <button type="submit" class="btn1" >상태 변경</button>
+                                    </td>
+                                </form>
+                                <form th:action="@{/role(id=${user.getId()})}" method="post">
+                                    <td>
+                                        <select name="role" id="role" class="select-box" >
+                                            <option value="[[${user.getRole()}]]">현재: [[${user.getRole()}]]</option>
+                                            <option value="ADMIN">ADMIN</option>
+                                            <option value="USER">USER</option>
+                                            <option value="TEACHER">TEACHER</option>
+                                        </select>
+                                        <button type="submit" class="btn1" >권한 변경</button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </tbody>
+                    </table>
+<!--                    <th:block th:if="${not #lists.isEmpty(userList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/admin/userList')"></div></th:block>-->
+                    <div th:if="${#lists.isEmpty(userList)}" class="text-center">목록이 비어있습니다.</div>
+                </div>
+                <div class="admin-p-wrapper">
+                    <p class="admin-p">※상태 설정</p>
+                    <p class="admin-p">ACTIVE: 활동 / REST: 휴면 / OUT: 탈퇴</p>
+                    <br>
+                    <p class="admin-p">※권한 설정</p>
+                    <p class="admin-p">ADMIN: 관리자 / USER: 유저 / TEACHER: 선생님</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -32,7 +32,8 @@ public class CourseServiceImpl {
         Optional<Course> course = courseRepository.findById(courseDto.getNo());
         Course res = course.orElseThrow();
         res.change(courseDto.getId(), courseDto.getLevel(),
-                courseDto.getTitle(), courseDto.getContent());
+                courseDto.getTitle(), courseDto.getContent(),
+                courseDto.getCopen());
         courseRepository.save(res);
     }
 

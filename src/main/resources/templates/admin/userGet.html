@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+    <title>관리자페이지: 회원</title>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+
+        <div class="main-panel">
+            <div class="col-lg-8">
+                <div class="d-flex flex-column align-items-center justify-content-center right_side">
+                    <h5 class="my-4" style="font-size:2.5em;font-weight:600;">회원정보</h5>
+
+                    <div class="container px-5">
+                        <table class="table table-bordered mx-3">
+                            <colgroup>
+                                <col style="width:20%;">
+                                <col style="width:auto;">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th class="text-center">아이디</th>
+                                <td>[[${user.id }]]</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">이름</th>
+                                <td>[[${user.name }]]</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">전화번호</th>
+                                <td>[[${user.tel }]]</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">이메일</th>
+                                <td>[[${user.email }]]</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">주소</th>
+                                <td>[[${user.postcode }]] [[${user.addr1}]] [[${user.addr2}]]</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">상태</th>
+                                <form th:action="@{/admin/changeStatus_get(id=${user.getId()})}" method="post">
+                                    <td>
+                                        <select name="status" id="status" class="select-box" >
+                                            <option value="[[${user.getStatus()}]]">현재: [[${user.getStatus()}]]</option>
+                                            <option value="ACTIVE">ACTIVE</option>
+                                            <option value="REST">REST</option>
+                                            <option value="OUT">OUT</option>
+                                        </select>
+                                        <button type="submit" class="btn1" >상태 변경</button>
+                                    </td>
+                                </form>
+                            </tr>
+                            <tr>
+                                <th class="text-center">상태</th>
+                                <form th:action="@{/role(id=${user.getId()})}" method="post">
+                                    <td>
+                                        <select name="role" id="role" class="select-box" >
+                                            <option value="[[${user.getRole()}]]">현재: [[${user.getRole()}]]</option>
+                                            <option value="ADMIN">ADMIN</option>
+                                            <option value="USER">USER</option>
+                                            <option value="TEACHER">TEACHER</option>
+                                        </select>
+                                        <button type="submit" class="btn1" >권한 변경</button>
+                                    </td>
+                                </form>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
