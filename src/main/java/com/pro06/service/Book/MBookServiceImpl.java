@@ -66,9 +66,9 @@ public class MBookServiceImpl implements MBookService {
 
     @Override
     public void updateFileboard(MbookVO fileboard) throws Exception {
-        Mbook board = fileboard.getFileBoard();
+        Mbook mbook = fileboard.getFileBoard();
         List<MbookImg> fileList = fileboard.getFileList();
-        mbookRepository.fileBoardUpdate(board);
+        mbookRepository.fileBoardUpdate(mbook);
         for(MbookImg file:fileList){
             mbookRepository.fileUpdate(file);
         }

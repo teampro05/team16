@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>중학 교재</title>
+    <title>수능 교재</title>
     <th:block th:replace="include/head :: head" ></th:block>
 
 </head>
@@ -33,35 +33,35 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="Mbook, status : ${MbookList}">
+            <tr th:each="Hbook, status : ${HbookList}">
                 <td style="width: 250px;">
-                    <th:block th:if="${Mbook != null}">
-                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Mbook.fileList[0].savefile}">
+                    <th:block th:if="${Hbook != null}">
+                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Hbook.fileList[0].savefile}">
                     </th:block>
 
                 </td>
                 <td>
-                    <p><a th:href="@{/Mbook/getMbook(no=${Mbook.fileBoard.no})}">[[${Mbook.fileBoard.title}]]</a></p>
+                    <p><a th:href="@{/Hbook/getHbook(no=${Hbook.fileBoard.no})}">[[${Hbook.fileBoard.title}]]</a></p>
                 </td>
                 <td>
-                    <p>[[${Mbook.fileBoard.servecontent}]]</p>
+                    <p>[[${Hbook.fileBoard.servecontent}]]</p>
                 </td>
 
                 <td>
-                    <p>[[${Mbook.fileBoard.price}]]원</p>
+                    <p>[[${Hbook.fileBoard.price}]]원</p>
                 </td>
                 <td>
-                    <p>[[${Mbook.fileBoard.publish}]]</p>
+                    <p>[[${Hbook.fileBoard.publish}]]</p>
                 </td>
                 <td>
-                    <a th:href="@{/Mbook/MbookUpdate(no=${Mbook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                    <a th:href="@{/Mbook/MbookDelete(no=${Mbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+                    <a th:href="@{/Hbook/HbookUpdate(no=${Hbook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                    <a th:href="@{/Hbook/HbookDelete(no=${Hbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
                 </td>
             </tr>
             </tbody>
         </table>
 <!--        <th:block th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">-->
-                <a th:href="@{/Mbook/fileUpload}" class="btn btn-primary">작성</a>
+                <a th:href="@{/Hbook/fileUpload}" class="btn btn-primary">작성</a>
 <!--        </th:block>-->
     </div>
 </div>

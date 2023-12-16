@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro06.repository.HbookRepository">
+
+<!--
+    List<Hbook> HbookList(); // 수능 교재 리스트
+    Hbook getHbook(Integer no); // 수능 교재 상세
+    int insertHbook(Hbook hbook); // 수능 교재 추가
+    int updateHbook(Hbook hbook); // 수능 교재 수정
+    int deleteHbook(Hbook hbook); // 수능 교재 삭제
+
+    /////////////////////////////////////////////
+
+    Integer fileBoardInsert(Hbook fileboard) throws Exception;
+    Integer fileInsert(HbookImg file) throws Exception;
+    List<HbookImg> getFileGroupList(int postNo) throws Exception;
+    int fileBoardDelete(int no) throws Exception;
+    void fileBoardUpdate(Hbook hbook) throws Exception;
+    void fileUpdate(HbookImg hbookImg) throws Exception;
+    void removeFileAll(int postNO) throws Exception;
+    HbookImg thmbn(int no) throws Exception;
+    Hbook latestFileboard() throws Exception;
+-->
+    <select id="HbookList" resultType="com.pro06.entity.Hbook">
+        select * from hbook order by no desc
+    </select>
+
+    <select id="getHbook" resultType="com.pro06.entity.Hbook">
+        select * from hbook where no =#{no}
+    </select>
+
+    <insert id="insertHbook">
+        insert into hbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <update id="updateHbook">
+        update hbook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <delete id="deleteHbook">
+        delete from hbook where no=#{no}
+    </delete>
+
+<!--    //////////////////////////////////////////////////////     -->
+
+    <insert id="fileBoardInsert">
+        insert into hbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <insert id="fileInsert">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into hbookImg values (default, #{Hbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="getFileGroupList" resultType="com.pro06.entity.HbookImg">
+        select * from hbookImg where Hbno=#{Hbno}
+    </select>
+
+    <delete id="fileBoardDelete">
+        delete from hbook where no=#{no}
+    </delete>
+
+    <update id="fileBoardUpdate">
+        update hbook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <insert id="fileUpdate">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into hbookImg values (default, #{Hbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="removeFileAll">
+        delete from hbookImg where Hbno=#{Hbno}
+    </delete>
+
+    <select id="thmbn" resultType="com.pro06.entity.HbookImg">
+        select * from hbookImg where Hbno=#{no} limit 1
+    </select>
+
+    <select id="latestFileboard" resultType="com.pro06.entity.Hbook">
+        select * from hbook order by no desc limit 0,1
+    </select>
+
+</mapper>

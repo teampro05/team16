@@ -66,9 +66,9 @@ public class EBookServiceImpl implements EBookService {
 
     @Override
     public void updateFileboard(EbookVO fileboard) throws Exception {
-        Ebook board = fileboard.getFileBoard();
+        Ebook ebook = fileboard.getFileBoard();
         List<EbookImg> fileList = fileboard.getFileList();
-        ebookRepository.fileBoardUpdate(board);
+        ebookRepository.fileBoardUpdate(ebook);
         for(EbookImg file:fileList){
             ebookRepository.fileUpdate(file);
         }

@@ -17,11 +17,9 @@ public interface MBookService {
     /////////////////////////////////////////////
 
     public void insertFileboard(MbookVO fileboard) throws Exception;
-//    public Integer fileInsert(EbookImg file) throws Exception;
     public List<MbookImg> getFileGroupList(int postNo) throws Exception;
     public int removeFileboard(int postNo) throws Exception;
-    public void updateFileboard(MbookVO mbook) throws Exception;
-//    public void fileUpdate(EbookImg ebookImg) throws Exception;
+    public void updateFileboard(MbookVO fileboard) throws Exception;
     public void removeFileAll(int postNO) throws Exception;
     public MbookImg thmbn(int no) throws Exception;
 
