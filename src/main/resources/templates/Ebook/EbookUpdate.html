@@ -53,9 +53,13 @@
                    oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required th:value="${Ebook.price}"/>
             </div>
 
-            <label for="content" class="form-label mt-4"> 출판일 </label>
-            <textarea name="content" class="form-control" id="publish" required>[[${Ebook.publish}]]</textarea>
-            <input type="hidden" value="no">
+            <div class="form-group">
+                <label for="publish" class="form-label mt-4"> 출판일 </label>
+                <input type="text" name="publish" class="form-control datepicker" id="publish" required
+                       th:value="${Ebook.publish}" readonly/>
+                <input type="hidden" value="no">
+            </div>
+
 
             <div class="form-group mt-4">
                 <label>기존파일</label><br>
@@ -90,7 +94,18 @@
 </div>
 
 
-<th:block th:replace="layout/footer :: footerFragment"></th:block>
+<th:block th:replace="include/footer :: footer" ></th:block>
 <script th:src="@{/js/file.js}"></script>
+<script>
+    $(function() {
+        // datepicker 초기화
+        $(".datepicker").datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>
+
 </body>
 </html>
