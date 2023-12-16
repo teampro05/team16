@@ -10,9 +10,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-public class MbookImg {
+public class TbookImg {
     private Integer no;
-    private Integer Mbno; // MiddleBookNO
+    private Integer Tbno; // ToeicBookNO
     private String savefolder;
     private String originfile;
     private String savefile;

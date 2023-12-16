@@ -12,7 +12,7 @@ import lombok.ToString;
 
 public class HbookImg {
     private Integer no;
-    private Integer Hbno; // MlementeryBookNO
+    private Integer Hbno; // HighBookNO
     private String savefolder;
     private String originfile;
     private String savefile;
