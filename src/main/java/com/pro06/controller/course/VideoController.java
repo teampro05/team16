@@ -113,7 +113,7 @@ public class VideoController {
         // 영상의 파일 이름 출력
         List<String> videoList = videoService.videoList(cno, lno);
 
-        model.addAttribute("que_size", queList.size());
+        model.addAttribute("que_size", queList.size());         // 질문 리스트 수
         model.addAttribute("queList", queList);                 // 해당 영상의 질문 목록
         model.addAttribute("cno", cno);                         // 강좌번호
         model.addAttribute("lno", lno);                         // 강의 번호

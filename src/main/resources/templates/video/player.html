@@ -19,7 +19,7 @@
         /* 처음 본 영상이면 처음에 완료버튼을 none 처리 */
         .complete {display: none;}
 
-        /* 버튼 위치 css */
+        /* 이전, 다음, 종료 버튼 위치 css */
         .vdo-btn {float: left; margin-right: 15px;}
 
         /* 인덱스에서 해당 위치의 영상으로 넘어가는 버튼 css */
@@ -48,13 +48,35 @@
             background-color: orange;
         }
 
-        /* 질문 보기 말 줄임 */
-        td p {
+        /* 질문 텍스트가 한 줄을 넘어갈 경우 ... 으로 표시되도록 설정 */
+        td .question {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 280px;
             margin: 0;
+        }
+
+        /* 질문을 클릭할 수 있게 변경 */
+        .question:hover {
+            cursor: pointer;
+            color: red;
+        }
+
+        /* 답변의 텍스트가 td에 벗어나지 않게 조절 */
+        td .answer {
+            width: 280px;
+            margin: 0;
+            word-break:break-all;
+        }
+
+        /* 질문 테이블 페이지 번호 디자인 */
+        .pageNumber {
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .pageNumber.active {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -196,8 +218,7 @@
         </table>
         <div style="margin: 10px auto;">
             <button id="prevPage"><</button>
-            <span id="currentPage"></span>
-<!--            <span id="pageNumber"></span>-->
+            <span id="pageNumbers"></span>
             <button id="nextPage">></button>
         </div>
 
@@ -367,27 +388,40 @@
     // 질문한 내용을 테이블에 바로 업데이트
     function addRow(res) {
         que_size++;
-        let newRow = $('<tr>');
-        newRow.append(`<td style="max-width: 60px;">${que_size}</td>`);
-        newRow.append(`<td style="max-width: 300px;"><p><a href="javascript:void(0);" onclick="openLecQue(${res.no})">${res.que}</a></p></td></tr>`);
+        let newRow = $(`<tr>
+                        <td>${que_size}</td>
+                        <td>
+                        <p class="question" title="답변 보기">${res.que}</p>
+                        <p class="answer" style="display:none">아직 답변이 등록되지 않았습니다.</p>
+                        </td></tr>`);
         $('tbody').prepend(newRow);
         showPage(currentPage);
     }
 
+    // 질문 삭제, 추가 예정
     function delRow() {
         que_size--;
         showPage(currentPage);
     }
-
 
     // 질문 테이블 페이징 처리
     $(document).ready(function() {
         let array = [[${queList}]];
 
         for (let i=0; i<array.length; i++) {
-            let newRow = $('<tr>');
-            newRow.append(`<td style="max-width: 60px;">${i+1}</td>`);
-            newRow.append(`<td style="max-width: 300px;"><p><a href="javascript:void(0);" onclick="openLecQue(${array[i].no})">${array[i].que}</a></p></td></tr>`);
+            // 답변이 등록 됐는지 안됐는지 확인
+            let answer = '아직 답변이 등록되지 않았습니다.';
+            if(array[i].ans != null) {
+                answer = array[i].ans
+            }
+
+            // 등록된 답변을 table에 바로 추가
+            let newRow = $(`<tr>
+                            <td>${i + 1}</td>
+                            <td>
+                            <p class="question" title="답변 보기">${array[i].que}</p>
+                            <p class="answer" style="display:none">${answer}</p>
+                            </td></tr>`);
             $('tbody').prepend(newRow);
         }
 
@@ -409,15 +443,33 @@
             }
         });
 
+        // 질문 클릭 시 답변 보이기/가리기
+        $('tbody').on('click', 'tr', function() {
+            $(this).find('.answer').slideToggle();
+            $('tr').not(this).find('.answer').slideUp();
+
+            // 클릭한 행에만 해당 CSS 스타일 제거
+            $(this).find('.question').css({
+                'white-space': '',
+                'word-break':'break-all'
+            });
+        });
+
+        // 페이지 번호 클릭 시 해당 페이지로 이동
+        $('.pageNumber').on('click', function() {
+            currentPage = parseInt($(this).attr('data-page'));
+            showPage();
+        });
         // 페이지 초기화
         showPage(currentPage);
     });
 
     // 페이지에 따라 보여줄 항목을 변경하는 함수
-    function showPage(currentPage) {
-        let pageSize = 5;
-        var start = (currentPage - 1) * pageSize;
-        var end = start + pageSize;
+    function showPage(param) {
+        currentPage = param;
+        let rowSize = 5;
+        let start = (currentPage - 1) * rowSize;
+        let end = start + rowSize;
 
         // 전체 항목을 숨김
         $('#myPagingTable tbody tr').hide();
@@ -426,56 +478,23 @@
         $('#myPagingTable tbody tr').slice(start, end).show();
 
         // 현재 페이지 업데이트
-        $('#currentPage').text(currentPage);
+        // $('#currentPage').text(currentPage);
 
+        pageNumbers();
+    }
+
+    function pageNumbers() {
         // 페이지 번호 그룹화하여 표시
-       /* var totalPages = Math.ceil(que_size / pageSize);
+        var totalPages = Math.ceil(que_size / pageSize);
         var pageNumberHtml = '';
         for (var i = 1; i <= totalPages; i++) {
-            pageNumberHtml += '<span class="pageNumber" data-page="' + i + '">' + i + '</span>';
+            pageNumberHtml += `<span class="pageNumber" data-page="${i}" onclick="showPage(${i})">${i}</span>`;
         }
         $('#pageNumbers').html(pageNumberHtml);
 
-        // 페이지 번호 클릭 시 해당 페이지로 이동
-        $('.pageNumber').on('click', function() {
-            currentPage = parseInt($(this).attr('data-page'));
-            showPage();
-        });*/
-    }
-
-    function openLecQue(no) {
-        console.log('no : ' + no)
-
-        // post로 보내기 위한 form 데이터 생성
-        let obj = {
-            "no": no,
-        }
-
-        $.ajax({
-            method: 'POST',
-            url:'/lecture/lecQue',
-            type: "post",
-            data: JSON.stringify(obj),
-            dataType: "json",
-            contentType: "application/json",
-            cache: false,
-            success: (result) => {
-                console.log('성공')
-            },
-            error : (err) => {
-                console.log('실패 : ' + err)
-            }
-        })
-
-        let windowname = "질문 상세";
-        let intWidth = 480;
-        let intHeight = 480;
-        let intXOffset = 0;
-        let intYOffset = 0;
-
-        let obwindow = window.open('', windowname, "toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no");
-        obwindow.resizeTo(intWidth, intHeight);
-        obwindow.moveTo(intXOffset, intYOffset);
+        // 현재 페이지 번호를 bold로 표시
+        $('.pageNumber').removeClass('active'); // 모든 페이지 번호의 active 클래스 제거
+        $('.pageNumber[data-page="' + currentPage + '"]').addClass('active'); // 선택된 페이지 번호에 active 클래스 추가
     }
 
     /*]]>*/
