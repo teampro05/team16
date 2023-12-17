@@ -123,7 +123,11 @@ CREATE TABLE board(
 );
 
 
--- 초등
+
+--------------------------------------------교재 및 교재 이미지 업로드---------------------------------------------------
+
+
+-- 초등 (Elementary)
 CREATE TABLE Ebook(
 	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
 	id VARCHAR(20) NOT NULL, -- 작성자
@@ -134,6 +138,7 @@ CREATE TABLE Ebook(
 	publish VARCHAR(50)
 );
 
+-- 초등 교재 이미지
 CREATE TABLE EbookImg(
 	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Ebno INT NOT NULL,
@@ -144,7 +149,7 @@ CREATE TABLE EbookImg(
 	uploaddate VARCHAR(100)
 );
 
--- 중학
+-- 중학 (Middle)
 CREATE TABLE Mbook(
 	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
 	id VARCHAR(20) NOT NULL, -- 작성자
@@ -155,6 +160,7 @@ CREATE TABLE Mbook(
 	publish VARCHAR(50)
 );
 
+-- 중학 교재 이미지
 CREATE TABLE MbookImg(
 	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Mbno INT NOT NULL,
@@ -165,7 +171,7 @@ CREATE TABLE MbookImg(
 	uploaddate VARCHAR(100)
 );
 
--- 수능
+-- 수능 (High)
 CREATE TABLE Hbook(
 	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
 	id VARCHAR(20) NOT NULL, -- 작성자
@@ -176,6 +182,7 @@ CREATE TABLE Hbook(
 	publish VARCHAR(50)
 );
 
+-- 수능 교재 이미지
 CREATE TABLE HbookImg(
 	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Hbno INT NOT NULL,
@@ -186,7 +193,7 @@ CREATE TABLE HbookImg(
 	uploaddate VARCHAR(100)
 );
 
--- 토익
+-- 토익 (Toeic)
 CREATE TABLE Tbook(
 	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
 	id VARCHAR(20) NOT NULL, -- 작성자
@@ -197,6 +204,7 @@ CREATE TABLE Tbook(
 	publish VARCHAR(50)
 );
 
+-- 토익 교재 이미지
 CREATE TABLE TbookImg(
 	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Tbno INT NOT NULL,
