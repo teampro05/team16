@@ -1,5 +1,7 @@
 package com.pro06.dto;
 
+import com.pro06.dto.course.CourseDto;
+import com.pro06.dto.course.LectureDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
