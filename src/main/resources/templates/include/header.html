@@ -14,13 +14,21 @@
 
     <!-- ======= Top Bar ======= -->
     <section id="topBar" class="d-flex align-items-center">
+    <section id="topBar" class="d-flex align-items-center">
         <div class="container ">
             <div class="cta">
+            <div class="cta">
                 <th:block sec:authorize="isAnonymous()">
+                    <a th:href="@{/term}" class="header_login">회원가입</a>
                     <a th:href="@{/login}" class="header_login">로그인</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
-                    <p class="topBar-name">반갑습니다!</p>
+                    <p class="topBar-name">반갑습니다.</p>
+                    <p class="topBar-name" sec:authentication="principal"></p>
+                    <p class="topBar-name"> 님</p>
+                    <a th:href="@{/myPage}" class="header_login">마이페이지</a>
+                    <a th:href="@{/logout}" class="header_login">로그아웃</a>
+                    <p class="topBar-name">반갑습니다.</p>
                     <p class="topBar-name" sec:authentication="principal"></p>
                     <p class="topBar-name"> 님 🤓 </p>
                     <a th:href="@{/myPage}" class="header_login" style="background: none">마이페이지</a>
@@ -40,6 +48,7 @@
             <!-- navbar -->
             <nav id="navbar" class="navbar">
                 <ul>
+                    <li><a class="nav-link scrollto active" th:href="@{/course/list}">강의</a></li>
                     <li><a class="nav-link scrollto active" th:href="@{/course/list}">강의</a></li>
                     <li class="dropdown"><a href="#"><span>교재</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -83,7 +92,7 @@
                                     </a>
                                 </li>
                                 <li class="quick03">
-                                    <a th:href="@{/mycourse/list}">
+                                    <a th:href="@{/myPage}">
                                     <p>나의 강의실</p>
                                     </a>
                                 </li>
@@ -97,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li class="quick02">
-                                    <a th:href="@{/mycourse/list}">
+                                    <a th:href="@{/myPage}">
                                         <p>나의 강의실</p>
                                     </a>
                                 </li>
