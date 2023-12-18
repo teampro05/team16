@@ -3,9 +3,6 @@ package com.pro06.controller.course;
 import com.pro06.dto.course.CourseDto;
 import com.pro06.dto.course.LectureDto;
 import com.pro06.dto.course.MyCourseDto;
-import com.pro06.entity.course.Course;
-import com.pro06.entity.Status;
-import com.pro06.entity.User;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
@@ -14,20 +11,14 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -134,4 +125,29 @@ public class CourseController {
 
 
 
+    // 자동으로 개강진행
+    @Scheduled(fixedRate = 10000)
+    @GetMapping("/openCource")
+    public void courseOpen () {
+        log.info("openCource ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        List<CourseDto> courseList = courseService.courseList();
+        LocalDateTime date = LocalDateTime.now();
+        //현재 시간 String으로 변경
+        String Local1 = date.format(DateTimeFormatter.BASIC_ISO_DATE);
+        log.info("date ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + date);
+        log.info("Local1 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + Local1);
+
+        for (CourseDto courseDto:courseList){
+            //강의 시간 String으로 변경
+            String Local2 = courseDto.getCopendate().format(DateTimeFormatter.BASIC_ISO_DATE);
+            log.info("courseDto.getCopendate() ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + courseDto.getCopendate());
+            log.info("Local2 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + Local2);
+
+            if(Local1.equals(Local2)){
+                //값이 같을 경우 강의 오픈
+                courseDto.setCopen(1);
+                courseService.courseUpdate(courseDto);
+            };
+        }
+    }
 }

@@ -1,14 +1,11 @@
 package com.pro06.service;
 
-import com.pro06.dto.UserDTO;
 import com.pro06.entity.BaseEntity;
 import com.pro06.entity.Role;
 import com.pro06.entity.Status;
 import com.pro06.entity.User;
 import com.pro06.repository.UserRepository;
-import com.sun.security.auth.UnixNumericUserPrincipal;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -30,16 +25,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @Override
-    public List<UserDTO> userList() {
-        List<User> userList = userRepository.findAll();
-        List<UserDTO> userDTOList = userList.stream().map(
-                user -> modelMapper.map(user, UserDTO.class))
-                .collect(Collectors.toList());
-        return userDTOList;
+    public List<User> userList() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -48,9 +36,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void userInsert(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        userRepository.save(user);
+    public User userInsert(User user) {
+        user.setPw(passwordEncoder.encode(user.getPw()));
+        user.setRole(Role.USER);
+        user.setStatus(Status.ACTIVE);
+        return userRepository.save(user);
     }
 
     @Override
@@ -59,22 +49,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getId(String id) {
-        User user = userRepository.getId(id);
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return userDTO;
+    public User getId(String id) {
+        return userRepository.getId(id);
     }
 
     @Override
-    public User LoginId(String id) {
-        User user = userRepository.getId(id);
-        return user;
-    }
-
-    @Override
-    public void userUpdate(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        userRepository.save(user);
+    public User userUpdate(User user) {
+        return userRepository.save(user);
     }
 
     @Override

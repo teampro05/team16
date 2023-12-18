@@ -38,7 +38,7 @@ public class AuthProvider implements AuthenticationProvider {
 
         PasswordEncoder passwordEncoder = userService.passwordEncoder();
         UsernamePasswordAuthenticationToken token;
-        User userVo = userService.LoginId(id);
+        User userVo = userService.getId(id);
 
         if (userVo != null && passwordEncoder.matches(pw, userVo.getPw())) { // 일치하는 user 정보가 있는지 확인
                 List<GrantedAuthority> roles = new ArrayList<>();

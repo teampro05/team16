@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NoticeRepository extends JpaRepository<Notice, Integer> {
+public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
     @Query("select m from Notice m where m.no = :no")
-    Notice get(@Param("no") Integer no);
+    Notice get(@Param("no") Long no);
 
 }
