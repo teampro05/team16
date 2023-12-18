@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:replace="/include/adminhead :: head"></th:block>
@@ -55,13 +54,13 @@
                                             <option value="REST">REST</option>
                                             <option value="OUT">OUT</option>
                                         </select>
-                                        <button type="submit" class="btn1" >상태 변경</button>
+                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
                                     </td>
                                 </form>
                             </tr>
                             <tr>
                                 <th class="text-center">상태</th>
-                                <form th:action="@{/role(id=${user.getId()})}" method="post">
+                                <form th:action="@{/admin/role_get(id=${user.getId()})}" method="post">
                                     <td>
                                         <select name="role" id="role" class="select-box" >
                                             <option value="[[${user.getRole()}]]">현재: [[${user.getRole()}]]</option>
@@ -69,7 +68,7 @@
                                             <option value="USER">USER</option>
                                             <option value="TEACHER">TEACHER</option>
                                         </select>
-                                        <button type="submit" class="btn1" >권한 변경</button>
+                                        <button type="submit" class="btn2 btn-primary" >권한 변경</button>
                                     </td>
                                 </form>
                             </tr>

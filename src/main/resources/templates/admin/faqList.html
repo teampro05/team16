@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+    <title>관리자페이지: F.A.Q 목록</title>
+    <style>
+        td form {
+            display: inline-flex;
+        }
+        select {
+            width: 150px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+        <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/}"> HOME </a> &gt; <span> F.A.Q </span></p>
+            </div>
+            <div class="content-wrapper">
+                <h1>F.A.Q</h1>
+                <div class="card p-3 faq" id="faq">
+<!--                    <div th:replace="/include/searchList :: fragment-search('/admin/userList', 'id:아이디,name:이름,tel:전화번호')"></div>-->
+                    <div class="faq-list">
+                        <ul>
+                            <th:block th:each="faq, noo: ${faqList}">
+<!--                                <li>카운트</li>-->
+<!--                                <li th:text="${noo.count}"></li>-->
+
+<!--                                <li>No</li>-->
+<!--                                <li th:text="${faq.no}"></li>-->
+
+<!--                                <li>제목</li>-->
+<!--                                <li th:text="${faq.title}"></li>-->
+
+<!--                                <li>내용</li>-->
+<!--                                <li th:text="${faq.content}"></li>-->
+
+                                    <li data-aos="fade-up" >
+                                        <form th:action="@{/admin/post}" method="post" onsubmit="abi()">
+                                            <i class="bx bx-help-circle icon-help"></i>
+                                            <input data-bs-toggle="collapse" name="title" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.title}" />
+                                            <input data-bs-toggle="collapse" name="no" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.no}" />
+    <!--                                        <div th:id="'faq-list-' + ${faq.count}" class="collapse show" data-bs-parent=".faq-list">-->
+                                                <input data-bs-toggle="collapse" name="content" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.content}" />
+    <!--                                        </div>-->
+                                            <button type="submit" class="btn2 btn-primary modifyBtn" id="update_btn" style="display: block">수정완료하기</button>
+                                        </form>
+                                    </li>
+                            </th:block>
+                            <th:block th:if="${faqList.size() <= 0}">
+                                <li data-aos="fade-up" >
+                                    <p> 목록이 없습니다. </p>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                    <button type="button" onclick="modifyReply()" id="start_btn" class="btn btn-primary"> 수정하기 </button>
+                    <button type="button" onclick="close()" id="end_btn" class="btn btn-primary" style="display: none;"> 완료 </button>
+
+
+<!--                    <th:block th:if="${not #lists.isEmpty(userList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/admin/userList')"></div></th:block>-->
+                </div>
+            </div>
+            <footer class="footer">
+                <script th:src="@{/js/datatables.js}"></script>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    function update() {
+        $("#update_btn").css("display", "block")
+        $(".faqinput").attr("readonly", false)
+        document.getElementsByClassName('faqinput').readonly = false;
+        $("#start_btn").css("display", "none")
+        $("#end_btn").css("display", "block")
+    }
+
+    function close() {
+        $("#update_btn").css("display", "none")
+        $(".faqinput").attr("readonly", true)
+        $("#start_btn").css("display", "block")
+        $("#end_btn").css("display", "none")
+    }
+
+    async function modifyReply() {
+        const response = await axios.post('/admin/post', "this is string").then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+        return response.data
+    }
+</script>

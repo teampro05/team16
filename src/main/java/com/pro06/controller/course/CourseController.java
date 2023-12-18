@@ -4,6 +4,7 @@ import com.pro06.dto.CourseDto;
 import com.pro06.dto.LectureDto;
 import com.pro06.dto.MyCourseDto;
 import com.pro06.entity.Course;
+import com.pro06.entity.Status;
 import com.pro06.entity.User;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,7 +32,6 @@ import java.util.List;
 // 해당 컨트롤러에서 사용한 log.error들은 싹다 alert로 나중에 바꿔야함
 
 // 강좌 컨트롤
-@Component
 @Controller
 @Log4j2
 @RequestMapping("/course/*")
@@ -128,29 +129,4 @@ public class CourseController {
 
 
 
-    // 자동으로 개강진행
-    @Scheduled(fixedRate = 10000)
-    @GetMapping("/openCource")
-    public void courseOpen () {
-        log.info("openCource ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-        List<CourseDto> courseList = courseService.courseList();
-        LocalDateTime date = LocalDateTime.now();
-        //현재 시간 String으로 변경
-        String Local1 = date.format(DateTimeFormatter.BASIC_ISO_DATE);
-        log.info("date ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + date);
-        log.info("Local1 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + Local1);
-
-        for (CourseDto courseDto:courseList){
-            //강의 시간 String으로 변경
-            String Local2 = courseDto.getCopendate().format(DateTimeFormatter.BASIC_ISO_DATE);
-            log.info("courseDto.getCopendate() ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + courseDto.getCopendate());
-            log.info("Local2 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + Local2);
-
-            if(Local1.equals(Local2)){
-                //값이 같을 경우 강의 오픈
-                courseDto.setCopen(1);
-                courseService.courseUpdate(courseDto);
-            };
-        }
-    }
 }
