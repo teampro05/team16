@@ -59,7 +59,7 @@ pre[class*="language-"] {
   color: black;
   background: none;
   text-shadow: 0 1px white;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family: 'EASTARJET-Medium';
   font-size: 1em;
   text-align: left;
   white-space: pre;
@@ -361,7 +361,7 @@ pre[class*="language-"] {
   border-radius: 3px;
   color: white;
   display: none;
-  font-family: sans-serif;
+  font-family: 'EASTARJET-Medium';
   font-size: 12px;
   line-height: 14px;
   margin: 5px 10px;

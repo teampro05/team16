@@ -12,11 +12,18 @@
 <section class="table-list">
     <div class="container">
         <h2>내 강좌 목록</h2>
+        <div class="search_from">
+            <select name="select_filter" class="select_filter">
+                <option value="1">제목</option>
+            </select>
+            <input type="text" name="search_filter" class="search_filter">
+        </div>
         <table class="List-table">
             <thead>
             <tr>
                 <th>No</th>
                 <th>제목</th>
+                <th>학년</th>
                 <th></th>
             </tr>
             </thead>
@@ -24,13 +31,9 @@
             <th:block th:each="myCourse, status : ${myCourseList}">
                 <tr>
                     <td th:text="${status.count}"></td>
-                    <td><span th:text="${myCourse.getCourse().title}"></span></td>
+                    <td th:text="${myCourse.getCourse().title}"></td>
+                    <td th:text="${myCourse.getCourse().level}"></td>
                     <td><a th:href="@{/mycourse/detail(no=${myCourse.getCourse().no})}">강좌보기</a></td>
-                </tr>
-            </th:block>
-            <th:block th:if="${myCourseList.size() <= 0}">
-                <tr>
-                    <td colspan="4">목록이 없습니다.</td>
                 </tr>
             </th:block>
             </tbody>

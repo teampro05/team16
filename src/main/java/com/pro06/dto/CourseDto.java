@@ -4,9 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 // validation을 이용해 size, notnull 을 써도 되고 아니면 
 // column을 이용해 length랑 null able 지정해줘도 됨
 
-@Data
+@Getter @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseDto extends BaseDto {

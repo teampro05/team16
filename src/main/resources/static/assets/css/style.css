@@ -12,9 +12,11 @@
   --sub1: #D0B987;
   --sub2: #AFB3BC;
   --sub3: #39312f;
+  --sub3: #39312f;
   --white: white;
   --black: black;
   --hover: #ff6b3b;
+  --admin: #4B49AC;
   --admin: #4B49AC;
 
 }
@@ -30,7 +32,7 @@
 
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'EASTARJET-Medium';
   color: var(--sub);
 }
 
@@ -50,7 +52,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: 'EASTARJET-Medium';
   text-align: center;
 }
 
@@ -63,6 +65,7 @@ ul, li{
 table {
   width: 60%;
   margin: 4rem auto;
+  margin: 4rem auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   border-radius: 8px;
@@ -74,6 +77,9 @@ select {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+textarea {
+  resize: none;
 }
 textarea {
   resize: none;
@@ -126,6 +132,8 @@ textarea {
 --------------------------------------------------------------*/
 #topBar {
   background: var(--sub3);
+#topBar {
+  background: var(--sub3);
   font-size: 14px;
   padding: 0;
   color: rgba(255, 255, 255, 0.8);
@@ -133,10 +141,13 @@ textarea {
 }
 
 #topBar .contact-info i {
+#topBar .contact-info i {
   font-style: normal;
   color: var(--main);
 }
 
+#topBar .contact-info i a,
+#topBar .contact-info i span {
 #topBar .contact-info i a,
 #topBar .contact-info i span {
   padding-left: 5px;
@@ -144,10 +155,12 @@ textarea {
 }
 
 #topBar .contact-info i a {
+#topBar .contact-info i a {
   line-height: 0;
   transition: 0.3s;
 }
 
+#topBar .contact-info i a:hover {
 #topBar .contact-info i a:hover {
   color: var(--main);
 }
@@ -157,17 +170,31 @@ textarea {
   height: auto;
   float: right;
 }
+.cta {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  float: right;
+}
 .cta a {
+  color: var(--white);
   color: var(--white);
   background: var(--main);
   padding: 10px 20px;
+  height: auto;
   height: auto;
   display: inline-block;
   text-shadow: 0.1px 0.1px 0.5px black;
 }
 
 #topBar .cta a:hover {
+#topBar .cta a:hover {
   background: var(--hover);
+}
+
+.topBar-name {
+  display: inline-block;
+  margin: 0 10px 0 0;
 }
 
 .topBar-name {
@@ -194,7 +221,7 @@ textarea {
   margin: 0;
   line-height: 0;
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'EASTARJET-Medium';
 }
 
 #header .logo h1 a,
@@ -282,6 +309,8 @@ textarea {
 .navbar .getstarted:focus:hover {
   color: var(--white);
   background: var(--hover);
+  color: var(--white);
+  background: var(--hover);
 }
 
 .navbar .dropdown ul {
@@ -294,6 +323,7 @@ textarea {
   z-index: 99;
   opacity: 0;
   visibility: hidden;
+  background: var(--white);
   background: var(--white);
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
   transition: 0.3s;
@@ -511,7 +541,7 @@ textarea {
 }
 
 #hero .btn-get-started {
-  font-family: "Raleway", sans-serif;
+  font-family: 'EASTARJET-Medium';
   font-weight: 400;
   font-size: 16px;
   letter-spacing: 1px;
@@ -589,7 +619,7 @@ section {
   font-weight: 500;
   margin-bottom: 20px;
   padding-bottom: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'EASTARJET-Medium';
   color: #635551;
 }
 
@@ -2357,7 +2387,9 @@ section {
    top: 0;
    text-align: center;
    background-color: var(--sub);
+   background-color: var(--sub);
    background-size: cover;
+   color: var(--black);
    color: var(--black);
    font-weight: bold;
    z-index: 1000;
@@ -2445,6 +2477,7 @@ section {
 
 .container-login {
   background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 20px 40px;
   border-radius: 5px;
   width: 550px;
@@ -2471,6 +2504,7 @@ section {
   padding: 15px;
   font-family: inherit;
   font-size: 16px;
+  font-weight: bold;
   font-weight: bold;
   border: 0;
   border-radius: 5px;
@@ -2572,7 +2606,23 @@ form p {
 /*    text-align: left;*/
 /*    border-bottom: 1px solid #ddd;*/
 /*  }*/
+/*.table-list {*/
+/*    border-collapse: collapse;*/
+/*    width: 100%;*/
+/*    margin: 20px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*    background-color: var(--white);*/
+/*    border-radius: 8px;*/
+/*  }*/
+/*.table-list th, td {*/
+/*    padding: 12px;*/
+/*    text-align: left;*/
+/*    border-bottom: 1px solid #ddd;*/
+/*  }*/
 
+/*.table-list th {*/
+/*    background-color: var(--white);*/
+/*  }*/
 /*.table-list th {*/
 /*    background-color: var(--white);*/
 /*  }*/
@@ -2580,9 +2630,15 @@ form p {
 /*.table-list tr:hover {*/
 /*    background-color: var(--white);*/
 /*  }*/
+/*.table-list tr:hover {*/
+/*    background-color: var(--white);*/
+/*  }*/
 
 
 .List-table table {
+  text-align: center;
+  width: 60%;
+  margin: 4rem auto;
   text-align: center;
   width: 60%;
   margin: 4rem auto;
@@ -2601,6 +2657,7 @@ form p {
 
 
 /* 꽃가루 이벤트 */
+/* 꽃가루 이벤트 */
 
 canvas {
   position: fixed;
@@ -2617,9 +2674,11 @@ canvas {
   background: none;
   border: none;
   color: var(--black);
+  color: var(--black);
 }
 
 
+/* 채팅메뉴 */
 /* 채팅메뉴 */
 #chatMenu {
   margin: 0;
@@ -2708,6 +2767,69 @@ canvas {
   display: none;
 }
 
+
+.textCount{
+  float: right;
+}
+
+.form-button{
+  display: block;
+}
+
+/* 버튼 */
+.btn1 {
+  color: #fff;
+  background: var(--main);
+  padding: 10px 20px;
+  display: inline-block;
+  text-shadow: 0.1px 0.1px 0.5px black;
+  border: none;
+  margin-left: 20px;
+}
+
+.button {
+  color: #fff;
+  background: var(--main);
+  padding: 10px 20px;
+  display: inline-block;
+  transition: 0.3s;
+  text-shadow: 0.1px 0.1px 0.5px black;
+  border: none;
+}
+
+.button:hover {
+  background: var(--hover);
+}
+
+.right1{
+  float: right;
+}
+.center1{
+  float: right;
+  margin-right: 16rem;
+}
+
+/* 폼 */
+.form-outline input{
+  border: 0.5px solid var(--sub);
+}
+.form-outline textarea{
+  border: 0.5px solid var(--sub);
+}
+
+/* breadcrumb */
+.breadcrumb {
+  clear:both;
+  width:1200px;
+  margin: 0 auto;
+  text-align: right;
+  color:var(--sub);
+  padding-top: 27px;
+  padding-bottom: 27px;
+}
+
+.breadcrumb a { color: var(--sub);
+  }
 
 .textCount{
   float: right;

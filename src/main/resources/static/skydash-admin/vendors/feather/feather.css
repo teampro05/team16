@@ -1,7 +1,7 @@
 @charset "UTF-8";
  
 @font-face {
-  font-family: "feather";
+  font-family: 'EASTARJET-Medium'; 
   src:url("fonts/feather-webfont.eot");
   src:url("fonts/feather-webfont.eot?#iefix") format("embedded-opentype"),
     url("fonts/feather-webfont.woff") format("woff"),
@@ -15,7 +15,7 @@
  
 [data-icon]:before {
   display: inline-block;
-  font-family: "feather";
+  font-family: 'EASTARJET-Medium'; 
   content: attr(data-icon);
   font-style: normal;
   font-weight: normal;
@@ -32,7 +32,7 @@
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
-  font-family: "feather";
+  font-family: 'EASTARJET-Medium'; 
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

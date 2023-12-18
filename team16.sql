@@ -123,53 +123,94 @@ CREATE TABLE board(
 );
 
 
--- 교재
--- 초등
-CREATE TABLE elementary(
-                           NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재 번호
-                           title VARCHAR(100) NOT NULL, -- 교재 제목
-                           content VARCHAR(2000) NOT NULL, -- 교재 내용
-                           price DECIMAL(10, 2), -- 가격
-                           publish DATE , -- 출간일
-                           resdate DATETIME DEFAULT CURRENT_TIMESTAMP -- 게시일
+
+--------------------------------------------교재 및 교재 이미지 업로드---------------------------------------------------
+
+
+-- 초등 (Elementary)
+CREATE TABLE Ebook(
+	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
+	id VARCHAR(20) NOT NULL, -- 작성자
+	title VARCHAR(2000),
+	content VARCHAR(2000), -- 내용
+	servecontent VARCHAR(1000), -- 요약 내용
+	price INT DEFAULT 10, -- 가격
+	publish VARCHAR(50)
 );
 
--- 중학
-CREATE TABLE middle(
-                       NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재 번호
-                       title VARCHAR(100) NOT NULL, -- 교재 제목
-                       content VARCHAR(2000) NOT NULL, -- 교재 내용
-                       price DECIMAL(10, 2), -- 가격
-                       publish DATE , -- 출간일
-                       resdate DATETIME DEFAULT CURRENT_TIMESTAMP -- 게시일
+-- 초등 교재 이미지
+CREATE TABLE EbookImg(
+	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	Ebno INT NOT NULL,
+	savefolder VARCHAR(400),
+	originfile VARCHAR(400),
+	savefile VARCHAR(800),
+	filesize LONG,
+	uploaddate VARCHAR(100)
 );
 
--- 수능
-CREATE TABLE high(
-                     NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재 번호
-                     title VARCHAR(100) NOT NULL, -- 교재 제목
-                     content VARCHAR(2000) NOT NULL, -- 교재 내용
-                     price DECIMAL(10, 2), -- 가격
-                     publish DATE , -- 출간일
-                     resdate DATETIME DEFAULT CURRENT_TIMESTAMP -- 게시일
+-- 중학 (Middle)
+CREATE TABLE Mbook(
+	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
+	id VARCHAR(20) NOT NULL, -- 작성자
+	title VARCHAR(2000),
+	content VARCHAR(2000), -- 내용
+	servecontent VARCHAR(1000), -- 요약 내용
+	price INT DEFAULT 10, -- 가격
+	publish VARCHAR(50)
 );
 
--- 토익
-CREATE TABLE toeic(
-                      NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재 번호
-                      title VARCHAR(100) NOT NULL, -- 교재 제목
-                      content VARCHAR(2000) NOT NULL, -- 교재 내용
-                      price DECIMAL(10, 2), -- 가격
-                      publish DATE , -- 출간일
-                      resdate DATETIME DEFAULT CURRENT_TIMESTAMP -- 게시일
+-- 중학 교재 이미지
+CREATE TABLE MbookImg(
+	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	Mbno INT NOT NULL,
+	savefolder VARCHAR(400),
+	originfile VARCHAR(400),
+	savefile VARCHAR(800),
+	filesize LONG,
+	uploaddate VARCHAR(100)
 );
 
--- 교재 업로드
-CREATE TABLE bookobj(
-                        NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                        bno INT NOT NULL, -- 교재 번호
-                        savefolder VARCHAR(400),
-                        originfile VARCHAR(400),
-                        filesize LONG,
-                        uploaddate VARCHAR(100)
+-- 수능 (High)
+CREATE TABLE Hbook(
+	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
+	id VARCHAR(20) NOT NULL, -- 작성자
+	title VARCHAR(2000),
+	content VARCHAR(2000), -- 내용
+	servecontent VARCHAR(1000), -- 요약 내용
+	price INT DEFAULT 10, -- 가격
+	publish VARCHAR(50)
+);
+
+-- 수능 교재 이미지
+CREATE TABLE HbookImg(
+	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	Hbno INT NOT NULL,
+	savefolder VARCHAR(400),
+	originfile VARCHAR(400),
+	savefile VARCHAR(800),
+	filesize LONG,
+	uploaddate VARCHAR(100)
+);
+
+-- 토익 (Toeic)
+CREATE TABLE Tbook(
+	NO INT PRIMARY KEY AUTO_INCREMENT, -- 교재코드
+	id VARCHAR(20) NOT NULL, -- 작성자
+	title VARCHAR(2000),
+	content VARCHAR(2000), -- 내용
+	servecontent VARCHAR(1000), -- 요약 내용
+	price INT DEFAULT 10, -- 가격
+	publish VARCHAR(50)
+);
+
+-- 토익 교재 이미지
+CREATE TABLE TbookImg(
+	NO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	Tbno INT NOT NULL,
+	savefolder VARCHAR(400),
+	originfile VARCHAR(400),
+	savefile VARCHAR(800),
+	filesize LONG,
+	uploaddate VARCHAR(100)
 );

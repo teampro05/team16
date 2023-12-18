@@ -17,12 +17,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Log4j2
 @Controller
+//@RequestMapping("/")
 //@RequestMapping("/")
 public class HomeController {
 
@@ -35,6 +38,7 @@ public class HomeController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
 
     @GetMapping("/")
@@ -58,6 +62,11 @@ public class HomeController {
         if(authentication != null){
             new SecurityContextLogoutHandler().logout(request,response,authentication);
         }
+    public String active(Model model, HttpServletRequest request, HttpServletResponse response){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null){
+            new SecurityContextLogoutHandler().logout(request,response,authentication);
+        }
         return "/user/active";
     }
 
@@ -66,6 +75,7 @@ public class HomeController {
     public String oto(Model model){
         return "/board/oto";
     }
+
 
 
     @GetMapping("/status")
@@ -78,6 +88,7 @@ public class HomeController {
             return "/alert";
         } else if (pass == 2) {
             model.addAttribute("msg", "해당 계정은 휴면계정입니다. 휴면을 풀어주세요.");
+            model.addAttribute("url", "/active");
             model.addAttribute("url", "/active");
             return "/alert";
         } else if (pass==3){
@@ -93,7 +104,9 @@ public class HomeController {
 
 
     @GetMapping("/join")
+    @GetMapping("/join")
     public String JoinForm(Model model){
+        return "/user/join";
         return "/user/join";
     }
 
@@ -121,6 +134,7 @@ public class HomeController {
     }
 
 
+
     // Faq
 
     @GetMapping("/faq")
@@ -141,6 +155,7 @@ public class HomeController {
         boardService.faqInsert(boardDTO);
         return "redirect:/faq";
     }
+
 
 
 
@@ -166,6 +181,7 @@ public class HomeController {
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
         model.addAttribute("prin", principal.getName());
+        model.addAttribute("prin", principal.getName());
         return "/board/noticeadd";
     }
 
@@ -183,6 +199,7 @@ public class HomeController {
     }
 
     @PostMapping("noticeEdit")
+    @PostMapping("noticeEdit")
     public String noticeEdit(BoardDTO boardDTO){
         boardService.NoticeInsert(boardDTO);
         return "redirect:/notice";
@@ -193,5 +210,6 @@ public class HomeController {
         boardService.NoticeDelete(no);
         return "redirect:/notice";
     }
+
 
 }
