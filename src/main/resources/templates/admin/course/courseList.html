@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강좌 목록</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
+    <style>
+        td form {
+            display: inline-flex;
+        }
+        select {
+            width: 150px;
+            font-weight: bold;
+        }
+
+    </style>
 </head>
 <body>
 <div class="container-scroller">
@@ -13,35 +23,53 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
 
         <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/}"> HOME </a> &gt; <span> 강좌관리 </span></p>
+            </div>
             <div class="content-wrapper">
-                <h1>관리자페이지</h1>
-                <h2>강좌관리</h2>
+                <h1>강좌관리</h1>
                 <div class="card p-3">
                     <table id="myTable" class="table text-center mb-3">
                         <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>제목</th>
-                                <th>수강현황</th>
-                                <th>작성자</th>
-                                <th>등록일</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th>No</th>
+                            <th>제목</th>
+                            <th>수강현황</th>
+                            <th>작성자</th>
+                            <th>등록일</th>
+                            <th>개설여부</th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <th:block th:each="course, status : ${courseList}">
-                                <tr>
-                                    <td th:text="${status.count}"></td>
-                                    <td th:text="${course.title}"></td>
-                                    <td th:text="${course.peo} + '/' + ${course.peo_max}"></td>
-                                    <td th:text="${course.id}"></td>
-                                    <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
-                                    <td>
-                                        <a th:href="@{/admin/courseDetail(no=${course.no})}" class="btn btn-primary">강좌상세</a>
-                                        <a th:href="@{/admin/courseUpdate(no=${course.no})}" class="btn btn-primary">강좌수정</a>
-                                    </td>
-                                </tr>
-                            </th:block>
+                        <th:block th:each="course, status : ${courseList}">
+                            <tr>
+                                <td th:text="${status.count}"></td>
+                                <td th:text="${course.title}"></td>
+                                <td th:text="${course.peo} + '/' + ${course.peo_max}"></td>
+                                <td th:text="${course.id}"></td>
+                                <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
+                                <td>
+                                    <form th:action="@{/admin/openCource_admin(no=${course.getNo()})}" method="post">
+                                        <select name="copen" id="copen" class="select-box" >
+                                            <th:block th:if="${course.getCopen().equals(1)}">
+                                                <option value="[[${course.getCopen()}]]">현재: 열기</option>
+                                            </th:block>
+                                            <th:block th:if="${course.getCopen().equals(0)}">
+                                                <option value="[[${course.getCopen()}]]">현재: 닫기</option>
+                                            </th:block>
+                                            <option value="1">열기</option>
+                                            <option value="0">닫기</option>
+                                        </select>
+                                        <button type="submit" class="btn2 btn-primary" >수정</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/courseDetail(no=${course.no})}" class="btn2 btn-primary">강좌상세</a>
+                                    <a th:href="@{/admin/courseUpdate(no=${course.no})}" class="btn2 btn-primary">강좌수정</a>
+                                </td>
+                            </tr>
+                        </th:block>
                         </tbody>
                     </table>
                     <div>
@@ -53,11 +81,6 @@
             </div>
 
             <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-                </div>
-
                 <script th:src="@{/js/datatables.js}"></script>
             </footer>
         </div>

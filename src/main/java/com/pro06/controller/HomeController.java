@@ -1,9 +1,9 @@
 package com.pro06.controller;
 
 import com.pro06.dto.BoardDTO;
+import com.pro06.dto.UserDTO;
 import com.pro06.entity.*;
-import com.pro06.service.FaqService;
-import com.pro06.service.NoticeService;
+import com.pro06.service.BoardService;
 import com.pro06.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,13 +36,10 @@ public class HomeController {
     private UserService userService;
 
     @Autowired
-    private FaqService faqService;
-
-    @Autowired
-    private NoticeService noticeService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BoardService boardService;
 
 
     @GetMapping("/")
@@ -106,64 +103,68 @@ public class HomeController {
     }
 
     @PostMapping("/joinPro")
-    public String Join(Model model, User user){
-        userService.userInsert(user);
+    public String Join(Model model, UserDTO userDTO){
+        userService.userInsert(userDTO);
         return "redirect:/";
     }
 
     @GetMapping("/myPage")
     public String Exindex(Model model, Principal principal){
-        User user = userService.getId(principal.getName());
-        model.addAttribute("user", user);
+        UserDTO userDTO = userService.getId(principal.getName());
+        model.addAttribute("user", userDTO);
         return "/user/myPage";
     }
 
     @GetMapping("/remove")
     public String remove(String id, Model model){
-        User user = userService.getId(id);
-        user.setStatus(Status.OUT);
-        userService.userUpdate(user);
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setStatus(Status.OUT);
+        userService.userUpdate(userDTO);
         model.addAttribute("msg", "지금까지 감사합니다.");
         model.addAttribute("url", "/logout");
         return "/alert";
     }
 
 
+
     // Faq
 
     @GetMapping("/faq")
     public String Faq(Model model) {
-        List<Faq> faqList = faqService.faqList();
+        List<BoardDTO> faqList = boardService.faqList();
         model.addAttribute("faqList", faqList);
         return "/board/faq";
     }
 
     @GetMapping("/faqadd")
     public String FaqForm(Model model) {
+        model.addAttribute("boarddto", new BoardDTO());
         return "/board/faqadd";
     }
 
     @PostMapping("/faqadd")
-    public String FaqInsert(Faq faq){
-        faqService.faqInsert(faq);
+    public String FaqInsert(BoardDTO boardDTO){
+        boardService.faqInsert(boardDTO);
         return "redirect:/faq";
     }
+
 
 
 
     // Notice
 
     @GetMapping("/notice")
-    public String notice(Model model, Principal principal) {
-        List<Notice> noticeList = noticeService.NoticeList();
+    public String notice(Model model) {
+        List<BoardDTO> noticeList = boardService.NoticeList();
         model.addAttribute("noticeList", noticeList);
         return "/board/notice";
     }
 
     @GetMapping("/noticeGet")
-    public String noticeGet(Model model, Long no) {
-        Notice notice = noticeService.NoticeGet(no);
-        model.addAttribute("notice", notice);
+    public String noticeGet(Model model, Integer no) {
+        BoardDTO boardDTO = boardService.NoticeGet(no);
+        model.addAttribute("notice", boardDTO);
+        log.info("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + boardDTO);
         return "/board/noticeGet";
     }
 
@@ -172,33 +173,32 @@ public class HomeController {
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
         model.addAttribute("prin", principal.getName());
+        model.addAttribute("prin", principal.getName());
         return "/board/noticeadd";
     }
 
     @PostMapping("/noticeadd")
     public String noticeInsert(BoardDTO boardDTO){
-        Notice notice = Notice.create(boardDTO);
-        noticeService.NoticeInsert(notice);
+        boardService.NoticeInsert(boardDTO);
         return "redirect:/notice";
     }
 
     @GetMapping("/noticeEdit")
-    public String noticeEditForm(Model model, Long no) {
-        Notice notice = noticeService.NoticeGet(no);
-        model.addAttribute("notice", notice);
+    public String noticeEditForm(Model model, Integer no) {
+        BoardDTO boardDTO = boardService.NoticeGet(no);
+        model.addAttribute("notice", boardDTO);
         return "/board/noticeEdit";
     }
 
     @PostMapping("noticeEdit")
     public String noticeEdit(BoardDTO boardDTO){
-        Notice notice = Notice.create(boardDTO);
-        noticeService.NoticeInsert(notice);
+        boardService.NoticeInsert(boardDTO);
         return "redirect:/notice";
     }
 
     @GetMapping("/noticeDelete")
-    public String noticeDelete(Model model, Long no) {
-        noticeService.NoticeDelete(no);
+    public String noticeDelete(Model model, Integer no) {
+        boardService.NoticeDelete(no);
         return "redirect:/notice";
     }
 

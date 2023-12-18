@@ -123,31 +123,4 @@ public class CourseController {
         return "redirect:/mycourse/list"; // 인덱스 이동
     }
 
-
-
-    // 자동으로 개강진행
-    @Scheduled(fixedRate = 10000)
-    @GetMapping("/openCource")
-    public void courseOpen () {
-        log.info("openCource ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-        List<CourseDto> courseList = courseService.courseList();
-        LocalDateTime date = LocalDateTime.now();
-        //현재 시간 String으로 변경
-        String Local1 = date.format(DateTimeFormatter.BASIC_ISO_DATE);
-        log.info("date ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + date);
-        log.info("Local1 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + Local1);
-
-        for (CourseDto courseDto:courseList){
-            //강의 시간 String으로 변경
-            String Local2 = courseDto.getCopendate().format(DateTimeFormatter.BASIC_ISO_DATE);
-            log.info("courseDto.getCopendate() ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + courseDto.getCopendate());
-            log.info("Local2 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + Local2);
-
-            if(Local1.equals(Local2)){
-                //값이 같을 경우 강의 오픈
-                courseDto.setCopen(1);
-                courseService.courseUpdate(courseDto);
-            };
-        }
-    }
 }
