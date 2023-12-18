@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro06.repository.MbookRepository">
+
+<!--
+    List<Mbook> MbookList(); // 중학 교재 리스트
+    Mbook getMbook(Integer no); // 중학 교재 상세
+    int insertMbook(Mbook mbook); // 중학 교재 추가
+    int updateMbook(Mbook mbook); // 중학 교재 수정
+    int deleteMbook(Mbook mbook); // 중학 교재 삭제
+
+    /////////////////////////////////////////////
+
+    Integer fileBoardInsert(Mbook fileboard) throws Exception;
+    Integer fileInsert(MbookImg file) throws Exception;
+    List<MbookImg> getFileGroupList(int postNo) throws Exception;
+    int fileBoardDelete(int no) throws Exception;
+    void fileBoardUpdate(Mbook mbook) throws Exception;
+    void fileUpdate(MbookImg mbookImg) throws Exception;
+    void removeFileAll(int postNO) throws Exception;
+    MbookImg thmbn(int no) throws Exception;
+    Mbook latestFileboard() throws Exception;
+-->
+    <select id="MbookList" resultType="com.pro06.entity.Mbook">
+        select * from mbook order by no desc
+    </select>
+
+    <select id="getMbook" resultType="com.pro06.entity.Mbook">
+        select * from mbook where no =#{no}
+    </select>
+
+    <insert id="insertMbook">
+        insert into mbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <update id="updateMbook">
+        update mbook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <delete id="deleteMbook">
+        delete from mbook where no=#{no}
+    </delete>
+
+<!--    //////////////////////////////////////////////////////     -->
+
+    <insert id="fileBoardInsert">
+        insert into mbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <insert id="fileInsert">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into mbookImg values (default, #{Mbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="getFileGroupList" resultType="com.pro06.entity.MbookImg">
+        select * from mbookImg where Mbno=#{Mbno}
+    </select>
+
+    <delete id="fileBoardDelete">
+        delete from mbook where no=#{no}
+    </delete>
+
+    <update id="fileBoardUpdate">
+        update mbook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <insert id="fileUpdate">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into mbookImg values (default, #{Mbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="removeFileAll">
+        delete from mbookImg where Mbno=#{Mbno}
+    </delete>
+
+    <select id="thmbn" resultType="com.pro06.entity.MbookImg">
+        select * from mbookImg where Mbno=#{no} limit 1
+    </select>
+
+    <select id="latestFileboard" resultType="com.pro06.entity.Mbook">
+        select * from mbook order by no desc limit 0,1
+    </select>
+
+</mapper>
