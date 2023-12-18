@@ -2,33 +2,22 @@
 <html lang="en">
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:replace="/include/adminhead :: head"></th:block>
     <title>관리자페이지: 회원목록</title>
-    <style>
-        td form {
-            display: inline-flex;
-        }
-        select {
-            width: 150px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper">
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
-            <div class="breadcrumb">
-                <p><a th:href="@{/}"> HOME </a> &gt; <span> 회원관리 </span></p>
-            </div>
             <div class="content-wrapper">
-                <h1>회원관리</h1>
+                <h1>회원</h1>
                 <div class="card p-3">
 <!--                    <div th:replace="/include/searchList :: fragment-search('/admin/userList', 'id:아이디,name:이름,tel:전화번호')"></div>-->
-                    <table id="myTable" class="table text-center mb-3" th:if="${not #lists.isEmpty(userList)}">
+                    <table class="table text-center mb-3" th:if="${not #lists.isEmpty(userList)}">
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -49,28 +38,28 @@
                                 <td th:text="${user.email}"></td>
                                 <td th:text="${#temporals.format(user.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                                 <td th:text="${#temporals.format(user.loginAt, 'yyyy-MM-dd hh:mm')}"></td>
-                                <td>
-                                    <form th:action="@{/admin/changeStatus_list(id=${user.getId()})}" method="post">
+                                <form th:action="@{/admin/changeStatus_list(id=${user.getId()})}" method="post">
+                                    <td>
                                         <select name="status" id="status" class="select-box" >
                                             <option value="[[${user.getStatus()}]]">현재: [[${user.getStatus()}]]</option>
                                             <option value="ACTIVE">ACTIVE</option>
                                             <option value="REST">REST</option>
                                             <option value="OUT">OUT</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form th:action="@{/admin/role_list(id=${user.getId()})}" method="post">
+                                        <button type="submit" class="btn1" >상태 변경</button>
+                                    </td>
+                                </form>
+                                <form th:action="@{/role(id=${user.getId()})}" method="post">
+                                    <td>
                                         <select name="role" id="role" class="select-box" >
                                             <option value="[[${user.getRole()}]]">현재: [[${user.getRole()}]]</option>
                                             <option value="ADMIN">ADMIN</option>
                                             <option value="USER">USER</option>
                                             <option value="TEACHER">TEACHER</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >권한 변경</button>
-                                    </form>
-                                </td>
+                                        <button type="submit" class="btn1" >권한 변경</button>
+                                    </td>
+                                </form>
                             </tr>
                         </tbody>
                     </table>
@@ -85,9 +74,6 @@
                     <p class="admin-p">ADMIN: 관리자 / USER: 유저 / TEACHER: 선생님</p>
                 </div>
             </div>
-            <footer class="footer">
-                <script th:src="@{/js/datatables.js}"></script>
-            </footer>
         </div>
     </div>
 </div>
