@@ -22,8 +22,16 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
             <div class="content-wrapper">
-                <h1>관리자페이지</h1>
-                <h2>질문관리</h2>
+                <h1>질문관리</h1>
+                <div class="search_from" style="text-align: center">
+                    <select name="select_filter" class="select_filter">
+                        <option value="1">강좌</option>
+                        <option value="2">질문</option>
+                        <option value="3">등록일</option>
+                        <option value="4">답변여부</option>
+                    </select>
+                    <input type="text" name="search_filter" class="search_filter">
+                </div>
                 <div class="card p-3">
                     <table id="myTable" class="table text-center mb-3">
                         <thead>

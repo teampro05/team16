@@ -121,10 +121,10 @@ public class AdminController {
         return "redirect:/admin/courseList";
     }
 
-    // 강좌 삭제
-    @GetMapping("courseDelete")
-    public String courseDelete(@RequestParam("no") Integer no) {
-        courseService.courseDelete(no);
+    // 강좌 삭제, 복구
+    @PostMapping("couDelRec")
+    public String couDelRec(CourseDto courseDto) {
+        courseService.couDelRec(courseDto);
         return "redirect:/admin/courseList";
     }
 

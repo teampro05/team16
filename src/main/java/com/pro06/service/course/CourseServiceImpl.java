@@ -37,11 +37,11 @@ public class CourseServiceImpl {
         courseRepository.save(res);
     }
 
-    // 강좌 삭제
-    public void courseDelete(Integer no) {
-        Optional<Course> course = courseRepository.findById(no);
+    // 강좌 삭제, 복구
+    public void couDelRec(CourseDto dto) {
+        Optional<Course> course = courseRepository.findById(dto.getNo());
         Course res = course.orElseThrow();
-        res.delete("y");
+        res.delete(dto.getDeleteYn());
         courseRepository.save(res);
     }
     
