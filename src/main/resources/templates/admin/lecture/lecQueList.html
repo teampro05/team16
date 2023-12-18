@@ -34,15 +34,10 @@
                                 <td th:text="${dto.course.title}"></td>
                                 <td th:text="${dto.que}"></td>
                                 <td th:text="${#temporals.format(dto.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
-                                <td th:text="${dto.ans} eq null ? '미답변' : '답변완료' "></td>
+                                <td th:text="${dto.ans} eq null ? '미답변' : '답변완료' " th:style="${dto.ans} eq null ? 'color:red' : 'color:blue'"></td>
                                 <td>
-                                    <th:block th:if="${dto.ans} eq null">
-                                        <a th:href="@{/admin/ansInsert(no=${dto.no})}" class="btn btn-primary">답변하기</a>
-                                    </th:block>
-
-                                    <th:block th:if="${dto.ans} ne null">
-                                        <a th:href="@{/admin/ansUpdate(no=${dto.no})}" class="btn btn-primary">답변수정</a>
-                                    </th:block>
+                                    <a th:href="@{/admin/ansInsUpd(no=${dto.no})}" class="btn btn-primary"
+                                    th:text="${dto.ans} eq null ? '답변하기' : '답변수정'"></a>
 
                                     <a th:href="@{/admin/ansDelete(no=${dto.no})}" class="btn btn-danger">제거</a>
                                 </td>

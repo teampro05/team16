@@ -60,11 +60,12 @@
                         <br>
 
                         <div class="form-group">
-                            <h3>답변 등록</h3>
-                            <form th:action="@{/admin/ansInsert}" method="post" onsubmit="return answerCheck();">
+                            <h3>답변 등록 / 수정</h3>
+                            <form th:action="@{/admin/ansInsUpd}" method="post" onsubmit="return answerCheck();">
                                 <div>
                                     <input type="hidden" name="no" id="no" th:value="${dto.no}">
-                                    <input type="text" name="ans" id="ans" class="form-control" maxlength="1000" required>
+                                    <input type="text" name="ans" id="ans" class="form-control" maxlength="500"
+                                           th:value="${dto.ans} eq null ? '' : ${dto.ans}" required>
                                 </div>
                                 <div>
                                     <span id="warn"></span>
