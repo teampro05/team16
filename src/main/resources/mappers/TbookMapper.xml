@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pro06.repository.TbookRepository">
+
+<!--
+    List<Tbook> TbookList(); // 토익 교재 리스트
+    Tbook getTbook(Integer no); // 토익 교재 상세
+    int insertTbook(Tbook tbook); // 토익 교재 추가
+    int updateTbook(Tbook tbook); // 토익 교재 수정
+    int deleteTbook(Tbook tbook); // 토익 교재 삭제
+
+    /////////////////////////////////////////////
+
+    Integer fileBoardInsert(Tbook fileboard) throws Exception;
+    Integer fileInsert(TbookImg file) throws Exception;
+    List<TbookImg> getFileGroupList(int postNo) throws Exception;
+    int fileBoardDelete(int no) throws Exception;
+    void fileBoardUpdate(Tbook tbook) throws Exception;
+    void fileUpdate(TbookImg tbookImg) throws Exception;
+    void removeFileAll(int postNO) throws Exception;
+    TbookImg thmbn(int no) throws Exception;
+    Tbook latestFileboard() throws Exception;
+-->
+    <select id="TbookList" resultType="com.pro06.entity.Tbook">
+        select * from tbook order by no desc
+    </select>
+
+    <select id="getTbook" resultType="com.pro06.entity.Tbook">
+        select * from tbook where no =#{no}
+    </select>
+
+    <insert id="insertTbook">
+        insert into tbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <update id="updateTbook">
+        update tbook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <delete id="deleteTbook">
+        delete from tbook where no=#{no}
+    </delete>
+
+<!--    //////////////////////////////////////////////////////     -->
+
+    <insert id="fileBoardInsert">
+        insert into tbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+    </insert>
+
+    <insert id="fileInsert">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into tbookImg values (default, #{Tbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="getFileGroupList" resultType="com.pro06.entity.TbookImg">
+        select * from tbookImg where Tbno=#{Tbno}
+    </select>
+
+    <delete id="fileBoardDelete">
+        delete from tbook where no=#{no}
+    </delete>
+
+    <update id="fileBoardUpdate">
+        update tbook set title=#{title}, content=#{content}, servecontent=#{servecontent}, price=#{price}, publish=#{publish} where no=#{no}
+    </update>
+
+    <insert id="fileUpdate">
+        <choose>
+            <when test="originfile != null and originfile.trim() != ''">
+                insert into tbookImg values (default, #{Tbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize})
+            </when>
+            <otherwise>
+                -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
+                select 1
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="removeFileAll">
+        delete from tbookImg where Tbno=#{Tbno}
+    </delete>
+
+    <select id="thmbn" resultType="com.pro06.entity.TbookImg">
+        select * from tbookImg where Tbno=#{no} limit 1
+    </select>
+
+    <select id="latestFileboard" resultType="com.pro06.entity.Tbook">
+        select * from tbook order by no desc limit 0,1
+    </select>
+
+</mapper>

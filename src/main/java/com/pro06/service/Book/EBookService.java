@@ -20,7 +20,7 @@ public interface EBookService {
 //    public Integer fileInsert(EbookImg file) throws Exception;
     public List<EbookImg> getFileGroupList(int postNo) throws Exception;
     public int removeFileboard(int postNo) throws Exception;
-    public void updateFileboard(EbookVO ebook) throws Exception;
+    public void updateFileboard(EbookVO fileboard) throws Exception;
 //    public void fileUpdate(EbookImg ebookImg) throws Exception;
     public void removeFileAll(int postNO) throws Exception;
     public EbookImg thmbn(int no) throws Exception;

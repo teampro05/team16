@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초등 교재 추가</title>
+    <title>중학 교재 추가</title>
     <th:block th:replace="include/head :: head" ></th:block>
     <link rel="stylesheet" th:href="@{/assets/css/product-filelist.css}">
 
@@ -22,7 +22,7 @@
     <div class="section properties">
         <div class="container">
             <div class="container" style="width:1280px;margin:20px auto;">
-                <form th:action="@{/Ebook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
+                <form th:action="@{/Mbook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="id">작성자</label>
                         <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
