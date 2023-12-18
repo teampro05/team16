@@ -14,16 +14,16 @@ public class Notice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long no;
-
-    @Column(length = 100)
-    private String title;
-
-    @Column(length = 1000)
-    private String content;
+    private Integer no;
 
     @Column(nullable = false)
-    private String author;
+    private String title;   //제목
+
+    @Column(nullable = false)
+    private String content; //내용
+
+    @Column(nullable = false)
+    private String author;  //저자
 
 
 

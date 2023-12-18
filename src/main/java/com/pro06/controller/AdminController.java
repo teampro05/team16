@@ -2,33 +2,34 @@ package com.pro06.controller;
 
 import com.pro06.dto.*;
 import com.pro06.entity.*;
+import com.pro06.service.BoardService;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Log4j2
 @Controller
+@Component
 @RequestMapping("/admin/*")
 public class AdminController {
 
@@ -50,6 +51,10 @@ public class AdminController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BoardService boardService;
+
 
     @GetMapping("/home")
     public String Home(Model model) {
@@ -232,34 +237,177 @@ public class AdminController {
         return "redirect:/admin/courseDetail?no=" + cno;
     }
 
+
+
+    // 자동으로 개강진행
+    @Scheduled(fixedRate = 30000)
+    @GetMapping("/openCource")
+    public void courseOpen () {
+        log.info("openCource ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        List<CourseDto> courseList = courseService.admCourseList();
+        LocalDateTime date = LocalDateTime.now();
+        //현재 시간 String으로 변경
+        String Local1 = date.format(DateTimeFormatter.BASIC_ISO_DATE);
+
+        for (CourseDto courseDto:courseList){
+            //강의 시간 String으로 변경
+            if(courseDto.getCopen().equals(0)){
+                String Local2 = courseDto.getCopendate().format(DateTimeFormatter.BASIC_ISO_DATE);
+                if(Local1.equals(Local2)) {
+                    //값이 같을 경우 강의 오픈
+                    courseDto.setCopen(1);
+                    courseService.courseUpdate(courseDto);
+                    log.info("오픈된 강의 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + courseDto.getTitle());
+                }
+            };
+        }
+    }
+
+    @PostMapping("/openCource_admin")
+    public String out1(Integer no, Model model, Integer copen ){
+        CourseDto courseDto = courseService.getCourse(no);
+        courseDto.setCopen(copen);
+        courseService.courseUpdate(courseDto);
+        return "redirect:/admin/courseList";
+    }
+
+
     // 회원 관리
+
     @GetMapping("userList")
     public String memberList(Model model){
-        List<User> userList = userService.userList();
+        List<UserDTO> userList = userService.userList();
         model.addAttribute("userList", userList);
         return "/admin/userList";
     }
 
     @GetMapping("/userGet")
     public String userGet(String id, Model model){
-        User user = userService.getId(id);
-        model.addAttribute("user", user);
+        UserDTO userDTO = userService.getId(id);
+        model.addAttribute("user", userDTO);
         return "/admin/userGet";
     }
 
     @PostMapping("/changeStatus_list")
     public String out1(String id, Model model, Status status){
-        User user = userService.getId(id);
-        user.setStatus(status);
-        userService.userUpdate(user);
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setStatus(status);
+        userService.userUpdate(userDTO);
         return "redirect:/admin/userList";
     }
 
     @PostMapping("/changeStatus_get")
     public String out2(String id, Model model, Status status){
-        User user = userService.getId(id);
-        user.setStatus(status);
-        userService.userUpdate(user);
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setStatus(status);
+        userService.userUpdate(userDTO);
         return "redirect:/admin/userGet?id="+id;
     }
+    @PostMapping("/role_list")
+    public String role1(String id, Model model, Role role){
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setRole(role);
+        userService.userUpdate(userDTO);
+        return "redirect:/admin/userList";
+    }
+
+    @PostMapping("/role_get")
+    public String role2(String id, Model model, Role role){
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setRole(role);
+        userService.userUpdate(userDTO);
+        return "redirect:/admin/userGet?id="+id;
+    }
+
+
+
+    // Notice
+
+    @GetMapping("/notice_Admin")
+    public String notice(Model model) {
+        List<BoardDTO> noticeList = boardService.NoticeList();
+        model.addAttribute("noticeList", noticeList);
+        return "/admin/noticeList";
+    }
+
+    @GetMapping("/noticeGet_Admin")
+    public String noticeGet(Model model, Integer no) {
+        BoardDTO boardDTO = boardService.NoticeGet(no);
+        model.addAttribute("notice", boardDTO);
+        return "/admin/noticeGet";
+    }
+
+
+    @GetMapping("/noticeadd_Admin")
+    public String noticeForm(Model model, Principal principal) {
+        model.addAttribute("boardDTO", new BoardDTO());
+        model.addAttribute("prin", principal.getName());
+        return "/admin/noticeadd";
+    }
+
+    @PostMapping("/noticeadd_Admin")
+    public String noticeInsert(BoardDTO boardDTO){
+        boardService.NoticeInsert(boardDTO);
+        return "redirect:/admin/notice_Admin";
+    }
+
+    @GetMapping("/noticeEdit_Admin")
+    public String noticeEditForm(Model model, Integer no) {
+        BoardDTO boardDTO = boardService.NoticeGet(no);
+        model.addAttribute("notice", boardDTO);
+        return "/admin/noticeEdit";
+    }
+
+    @PostMapping("noticeEdit_Admin")
+    public String noticeEdit(BoardDTO boardDTO){
+        boardService.NoticeInsert(boardDTO);
+        return "redirect:/admin/notice_Admin";
+    }
+
+    @GetMapping("/noticeDelete_Admin")
+    public String noticeDelete(Model model, Integer no) {
+        boardService.NoticeDelete(no);
+        return "redirect:/admin/notice_Admin";
+    }
+
+
+    // Faq
+
+    @GetMapping("/faqList_Admin")
+    public String Faq(Model model) {
+        List<BoardDTO> faqList = boardService.faqList();
+        model.addAttribute("faqList", faqList);
+        return "/admin/faqlist";
+    }
+
+    @GetMapping("/faqadd_Admin")
+    public String FaqForm(Model model) {
+        model.addAttribute("boarddto", new BoardDTO());
+        return "/admin/faqadd";
+    }
+
+    @PostMapping("/faqadd_Admin")
+    public String FaqInsert(BoardDTO boardDTO){
+        boardService.faqInsert(boardDTO);
+        return "redirect:/admin/faqlist";
+    }
+
+//    @ResponseBody
+//    @PostMapping(value = "/${no}", consumes = MediaType.APPLICATION_JSON_VALUE )
+//    public Map<String,Integer> FaqEdit(@PathVariable("no") Integer no, @RequestBody Faq faq ){
+//        faq.setNo(no);
+//        boardService.faqUpdate(faq);
+//        Map<String, Integer> resultMap = new HashMap<>();
+//        resultMap.put("no", no);
+//        return resultMap;
+//    }
+//
+
+    @ResponseBody
+    @PostMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE )
+    public String PostTest(@RequestBody String msg) {
+        return "post success!!!" + msg;
+    }
+
+
 }
