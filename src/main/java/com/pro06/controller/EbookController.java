@@ -173,7 +173,7 @@ public class EbookController {
         return "redirect:/Ebook/EbookList";
     }
 
-    // 거래글 수정폼 이동
+    // 수정 폼 이동
     @GetMapping("EbookUpdate")
     public String modifyFileboard(@RequestParam("no") Integer postNo, Model model) throws Exception {
         Ebook ebook = eBookService.getEbook(postNo);

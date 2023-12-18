@@ -36,7 +36,6 @@
             <tr th:each="Ebook, status : ${EbookList}">
                 <td style="width: 250px;">
                     <th:block th:if="${Ebook != null}">
-<!--                        <img class="pro-img" th:src="${Ebook.fileList[0].savefolder + '\' + Ebook.fileList[0].savefile}">-->
                         <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
                     </th:block>
 

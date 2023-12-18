@@ -6,12 +6,7 @@
 <!--    <th:block sec:authorize="isAuthenticated()">-->
             <th:block sec:authorize="hasAuthority('ADMIN')">
                 <div class="hasRole">
-                    <h2 style="margin: 0; padding: 0">
-                        <button id="startButton" class="fireButton">ʕ</button>
-                        •  ᴥ  •
-                        <button id="stopButton" class="fireButton">ʔ</button>
-                    </h2>
-                        <h2 style="margin: 0; padding: 0">ㅡㅡ 관리자 ㅡㅡ</h2>
+                    <h2 style="margin: 0; padding: 0; line-height: 80px">📢 관리자 권한으로 로그인되었습니다.</h2>
                 </div>
 
             </th:block>
@@ -25,11 +20,11 @@
                     <a th:href="@{/login}" class="header_login">로그인</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
-                    <p class="topBar-name">반갑습니다.</p>
+                    <p class="topBar-name">반갑습니다!</p>
                     <p class="topBar-name" sec:authentication="principal"></p>
-                    <p class="topBar-name"> 님</p>
-                    <a th:href="@{/myPage}" class="header_login">마이페이지</a>
-                    <a th:href="@{/logout}" class="header_login">로그아웃</a>
+                    <p class="topBar-name"> 님 🤓 </p>
+                    <a th:href="@{/myPage}" class="header_login" style="background: none">마이페이지</a>
+                    <a th:href="@{/logout}" class="header_login" style="background: none">로그아웃</a>
                 </th:block>
             </div>
         </div>
@@ -40,9 +35,7 @@
         <div class="container d-flex align-items-center justify-content-between">
 
             <div class="logo">
-                <h1><a th:href="@{/}">메인으로</a></h1>
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+                <h1><a th:href="@{/}">WordMaster</a></h1>
             </div>
             <!-- navbar -->
             <nav id="navbar" class="navbar">
