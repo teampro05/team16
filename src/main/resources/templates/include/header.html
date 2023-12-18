@@ -17,6 +17,7 @@
         <div class="container ">
             <div class="cta">
                 <th:block sec:authorize="isAnonymous()">
+                    <a th:href="@{/term}" class="header_login">회원가입</a>
                     <a th:href="@{/login}" class="header_login">로그인</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
