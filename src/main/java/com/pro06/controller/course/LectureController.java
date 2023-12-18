@@ -1,6 +1,6 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.*;
+import com.pro06.dto.course.*;
 import com.pro06.service.course.LectureServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
@@ -122,7 +122,7 @@ public class LectureController {
     @PostMapping("lecQueInsert")
     @ResponseBody
     public LecQueDto lecQueInsert(@RequestBody HashMap<String, Object> map,
-                                        Principal principal) throws Exception {
+                                  Principal principal) throws Exception {
         LecQueDto lecQueDto = new LecQueDto();
         lecQueDto.setId(principal.getName());
         lecQueDto.setPage((Integer) map.get("page"));

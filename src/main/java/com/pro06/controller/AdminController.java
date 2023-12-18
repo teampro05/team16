@@ -1,11 +1,10 @@
 package com.pro06.controller;
 
-import com.pro06.dto.*;
+import com.pro06.dto.course.*;
 import com.pro06.entity.*;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;

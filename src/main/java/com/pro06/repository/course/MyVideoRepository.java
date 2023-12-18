@@ -1,7 +1,7 @@
 package com.pro06.repository.course;
 
 
-import com.pro06.entity.MyVideo;
+import com.pro06.entity.course.MyVideo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

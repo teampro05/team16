@@ -1,14 +1,9 @@
-package com.pro06.dto;
+package com.pro06.dto.course;
 
-import com.pro06.entity.BaseEntity;
-import com.pro06.entity.Course;
-import com.pro06.entity.Lecture;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Setter
@@ -19,12 +14,15 @@ public class LecQueDto {
 
     private Integer no;         // 강의 질문 번호
 
+    @Size(max = 20)
     @NotBlank
     private String id;          // 작성자 아이디
 
+    @Size(max = 1000)
     @NotNull
     private String que;         // 작성자의 질문
 
+    @Size(max = 2000)
     private String ans;        // 관리자가 작성한 답안
 
     @NotNull

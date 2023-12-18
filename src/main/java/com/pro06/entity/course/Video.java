@@ -1,5 +1,6 @@
-package com.pro06.entity;
+package com.pro06.entity.course;
 
+import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

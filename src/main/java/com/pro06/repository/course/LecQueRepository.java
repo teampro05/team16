@@ -1,7 +1,6 @@
 package com.pro06.repository.course;
 
-import com.pro06.dto.LecQueDto;
-import com.pro06.entity.LecQue;
+import com.pro06.entity.course.LecQue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

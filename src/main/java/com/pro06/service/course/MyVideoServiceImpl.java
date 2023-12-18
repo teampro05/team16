@@ -1,7 +1,7 @@
 package com.pro06.service.course;
 
-import com.pro06.dto.MyVideoDto;
-import com.pro06.entity.MyVideo;
+import com.pro06.dto.course.MyVideoDto;
+import com.pro06.entity.course.MyVideo;
 import com.pro06.repository.course.MyVideoRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;

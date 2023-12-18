@@ -1,7 +1,7 @@
 package com.pro06.service.course;
 
-import com.pro06.dto.*;
-import com.pro06.entity.*;
+import com.pro06.dto.course.*;
+import com.pro06.entity.course.*;
 import com.pro06.repository.course.*;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;

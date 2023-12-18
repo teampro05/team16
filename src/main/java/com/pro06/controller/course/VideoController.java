@@ -1,9 +1,9 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.CourseDto;
-import com.pro06.dto.LecQueDto;
-import com.pro06.dto.LectureDto;
-import com.pro06.dto.MyVideoDto;
+import com.pro06.dto.course.CourseDto;
+import com.pro06.dto.course.LecQueDto;
+import com.pro06.dto.course.LectureDto;
+import com.pro06.dto.course.MyVideoDto;
 import com.pro06.service.course.LectureServiceImpl;
 import com.pro06.service.course.MyCourseServiceImpl;
 import com.pro06.service.course.MyVideoServiceImpl;

@@ -1,10 +1,8 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.CourseDto;
-import com.pro06.dto.LectureDto;
-import com.pro06.dto.MyCourseDto;
-import com.pro06.entity.Course;
-import com.pro06.entity.User;
+import com.pro06.dto.course.CourseDto;
+import com.pro06.dto.course.LectureDto;
+import com.pro06.dto.course.MyCourseDto;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

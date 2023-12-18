@@ -1,5 +1,6 @@
-package com.pro06.dto;
+package com.pro06.dto.course;
 
+import com.pro06.dto.BaseDto;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,7 +30,7 @@ public class CourseDto extends BaseDto {
     @NotBlank
     private String level;      // 학년
 
-    @Size(max = 100)
+    @Size(max = 200)
     @NotBlank
     private String title;       // 제목
 

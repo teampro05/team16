@@ -1,5 +1,6 @@
-package com.pro06.dto;
+package com.pro06.dto.course;
 
+import com.pro06.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,7 +23,7 @@ public class LectureDto extends BaseDto {
     @NotBlank
     private String id;          // 작성자(관리자)
 
-    @Size(max = 100)
+    @Size(max = 200)
     @NotBlank
     private String title;       // 강의 제목
 
@@ -30,7 +31,7 @@ public class LectureDto extends BaseDto {
     @NotNull
     private String content;     // 강의 설명
 
-    @Size(max = 100)
+    @Size(max = 200)
     @NotNull
     private String keyword;     // 키워드
 

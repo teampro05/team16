@@ -1,5 +1,6 @@
-package com.pro06.entity;
+package com.pro06.entity.course;
 
+import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -19,7 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 // column에 defualt 값을 설정할 때에 밑의 두개를 같이 써줘야 한다.
 @DynamicInsert
 @DynamicUpdate
-public class Lecture extends BaseEntity{
+public class Lecture extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +29,13 @@ public class Lecture extends BaseEntity{
     @Column(length = 20, nullable = false)
     private String id;          // 작성자(관리자)
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 200, nullable = false)
     private String title;       // 강의 제목
 
     @Column(length = 2000, nullable = false)
     private String content;     // 강의 설명
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 200, nullable = false)
     private String keyword;     // 키워드
 
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)

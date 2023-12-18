@@ -1,5 +1,6 @@
-package com.pro06.dto;
+package com.pro06.dto.course;
 
+import com.pro06.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -27,7 +28,7 @@ public class MyVideoDto extends BaseDto {
     @NotNull
     private Integer sec;            // 시간 초
 
-    @Size(max = 5)
+    @Size(max = 10)
     @NotNull
     private String state;           // 모든 비디오를 봤는지 안봤는지 체크
 

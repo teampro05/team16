@@ -1,4 +1,4 @@
-package com.pro06.entity;
+package com.pro06.entity.course;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,35 +23,35 @@ public class LecTest {
     private Integer no;         // 시험 번호
     
     // 문제
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String exam1;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String exam2;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String exam3;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String exam4;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String exam5;
     
     // 해당 문제의 답안
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer1;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer2;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer3;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer4;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer5;
     
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
