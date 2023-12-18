@@ -1,5 +1,6 @@
 package com.pro06.repository.course;
 
+import com.pro06.dto.course.VideoDto;
 import com.pro06.entity.course.Video;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,6 @@ import java.util.List;
 public interface VideoRepository extends JpaRepository<Video, Integer> {
     
     // 해당 강좌의 해당 강의의 실제 저장된 비디오 이름을 List 형태로 추출
-    @Query("select v.savefile from Video v where v.lecture.no = :lno and v.course.no = :cno")
-    List<String> videoList(@Param("cno") Integer cno, @Param("lno") Integer lno);
+    @Query("select v from Video v where v.lecture.no = :lno and v.course.no = :cno")
+    List<Video> videoList(@Param("cno") Integer cno, @Param("lno") Integer lno);
 }

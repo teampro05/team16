@@ -73,10 +73,33 @@
         /* 질문 테이블 페이지 번호 디자인 */
         .pageNumber {
             cursor: pointer;
-            margin-right: 5px;
+            margin: 0 3px;
         }
+
+        /* 페이지네이션 css 조정 */
+        #pageNumbers {
+            min-width: 100px;
+            max-width: 200px;
+            float: left;
+            margin: 3px auto;
+            text-align: center;
+        }
+
+        /* 이전, 다음 버튼 css */
+        #prevPage {
+            float: left;
+        }
+        #nextPage {
+            float: right;
+        }
+
+        /* 현재 페이지 bold */
         .pageNumber.active {
             font-weight: bold;
+        }
+
+        tbody tr {
+            height: 50px;
         }
     </style>
 </head>
@@ -227,6 +250,7 @@
             <th:block sec:authorize="isAuthenticated()">
                 <div class="form-group">
                     <span id="warn" style="color: red;"></span>
+                    <input type="hidden" id="vno" th:value="${page}">
                     <textarea id="que" class="form-control mb-2"></textarea>
                     <button onclick="question()" class="btn btn-primary">질문하기</button>
                 </div>
@@ -483,11 +507,19 @@
         pageNumbers();
     }
 
+    // 테이블 페이지 네이션 관련 함수
     function pageNumbers() {
         // 페이지 번호 그룹화하여 표시
-        var totalPages = Math.ceil(que_size / pageSize);
-        var pageNumberHtml = '';
-        for (var i = 1; i <= totalPages; i++) {
+        let totalPages = Math.ceil(que_size / pageSize);
+        let pageNumberHtml = '';
+
+        // 페이지 네이션을 5개씩 보이게 설정
+        // 현재 페이지를 기준으로 페이지 그룹 설정
+        let maxPageNum = 5;
+        let groupStart = Math.floor((currentPage - 1) / maxPageNum) * maxPageNum + 1; // 페이지 그룹의 시작 페이지
+        let groupEnd = Math.min(groupStart + maxPageNum - 1, totalPages); // 페이지 그룹의 끝 페이지
+
+        for (let i = groupStart; i <= groupEnd; i++) {
             pageNumberHtml += `<span class="pageNumber" data-page="${i}" onclick="showPage(${i})">${i}</span>`;
         }
         $('#pageNumbers').html(pageNumberHtml);

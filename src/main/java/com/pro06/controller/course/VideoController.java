@@ -1,9 +1,6 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.course.CourseDto;
-import com.pro06.dto.course.LecQueDto;
-import com.pro06.dto.course.LectureDto;
-import com.pro06.dto.course.MyVideoDto;
+import com.pro06.dto.course.*;
 import com.pro06.service.course.LectureServiceImpl;
 import com.pro06.service.course.MyCourseServiceImpl;
 import com.pro06.service.course.MyVideoServiceImpl;
@@ -110,8 +107,8 @@ public class VideoController {
         List<LecQueDto> queList = lectureService.lecQueList(lecQueDto);
 
 
-        // 영상의 파일 이름 출력
-        List<String> videoList = videoService.videoList(cno, lno);
+        // 영상의 파일 정보 추출
+        List<VideoDto> videoList = videoService.videoList(cno, lno);
 
         model.addAttribute("que_size", queList.size());         // 질문 리스트 수
         model.addAttribute("queList", queList);                 // 해당 영상의 질문 목록
@@ -122,7 +119,8 @@ public class VideoController {
         model.addAttribute("page", page);                       // 현재 영상 페이지
         model.addAttribute("sec", userSec);                     // 들은 시간
         model.addAttribute("state", myVideo.getState());        // 완강 상태
-        model.addAttribute("savefile", videoList.get(page));
+        model.addAttribute("savefile", videoList.get(page).getSavefile());      // 저장된 파일 이름
+        model.addAttribute("vno", videoList.get(page).getNo());     // 비디오 번호
         return "video/player";
     }
     

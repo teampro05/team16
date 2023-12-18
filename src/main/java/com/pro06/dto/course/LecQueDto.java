@@ -1,5 +1,7 @@
 package com.pro06.dto.course;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.pro06.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,7 +12,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class LecQueDto {
+public class LecQueDto extends BaseDto {
 
     private Integer no;         // 강의 질문 번호
 
