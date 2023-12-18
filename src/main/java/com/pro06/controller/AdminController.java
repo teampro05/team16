@@ -274,9 +274,23 @@ public class AdminController {
     }
 
     // 질문의 답변 삭제
-    @GetMapping("ansDelete")
+/*    @GetMapping("ansDelete")
     public String ansDelete(LecQueDto lecQueDto) {
         lectureService.lecQueDelete(lecQueDto.getNo());
+        return "redirect:/admin/lecQueList";
+    }*/
+
+    // 질문의 답변 삭제, 복구
+    @PostMapping("ansDelRec")
+    public String ansDelRec(LecQueDto lecQueDto) {
+        lectureService.lecQueDelete(lecQueDto);
+        return "redirect:/admin/lecQueList";
+    }
+
+    // 질문의 답변 복구
+    @GetMapping("ansRecover")
+    public String ansRecover(LecQueDto lecQueDto) {
+        lectureService.lecQueAnsRecover(lecQueDto.getNo());
         return "redirect:/admin/lecQueList";
     }
 

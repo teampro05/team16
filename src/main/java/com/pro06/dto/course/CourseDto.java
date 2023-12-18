@@ -50,4 +50,6 @@ public class CourseDto extends BaseDto {
     private LocalDateTime copendate;    // 개강날짜
 
     private Integer copen;    // 오픈여부   open=1, close=0
+    
+    private String deleteYn;        // 삭제 여부
 }

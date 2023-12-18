@@ -39,7 +39,10 @@ public class CourseServiceImpl {
 
     // 강좌 삭제
     public void courseDelete(Integer no) {
-        courseRepository.deleteById(no);
+        Optional<Course> course = courseRepository.findById(no);
+        Course res = course.orElseThrow();
+        res.delete("y");
+        courseRepository.save(res);
     }
     
     // 어드민 강좌 목록 불러오기

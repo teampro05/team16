@@ -125,16 +125,18 @@ public class LectureServiceImpl {
 
 
     // region lecQue
+    // admin 용
     // admin 에서 사용할 list
     // 모든 질문 목록
     public List<LecQueDto> lecQueDtoFindByAll() {
-        List<LecQue> lst = lecQueRepository.findByDeleteYn("n");
+        List<LecQue> lst = lecQueRepository.findAll();
         List<LecQueDto> dtoList = lst.stream().map(lecQue ->
                         modelMapper.map(lecQue, LecQueDto.class))
                 .collect(Collectors.toList());
         return dtoList;
     }
-
+    
+    // user 용
     // video 에서 사용할 list
     // 해당 강좌, 강의, 영상에서 유저가 질문한 목록
     public List<LecQueDto> lecQueList(LecQueDto lecQueDto) {
@@ -162,10 +164,10 @@ public class LectureServiceImpl {
     }
 
     // 질문 삭제
-    public void lecQueDelete(Integer no) {
-        Optional<LecQue> lecQue = lecQueRepository.findById(no);
+    public void lecQueDelete(LecQueDto dto) {
+        Optional<LecQue> lecQue = lecQueRepository.findById(dto.getNo());
         LecQue lecQue1 = lecQue.orElseThrow();
-        lecQue1.delete("y");
+        lecQue1.delete(dto.getDeleteYn());
         lecQueRepository.save(lecQue1);
     }
 
@@ -174,6 +176,14 @@ public class LectureServiceImpl {
         Optional<LecQue> lecQue = lecQueRepository.findById(lecQueDto.getNo());
         LecQue lecQue1 = lecQue.orElseThrow();
         lecQue1.answer(lecQueDto.getAns());
+        lecQueRepository.save(lecQue1);
+    }
+
+    // 질문 삭제 취소
+    public void lecQueAnsRecover(Integer no) {
+        Optional<LecQue> lecQue = lecQueRepository.findById(no);
+        LecQue lecQue1 = lecQue.orElseThrow();
+        lecQue1.delete("n");
         lecQueRepository.save(lecQue1);
     }
     // endregion

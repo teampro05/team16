@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>질문 목록</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
+    <style>
+        td form {
+            display: inline-flex;
+        }
+        select {
+            width: 150px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <div class="container-scroller">
@@ -23,7 +32,8 @@
                             <th>강좌</th>
                             <th>질문</th>
                             <th>등록일</th>
-                            <th>처리</th>
+                            <th>답변여부</th>
+                            <th>삭제여부</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -35,11 +45,27 @@
                                 <td th:text="${dto.que}"></td>
                                 <td th:text="${#temporals.format(dto.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
                                 <td th:text="${dto.ans} eq null ? '미답변' : '답변완료' " th:style="${dto.ans} eq null ? 'color:red' : 'color:blue'"></td>
+<!--                                <td th:text="${dto.deleteYn} eq 'y' ? '삭제' : ''" style="color:red;"></td>-->
                                 <td>
-                                    <a th:href="@{/admin/ansInsUpd(no=${dto.no})}" class="btn btn-primary"
-                                    th:text="${dto.ans} eq null ? '답변하기' : '답변수정'"></a>
+                                    <form th:action="@{/admin/ansDelRec(no=${dto.no})}" method="post">
+                                        <select name="deleteYn" id="deleteYn" class="select-box">
+                                            <option value="y" th:selected="${dto.deleteYn} eq 'y'">삭제</option>
+                                            <option value="n" th:selected="${dto.deleteYn} eq 'n'">생성</option>
+                                        </select>
+                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/ansInsUpd(no=${dto.no})}" class="btn"
+                                    th:text="${dto.ans} eq null ? '답변하기' : '답변수정'" th:class="${dto.ans} eq null ? 'btn btn-primary' : 'btn btn-success'"></a>
 
-                                    <a th:href="@{/admin/ansDelete(no=${dto.no})}" class="btn btn-danger">제거</a>
+<!--                                    <th:block th:if="${dto.deleteYn} eq 'n'">
+                                        <a th:href="@{/admin/ansDelete(no=${dto.no})}" class="btn btn-danger">제거</a>
+                                    </th:block>
+
+                                    <th:block th:if="${dto.deleteYn} eq 'y'">
+                                        <a th:href="@{/admin/ansRecover(no=${dto.no})}" class="btn btn-success">복구</a>
+                                    </th:block>-->
                                 </td>
                             </tr>
                         </th:block>
