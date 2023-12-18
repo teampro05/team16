@@ -40,9 +40,11 @@
                     </th:block>
 
                 </td>
+
                 <td>
                     <p><a th:href="@{/Ebook/getEbook(no=${Ebook.fileBoard.no})}">[[${Ebook.fileBoard.title}]]</a></p>
                 </td>
+
                 <td>
                     <p>[[${Ebook.fileBoard.servecontent}]]</p>
                 </td>
@@ -50,23 +52,25 @@
                 <td>
                     <p>[[${Ebook.fileBoard.price}]]원</p>
                 </td>
+
                 <td>
                     <p>[[${Ebook.fileBoard.publish}]]</p>
                 </td>
+
                 <td>
-                    <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                    <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+<!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
+                        <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                        <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+<!--                    </th:block>-->
                 </td>
             </tr>
             </tbody>
         </table>
-<!--        <th:block th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">-->
+<!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
                 <a th:href="@{/Ebook/fileUpload}" class="btn btn-primary">작성</a>
 <!--        </th:block>-->
     </div>
 </div>
-<!-- datatables -->
-<script th:src="@{/js/datatables.js}"></script>
 <th:block th:replace="include/footer :: footer" ></th:block>
 </body>
 </html>

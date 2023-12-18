@@ -1,5 +1,6 @@
-package com.pro06.dto;
+package com.pro06.dto.course;
 
+import com.pro06.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,7 +23,7 @@ public class MyCourseDto extends BaseDto {
     @NotBlank
     private String id;          // 수강신청자
 
-    @Size(max = 5)
+    @Size(max = 10)
     @NotNull
     private String state;       // 수강상태
 

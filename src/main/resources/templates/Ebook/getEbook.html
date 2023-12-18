@@ -36,9 +36,10 @@
                     <ul>
                         <li>
                             <div class="d-flex justify-content-end mt-5">
-<!--									th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">-->
-                                <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                                <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+<!--									<th:block sec:authorize="hasAuthority('ADMIN')">-->
+                                        <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                                        <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+<!--                                    </th:block>-->
                             </div>
                         </li>
                     </ul>

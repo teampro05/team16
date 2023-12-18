@@ -1,11 +1,12 @@
 package com.pro06.controller;
 
-import com.pro06.dto.*;
+import com.pro06.dto.course.*;
 import com.pro06.entity.*;
 import com.pro06.service.BoardService;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
+import com.pro06.service.course.VideoServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VideoServiceImpl videoService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -237,6 +241,35 @@ public class AdminController {
         return "redirect:/admin/courseDetail?no=" + cno;
     }
 
+    // 질문 목록
+    @GetMapping("lecQueList")
+    public String lecQueList(Model model) {
+        List<LecQueDto> dtoList = lectureService.lecQueDtoFindByAll();
+        model.addAttribute("dtoList", dtoList);
+        return "admin/lecture/lecQueList";
+    }
+
+    // 질문의 답변 상세 폼 이동
+    @GetMapping("ansInsert")
+    public String ansInsert(@RequestParam("no") Integer no, Model model) {
+        LecQueDto dto = lectureService.getLecQue(no);
+
+        // 영상의 파일 정보 추출
+        List<VideoDto> videoList = videoService.videoList(dto.getCourse().getNo(), dto.getLecture().getNo());
+        Integer page = dto.getPage();
+        String savefile = videoList.get(page).getSavefile();
+
+        model.addAttribute("savefile", savefile);
+        model.addAttribute("dto", dto);
+        return "admin/lecture/ansInsert";
+    }
+    
+    // 질문의 답변 작성, 수정
+    @PostMapping("ansInsert")
+    public String ansInsertPro(LecQueDto lecQueDto) {
+        lectureService.lecQueAnsInsUpd(lecQueDto);
+        return "redirect:/admin/lecQueList";
+    }
 
 
     // 자동으로 개강진행

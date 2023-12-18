@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
         /* 처음 본 영상이면 처음에 완료버튼을 none 처리 */
         .complete {display: none;}
 
-        /* 버튼 위치 css */
+        /* 이전, 다음, 종료 버튼 위치 css */
         .vdo-btn {float: left; margin-right: 15px;}
 
         /* 인덱스에서 해당 위치의 영상으로 넘어가는 버튼 css */
@@ -45,6 +46,60 @@
         .idx-btn-now:hover {
             color: white;
             background-color: orange;
+        }
+
+        /* 질문 텍스트가 한 줄을 넘어갈 경우 ... 으로 표시되도록 설정 */
+        td .question {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 280px;
+            margin: 0;
+        }
+
+        /* 질문을 클릭할 수 있게 변경 */
+        .question:hover {
+            cursor: pointer;
+            color: red;
+        }
+
+        /* 답변의 텍스트가 td에 벗어나지 않게 조절 */
+        td .answer {
+            width: 280px;
+            margin: 0;
+            word-break:break-all;
+        }
+
+        /* 질문 테이블 페이지 번호 디자인 */
+        .pageNumber {
+            cursor: pointer;
+            margin: 0 3px;
+        }
+
+        /* 페이지네이션 css 조정 */
+        #pageNumbers {
+            min-width: 100px;
+            max-width: 200px;
+            float: left;
+            margin: 3px auto;
+            text-align: center;
+        }
+
+        /* 이전, 다음 버튼 css */
+        #prevPage {
+            float: left;
+        }
+        #nextPage {
+            float: right;
+        }
+
+        /* 현재 페이지 bold */
+        .pageNumber.active {
+            font-weight: bold;
+        }
+
+        tbody tr {
+            height: 50px;
         }
     </style>
 </head>
@@ -79,95 +134,131 @@
         </div>-->
 
         <div style="margin: 20px 0 0 10px;">
-            <!-- 이전 영상으로 넘어가기 -->
-            <th:block th:if="${page > 0}">
-                <form th:action="@{/video/player}" method="post" onsubmit="return videoBack()">
-                    <input type="hidden" name="cno" id="cno1" th:value="${cno}">
-                    <input type="hidden" name="lno" id="lno1" th:value="${lno}">
-                    <input type="hidden" name="page" id="page1" th:value="${page - 1}">
-                    <input type="submit" class="vdo-btn btn btn-primary"
-                           title="이전 영상으로 돌아가기" value="이전 영상">
-                </form>
-            </th:block>
 
-            <!-- 다음 영상으로 넘어가기 -->
-            <th:block th:if="${page < total_size - 1 and user_page <= page}">
-                <form th:action="@{/video/player}" method="post" onsubmit="return videoNext()">
-                    <input type="hidden" name="cno" id="cno2" th:value="${cno}">
-                    <input type="hidden" name="lno" id="lno2" th:value="${lno}">
-                    <input type="hidden" name="page" id="page2" th:value="${page + 1}">
-                    <input type="submit" class="complete vdo-btn btn btn-primary"
-                           title="다음 영상으로 넘어가기" value="다음 영상">
-                </form>
-            </th:block>
+            <div style="float: left;">
+                <h3>인덱스</h3>
+                <ul>
+                    <th:block th:each="i : ${#numbers.sequence(0, total_size - 1)}">
+                        <li th:id="'li' + ${i}">
+                            <th:block th:if="${user_page > i and i != page}">
+                                <form th:action="@{/video/player}" method="post">
+                                    <input type="hidden" name="cno" th:value="${cno}">
+                                    <input type="hidden" name="lno" th:value="${lno}">
+                                    <input type="hidden" name="page" th:value="${i}">
+                                    <input type="submit" class="idx-btn" title="해당 영상으로 넘어가기"
+                                           th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
+                                </form>
+                            </th:block>
+                            <th:block th:if="${user_page == i and i != page}">
+                                <form th:action="@{/video/player}" method="post">
+                                    <input type="hidden" name="cno" th:value="${cno}">
+                                    <input type="hidden" name="lno" th:value="${lno}">
+                                    <input type="hidden" name="page" th:value="${i}">
+                                    <input type="submit" class="idx-btn-now" title="해당 영상으로 넘어가기, 현재 여기까지 수강했습니다."
+                                           th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
+                                </form>
+                            </th:block>
+                            <th:block th:if="${user_page < i or i == page}">
+                                <span th:id="'btn' + ${i}" th:text="${i + 1} + '번 영상'"></span>
+                            </th:block>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
 
-            <!-- 다음 영상으로 넘어가기 -->
-            <!-- 이미 해당 영상을 수강한 경우 -->
-            <th:block th:if="${page < total_size - 1 and user_page > page}">
-                <form th:action="@{/video/player}" method="post">
-                    <input type="hidden" name="cno" id="cno4" th:value="${cno}">
-                    <input type="hidden" name="lno" id="lno4" th:value="${lno}">
-                    <input type="hidden" name="page" id="page4" th:value="${page + 1}">
-                    <input type="submit" class="vdo-btn btn btn-primary"
-                           title="다음 영상으로 넘어가기" value="다음 영상">
-                </form>
-            </th:block>
+            <div style="float: left">
+                <!-- 이전 영상으로 넘어가기 -->
+                <th:block th:if="${page > 0}">
+                    <form th:action="@{/video/player}" method="post" onsubmit="return videoBack()">
+                        <input type="hidden" name="cno" id="cno1" th:value="${cno}">
+                        <input type="hidden" name="lno" id="lno1" th:value="${lno}">
+                        <input type="hidden" name="page" id="page1" th:value="${page - 1}">
+                        <input type="submit" class="vdo-btn btn btn-primary"
+                               title="이전 영상으로 돌아가기" value="이전 영상">
+                    </form>
+                </th:block>
 
-            <!-- 수강 완료 해당 영상을 처음듣는 경우 -->
-            <th:block th:if="${page == total_size - 1 and user_page <= page}">
-                <form th:action="@{/video/complete}" method="post" onsubmit="return videoNext()">
-                    <input type="hidden" name="cno" id="cno5" th:value="${cno}">
-                    <input type="hidden" name="lno" id="lno5" th:value="${lno}">
-                    <input type="hidden" name="page" id="page5" th:value="${page+1}">
-                    <input type="submit"  class="complete vdo-btn btn btn-primary"
-                           title="수강 완료 확인" value="수강 완료">
-                </form>
-            </th:block>
+                <!-- 다음 영상으로 넘어가기 -->
+                <th:block th:if="${page < total_size - 1 and user_page <= page}">
+                    <form th:action="@{/video/player}" method="post" onsubmit="return videoNext()">
+                        <input type="hidden" name="cno" id="cno2" th:value="${cno}">
+                        <input type="hidden" name="lno" id="lno2" th:value="${lno}">
+                        <input type="hidden" name="page" id="page2" th:value="${page + 1}">
+                        <input type="submit" class="complete vdo-btn btn btn-primary"
+                               title="다음 영상으로 넘어가기" value="다음 영상">
+                    </form>
+                </th:block>
 
-            <!-- 수강 완료 해당 영상을 이미 수강한 경우 -->
-            <th:block th:if="${page == total_size - 1 and user_page > page}">
-                <form th:action="@{/video/complete}" method="post">
-                    <input type="hidden" name="cno" id="cno6" th:value="${cno}">
-                    <input type="hidden" name="lno" id="lno6" th:value="${lno}">
-                    <input type="hidden" name="page" id="page6" th:value="${page + 1}">
-                    <input type="submit" class="vdo-btn btn btn-primary" value="수강 완료">
-                </form>
-            </th:block>
+                <!-- 다음 영상으로 넘어가기 -->
+                <!-- 이미 해당 영상을 수강한 경우 -->
+                <th:block th:if="${page < total_size - 1 and user_page > page}">
+                    <form th:action="@{/video/player}" method="post">
+                        <input type="hidden" name="cno" id="cno4" th:value="${cno}">
+                        <input type="hidden" name="lno" id="lno4" th:value="${lno}">
+                        <input type="hidden" name="page" id="page4" th:value="${page + 1}">
+                        <input type="submit" class="vdo-btn btn btn-primary"
+                               title="다음 영상으로 넘어가기" value="다음 영상">
+                    </form>
+                </th:block>
+
+                <!-- 수강 완료 해당 영상을 처음듣는 경우 -->
+                <th:block th:if="${page == total_size - 1 and user_page <= page}">
+                    <form th:action="@{/video/complete}" method="post" onsubmit="return videoNext()">
+                        <input type="hidden" name="cno" id="cno5" th:value="${cno}">
+                        <input type="hidden" name="lno" id="lno5" th:value="${lno}">
+                        <input type="hidden" name="page" id="page5" th:value="${page+1}">
+                        <input type="submit"  class="complete vdo-btn btn btn-primary"
+                               title="수강 완료 확인" value="수강 완료">
+                    </form>
+                </th:block>
+
+                <!-- 수강 완료 해당 영상을 이미 수강한 경우 -->
+                <th:block th:if="${page == total_size - 1 and user_page > page}">
+                    <form th:action="@{/video/complete}" method="post">
+                        <input type="hidden" name="cno" id="cno6" th:value="${cno}">
+                        <input type="hidden" name="lno" id="lno6" th:value="${lno}">
+                        <input type="hidden" name="page" id="page6" th:value="${page + 1}">
+                        <input type="submit" class="vdo-btn btn btn-primary" value="수강 완료">
+                    </form>
+                </th:block>
+            </div>
         </div>
     </div>
 
-    <div style="width: 200px; float: left">
-        <h3>인덱스</h3>
-        <ul>
-            <th:block th:each="i : ${#numbers.sequence(0, total_size - 1)}">
-                <li th:id="'li' + ${i}">
-                    <th:block th:if="${user_page > i and i != page}">
-                        <form th:action="@{/video/player}" method="post">
-                            <input type="hidden" name="cno" th:value="${cno}">
-                            <input type="hidden" name="lno" th:value="${lno}">
-                            <input type="hidden" name="page" th:value="${i}">
-                            <input type="submit" class="idx-btn" title="해당 영상으로 넘어가기"
-                                   th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
-                        </form>
-                    </th:block>
-                    <th:block th:if="${user_page == i and i != page}">
-                        <form th:action="@{/video/player}" method="post">
-                            <input type="hidden" name="cno" th:value="${cno}">
-                            <input type="hidden" name="lno" th:value="${lno}">
-                            <input type="hidden" name="page" th:value="${i}">
-                            <input type="submit" class="idx-btn-now" title="해당 영상으로 넘어가기, 현재 여기까지 수강했습니다."
-                                   th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
-                        </form>
-                    </th:block>
-                    <th:block th:if="${user_page < i or i == page}">
-                        <span th:id="'btn' + ${i}" th:text="${i + 1} + '번 영상'"></span>
-                    </th:block>
-                </li>
+    <div style="width: 400px; float: left">
+        <h3>질문 목록</h3>
+        <div class="card p-2">
+        <table id="myPagingTable" class="table text-center mt-2" style="height: 320px;">
+            <thead>
+            <tr>
+                <th style="max-width: 60px;">No</th>
+                <th style="max-width: 300px;">질문</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div style="margin: 10px auto;">
+            <button id="prevPage"><</button>
+            <span id="pageNumbers"></span>
+            <button id="nextPage">></button>
+        </div>
+
+
+        <div>
+            <th:block sec:authorize="isAuthenticated()">
+                <div class="form-group">
+                    <span id="warn" style="color: red;"></span>
+                    <input type="hidden" id="vno" th:value="${page}">
+                    <textarea id="que" class="form-control mb-2"></textarea>
+                    <button onclick="question()" class="btn btn-primary">질문하기</button>
+                </div>
             </th:block>
-        </ul>
+        </div>
     </div>
 </div>
-
+</div>
 <script th:inline="javascript">
     /*<![CDATA[*/
     let video = document.getElementById('my-video');
@@ -177,6 +268,10 @@
     let sec = [[${sec}]];                   // db에 저장된 해당 이용자가 본 시간
     let cno = [[${cno}]];                   // 강좌 번호
     let lno = [[${lno}]];                   // 강의 번호
+    let que_size = [[${que_size}]];         // 질문 개수
+
+    let pageSize = 5;       // 페이징 크기
+    let currentPage = 1;    // 현재 페이지
 
     console.log('user_page : ' + user_page);
     console.log('page : ' + page);
@@ -265,6 +360,175 @@
         }
     }
     const intervalID = setInterval(complete, 1000);
+
+    // 질문하기
+    function question() {
+        console.log('질문 버튼 클릭');
+
+        let value = $("#que").val();
+        console.log(value);
+        if(value === "") {
+            $("#warn").html("질문을 입력하세요.") // error 문구
+            return false;
+        }
+
+        // 패턴 비교 한글, 자음, 모음, 영어대소문자, 숫자, 공백, 엔터, 1~200 자리
+        let pattern = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\s\n]{1,200}$/;
+        if (!pattern.test(value)) {
+            $("#warn").html("한글, 영어대소문자, 숫자만 입력이 가능합니다. <br>최대 200자까지 입력 가능합니다."); // error 문구
+            return false;
+        } else {
+            $("#warn").html(); // 초기화
+            alert('제대로 입력이 되었습니다.')
+        }
+
+        let obj = {
+            "que": value,
+            "sec": Math.floor(video.currentTime),
+            "page": page,
+            "cno": cno,
+            "lno": lno
+        }
+
+        $.ajax({
+            method: 'POST',
+            url:'/lecture/lecQueInsert',
+            type: "post",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            contentType: "application/json",
+            cache: false,
+            success: (result) => {
+                console.log(result);
+                $("#que").val("");
+                addRow(result);
+            },
+            error : () => {
+                alert('질문 등록 실패')
+            }
+        })
+    }
+
+    // 질문한 내용을 테이블에 바로 업데이트
+    function addRow(res) {
+        que_size++;
+        let newRow = $(`<tr>
+                        <td>${que_size}</td>
+                        <td>
+                        <p class="question" title="답변 보기">${res.que}</p>
+                        <p class="answer" style="display:none">아직 답변이 등록되지 않았습니다.</p>
+                        </td></tr>`);
+        $('tbody').prepend(newRow);
+        showPage(currentPage);
+    }
+
+    // 질문 삭제, 추가 예정
+    function delRow() {
+        que_size--;
+        showPage(currentPage);
+    }
+
+    // 질문 테이블 페이징 처리
+    $(document).ready(function() {
+        let array = [[${queList}]];
+
+        for (let i=0; i<array.length; i++) {
+            // 답변이 등록 됐는지 안됐는지 확인
+            let answer = '아직 답변이 등록되지 않았습니다.';
+            if(array[i].ans != null) {
+                answer = array[i].ans
+            }
+
+            // 등록된 답변을 table에 바로 추가
+            let newRow = $(`<tr>
+                            <td>${i + 1}</td>
+                            <td>
+                            <p class="question" title="답변 보기">${array[i].que}</p>
+                            <p class="answer" style="display:none">${answer}</p>
+                            </td></tr>`);
+            $('tbody').prepend(newRow);
+        }
+
+        // 이전 페이지로 이동
+        $('#prevPage').on('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        // 다음 페이지로 이동
+        $('#nextPage').on('click', function() {
+            let totalPages = Math.ceil(que_size / pageSize);
+            if(currentPage < totalPages) {
+                // 여기서는 간단한 예시로서 무조건 다음 페이지로 넘어가도록 구현됨
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        // 질문 클릭 시 답변 보이기/가리기
+        $('tbody').on('click', 'tr', function() {
+            $(this).find('.answer').slideToggle();
+            $('tr').not(this).find('.answer').slideUp();
+
+            // 클릭한 행에만 해당 CSS 스타일 제거
+            $(this).find('.question').css({
+                'white-space': '',
+                'word-break':'break-all'
+            });
+        });
+
+        // 페이지 번호 클릭 시 해당 페이지로 이동
+        $('.pageNumber').on('click', function() {
+            currentPage = parseInt($(this).attr('data-page'));
+            showPage();
+        });
+        // 페이지 초기화
+        showPage(currentPage);
+    });
+
+    // 페이지에 따라 보여줄 항목을 변경하는 함수
+    function showPage(param) {
+        currentPage = param;
+        let rowSize = 5;
+        let start = (currentPage - 1) * rowSize;
+        let end = start + rowSize;
+
+        // 전체 항목을 숨김
+        $('#myPagingTable tbody tr').hide();
+
+        // 현재 페이지에 해당하는 항목을 표시
+        $('#myPagingTable tbody tr').slice(start, end).show();
+
+        // 현재 페이지 업데이트
+        // $('#currentPage').text(currentPage);
+
+        pageNumbers();
+    }
+
+    // 테이블 페이지 네이션 관련 함수
+    function pageNumbers() {
+        // 페이지 번호 그룹화하여 표시
+        let totalPages = Math.ceil(que_size / pageSize);
+        let pageNumberHtml = '';
+
+        // 페이지 네이션을 5개씩 보이게 설정
+        // 현재 페이지를 기준으로 페이지 그룹 설정
+        let maxPageNum = 5;
+        let groupStart = Math.floor((currentPage - 1) / maxPageNum) * maxPageNum + 1; // 페이지 그룹의 시작 페이지
+        let groupEnd = Math.min(groupStart + maxPageNum - 1, totalPages); // 페이지 그룹의 끝 페이지
+
+        for (let i = groupStart; i <= groupEnd; i++) {
+            pageNumberHtml += `<span class="pageNumber" data-page="${i}" onclick="showPage(${i})">${i}</span>`;
+        }
+        $('#pageNumbers').html(pageNumberHtml);
+
+        // 현재 페이지 번호를 bold로 표시
+        $('.pageNumber').removeClass('active'); // 모든 페이지 번호의 active 클래스 제거
+        $('.pageNumber[data-page="' + currentPage + '"]').addClass('active'); // 선택된 페이지 번호에 active 클래스 추가
+    }
+
     /*]]>*/
 </script>
 <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>

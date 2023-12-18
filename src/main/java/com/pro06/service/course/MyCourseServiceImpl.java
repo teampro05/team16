@@ -1,7 +1,7 @@
 package com.pro06.service.course;
 
-import com.pro06.dto.MyCourseDto;
-import com.pro06.entity.MyCourse;
+import com.pro06.dto.course.MyCourseDto;
+import com.pro06.entity.course.MyCourse;
 import com.pro06.repository.course.MyCourseRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;

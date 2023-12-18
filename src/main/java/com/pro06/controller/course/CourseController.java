@@ -1,9 +1,9 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.CourseDto;
-import com.pro06.dto.LectureDto;
-import com.pro06.dto.MyCourseDto;
-import com.pro06.entity.Course;
+import com.pro06.dto.course.CourseDto;
+import com.pro06.dto.course.LectureDto;
+import com.pro06.dto.course.MyCourseDto;
+import com.pro06.entity.course.Course;
 import com.pro06.entity.Status;
 import com.pro06.entity.User;
 import com.pro06.service.UserService;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.text.SimpleDateFormat;
@@ -130,7 +129,7 @@ public class CourseController {
         courseService.setCoursePeo(cno);
         myCourseService.myCourseInsert(myCourse);
 
-        return "redirect:/"; // 인덱스 이동
+        return "redirect:/mycourse/list"; // 인덱스 이동
     }
 
 

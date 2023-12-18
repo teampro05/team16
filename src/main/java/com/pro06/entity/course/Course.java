@@ -1,8 +1,10 @@
-package com.pro06.entity;
+package com.pro06.entity.course;
 
+import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -24,20 +26,21 @@ import java.time.LocalDateTime;
 // column에 defualt 값을 설정할 때에 밑의 두개를 같이 써줘야 한다.
 @DynamicInsert
 @DynamicUpdate
-public class Course extends BaseEntity{
+public class Course extends BaseEntity {
 
     @Id
     @Column(name = "no")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;         // 강좌 번호
 
+    @Comment("작성자(관리자)")    // jpa 코멘트 작성 예시
     @Column(length = 20, nullable = false)
     private String id;          // 작성자(관리자)
 
     @Column(length = 10, nullable = false)
     private String level;      // 학년
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 200, nullable = false)
     private String title;       // 제목
 
     @Column(length = 2000, nullable = false)

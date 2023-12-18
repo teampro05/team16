@@ -1,6 +1,6 @@
-package com.pro06.dto;
+package com.pro06.dto.course;
 
-import com.pro06.entity.BaseEntity;
+import com.pro06.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

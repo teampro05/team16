@@ -1,6 +1,6 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.*;
+import com.pro06.dto.course.*;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;

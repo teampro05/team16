@@ -1,5 +1,6 @@
-package com.pro06.entity;
+package com.pro06.entity.course;
 
+import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.DynamicUpdate;
 // column에 defualt 값을 설정할 때에 밑의 두개를 같이 써줘야 한다.
 @DynamicInsert
 @DynamicUpdate
-public class MyCourse extends BaseEntity{
+public class MyCourse extends BaseEntity {
 
     @Id
     @Column(name = "no")
@@ -30,7 +31,7 @@ public class MyCourse extends BaseEntity{
     @Column(length = 20, nullable = false)
     private String id;          // 수강신청자
 
-    @Column(length = 20)
+    @Column(length = 10)
     @ColumnDefault("'y'")
     private String state;       // 수강상태
 

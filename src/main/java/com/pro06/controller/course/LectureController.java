@@ -1,9 +1,6 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.CourseDto;
-import com.pro06.dto.LecAnsDto;
-import com.pro06.dto.LecTestDto;
-import com.pro06.dto.LectureDto;
+import com.pro06.dto.course.*;
 import com.pro06.service.course.LectureServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
@@ -11,15 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 // 강의 컨트롤러
@@ -121,5 +116,64 @@ public class LectureController {
         PrintWriter out = res.getWriter();
         out.println("<script>window.close();</script>");
         out.flush();
+    }
+    
+    // 질문 전송
+    @PostMapping("lecQueInsert")
+    @ResponseBody
+    public LecQueDto lecQueInsert(@RequestBody HashMap<String, Object> map,
+                                  Principal principal) throws Exception {
+        LecQueDto lecQueDto = new LecQueDto();
+        lecQueDto.setId(principal.getName());
+        lecQueDto.setPage((Integer) map.get("page"));
+        lecQueDto.setSec((Integer) map.get("sec"));
+        lecQueDto.setQue((String) map.get("que"));
+
+        CourseDto courseDto = new CourseDto();
+        courseDto.setNo((Integer) map.get("cno"));
+        lecQueDto.setCourse(courseDto);
+
+        LectureDto lectureDto = new LectureDto();
+        lectureDto.setNo((Integer) map.get("lno"));
+        lecQueDto.setLecture(lectureDto);
+
+        log.warn("lectureDto : " + lectureDto.toString());
+
+        LecQueDto resDto = lectureService.lecQueInsert(lecQueDto);
+        return resDto;
+    }
+
+    // 질문 보기
+    @PostMapping("lecQue")
+    public String getLecQue(Principal principal, @RequestBody HashMap<String, Object> map,
+                       HttpServletResponse res, Model model) throws Exception {
+        String id = principal.getName();
+
+        if(id == null) {
+            // 현재 창 닫기
+            res.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = res.getWriter();
+            out.println("<script>alert('잘못된 접근입니다.');</script>");
+            out.println("<script>window.close();</script>");
+            out.flush();
+        }
+
+        LecQueDto dto = lectureService.getLecQue((Integer) map.get("no"));
+
+        if(!id.equals(dto.getId())) {
+            // 현재 창 닫기
+            res.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = res.getWriter();
+            out.println("<script>alert('잘못된 접근입니다.');</script>");
+            out.println("<script>window.close();</script>");
+            out.flush();
+        }
+
+        if(dto.getAns() == null) {
+            dto.setAns("아직 답변이 달리지 않았습니다.");
+        }
+
+        model.addAttribute("dto", dto);
+        return "lecture/lecQue";
     }
 }

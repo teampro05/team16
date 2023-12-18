@@ -1,8 +1,7 @@
 package com.pro06.controller.course;
 
-import com.pro06.dto.CourseDto;
-import com.pro06.dto.LectureDto;
-import com.pro06.dto.MyVideoDto;
+import com.pro06.dto.course.*;
+import com.pro06.service.course.LectureServiceImpl;
 import com.pro06.service.course.MyCourseServiceImpl;
 import com.pro06.service.course.MyVideoServiceImpl;
 import com.pro06.service.course.VideoServiceImpl;
@@ -34,6 +33,9 @@ public class VideoController {
 
     @Autowired
     private MyCourseServiceImpl myCourseService;
+
+    @Autowired
+    private LectureServiceImpl lectureService;
     
     // 영상 재생
     // 아이디, 강좌번호, 강의번호, 현재페이지를 받음
@@ -91,7 +93,25 @@ public class VideoController {
             userSec = myVideo.getSec();
         }
 
-        List<String> videoList = videoService.videoList(cno, lno);
+
+        // 질문 목록 출력
+        LecQueDto lecQueDto = new LecQueDto();
+        lecQueDto.setId(id);
+        lecQueDto.setPage(page);
+        CourseDto cou = new CourseDto();
+        cou.setNo(cno);
+        lecQueDto.setCourse(cou);
+        LectureDto lec = new LectureDto();
+        lec.setNo(lno);
+        lecQueDto.setLecture(lec);
+        List<LecQueDto> queList = lectureService.lecQueList(lecQueDto);
+
+
+        // 영상의 파일 정보 추출
+        List<VideoDto> videoList = videoService.videoList(cno, lno);
+
+        model.addAttribute("que_size", queList.size());         // 질문 리스트 수
+        model.addAttribute("queList", queList);                 // 해당 영상의 질문 목록
         model.addAttribute("cno", cno);                         // 강좌번호
         model.addAttribute("lno", lno);                         // 강의 번호
         model.addAttribute("total_size", videoList.size());     //
@@ -99,7 +119,8 @@ public class VideoController {
         model.addAttribute("page", page);                       // 현재 영상 페이지
         model.addAttribute("sec", userSec);                     // 들은 시간
         model.addAttribute("state", myVideo.getState());        // 완강 상태
-        model.addAttribute("savefile", videoList.get(page));
+        model.addAttribute("savefile", videoList.get(page).getSavefile());      // 저장된 파일 이름
+        model.addAttribute("vno", videoList.get(page).getNo());     // 비디오 번호
         return "video/player";
     }
     

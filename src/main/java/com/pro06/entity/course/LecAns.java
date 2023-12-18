@@ -1,5 +1,6 @@
-package com.pro06.entity;
+package com.pro06.entity.course;
 
+import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,29 +18,29 @@ import org.hibernate.annotations.DynamicUpdate;
 // column에 defualt 값을 설정할 때에 밑의 두개를 같이 써줘야 한다.
 @DynamicInsert
 @DynamicUpdate
-public class LecAns extends BaseEntity{
+public class LecAns extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;         // 시험 번호
 
     @Column(length = 20, nullable = false)
-    private String id;
+    private String id;          // 시험을 본 유저의 아이디
     
     // 제출된 답안
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer1;         // 1번
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer2;         // 2번
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer3;         // 3번
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer4;         // 4번
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String answer5;         // 5번
 
     private Integer ansCnt;         // 맞은 개수
