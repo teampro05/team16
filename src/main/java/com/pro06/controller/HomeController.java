@@ -81,7 +81,7 @@ public class HomeController {
         String id = principal.getName();
         int pass = userService.loginPro(id);
         if (pass == 1) {
-            model.addAttribute("msg", "로그인 되었습니다.");
+            model.addAttribute("msg", "환영합니다! 로그인되었습니다 \uD83E\uDD13");
             model.addAttribute("url", "/");
             return "/alert";
         } else if (pass == 2) {
