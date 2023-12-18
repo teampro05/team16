@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>초등 교재 상세 보기</title>
+    <title>토익 교재 상세 보기</title>
     <th:block th:replace="include/head :: head" ></th:block>
 
     <script th:src="@{https://code.jquery.com/jquery-3.2.1.slim.min.js}"></script>
@@ -31,15 +31,14 @@
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
-                    <h3 class="mt-2">[[${Ebook.fileBoard.title}]]</h3>
-                    <h5>[[${Ebook.fileBoard.price}]]원</h5>
+                    <h3 class="mt-2">[[${Tbook.fileBoard.title}]]</h3>
+                    <h5>[[${Tbook.fileBoard.price}]]원</h5>
                     <ul>
                         <li>
                             <div class="d-flex justify-content-end mt-5">
-<!--									<th:block sec:authorize="hasAuthority('ADMIN')">-->
-                                        <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                                        <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
-<!--                                    </th:block>-->
+<!--									th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">-->
+                                <a th:href="@{/Tbook/TbookUpdate(no=${Tbook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                                <a th:href="@{/Tbook/TbookDelete(no=${Tbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
                             </div>
                         </li>
                     </ul>
@@ -72,7 +71,7 @@
                                 <h5>교재 제목</h5>
                             </td>
                             <td>
-                                <p>[[${Ebook.fileBoard.title}]]</p>
+                                <p>[[${Tbook.fileBoard.title}]]</p>
                             </td>
                         </tr>
                         <tr>
@@ -80,7 +79,7 @@
                                 <h5>요약 내용</h5>
                             </td>
                             <td>
-                                <p>[[${Ebook.fileBoard.servecontent}]]</p>
+                                <p>[[${Tbook.fileBoard.servecontent}]]</p>
                             </td>
                         </tr>
                         <tr>
@@ -88,7 +87,7 @@
                                 <h5>가격</h5>
                             </td>
                             <td>
-                                <p>[[${Ebook.fileBoard.price}]]</p>
+                                <p>[[${Tbook.fileBoard.price}]]</p>
                             </td>
                         </tr>
 
@@ -97,7 +96,7 @@
                                 <h5>출판일</h5>
                             </td>
                             <td>
-                                <p>[[${Ebook.fileBoard.publish}]]</p>
+                                <p>[[${Tbook.fileBoard.publish}]]</p>
                             </td>
                         </tr>
                         </tbody>
@@ -114,7 +113,7 @@
                             <h5>교재 내용</h5>
                         </td>
                         <td>
-                            <p>[[${Ebook.fileBoard.content}]]</p>
+                            <p>[[${Tbook.fileBoard.content}]]</p>
                         </td>
                     </tr>
                     </tbody>
