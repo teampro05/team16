@@ -128,7 +128,7 @@ public class LectureServiceImpl {
     // admin 에서 사용할 list
     // 모든 질문 목록
     public List<LecQueDto> lecQueDtoFindByAll() {
-        List<LecQue> lst = lecQueRepository.findAll();
+        List<LecQue> lst = lecQueRepository.findByDeleteYn("n");
         List<LecQueDto> dtoList = lst.stream().map(lecQue ->
                         modelMapper.map(lecQue, LecQueDto.class))
                 .collect(Collectors.toList());
@@ -139,7 +139,7 @@ public class LectureServiceImpl {
     // 해당 강좌, 강의, 영상에서 유저가 질문한 목록
     public List<LecQueDto> lecQueList(LecQueDto lecQueDto) {
         List<LecQue> lst = lecQueRepository.lecQueList(lecQueDto.getId(), lecQueDto.getPage(),
-                lecQueDto.getCourse().getNo(), lecQueDto.getLecture().getNo());
+                lecQueDto.getCourse().getNo(), lecQueDto.getLecture().getNo(), "n");
         List<LecQueDto> dtoList = lst.stream().map(lecQue ->
                         modelMapper.map(lecQue, LecQueDto.class))
                 .collect(Collectors.toList());
@@ -163,7 +163,10 @@ public class LectureServiceImpl {
 
     // 질문 삭제
     public void lecQueDelete(Integer no) {
-        lecQueRepository.deleteById(no);
+        Optional<LecQue> lecQue = lecQueRepository.findById(no);
+        LecQue lecQue1 = lecQue.orElseThrow();
+        lecQue1.delete("y");
+        lecQueRepository.save(lecQue1);
     }
 
     // 질문에 대한 답변 입력, 수정

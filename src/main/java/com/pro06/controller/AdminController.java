@@ -252,8 +252,8 @@ public class AdminController {
     }
 
     // 질문의 답변 상세 폼 이동
-    @GetMapping("ansInsert")
-    public String ansInsert(@RequestParam("no") Integer no, Model model) {
+    @GetMapping("ansInsUpd")
+    public String ansInsUpd(@RequestParam("no") Integer no, Model model) {
         LecQueDto dto = lectureService.getLecQue(no);
 
         // 영상의 파일 정보 추출
@@ -263,13 +263,20 @@ public class AdminController {
 
         model.addAttribute("savefile", savefile);
         model.addAttribute("dto", dto);
-        return "admin/lecture/ansInsert";
+        return "admin/lecture/ansInsUpd";
     }
     
     // 질문의 답변 작성, 수정
-    @PostMapping("ansInsert")
-    public String ansInsertPro(LecQueDto lecQueDto) {
+    @PostMapping("ansInsUpd")
+    public String ansInsUpdPro(LecQueDto lecQueDto) {
         lectureService.lecQueAnsInsUpd(lecQueDto);
+        return "redirect:/admin/lecQueList";
+    }
+
+    // 질문의 답변 삭제
+    @GetMapping("ansDelete")
+    public String ansDelete(LecQueDto lecQueDto) {
+        lectureService.lecQueDelete(lecQueDto.getNo());
         return "redirect:/admin/lecQueList";
     }
 
