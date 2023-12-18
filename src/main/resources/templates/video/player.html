@@ -20,7 +20,7 @@
         .complete {display: none;}
 
         /* 이전, 다음, 종료 버튼 위치 css */
-        .vdo-btn {float: left; margin-right: 15px;}
+        .vdo-btn {float: left; margin-left: 15px;}
 
         /* 인덱스에서 해당 위치의 영상으로 넘어가는 버튼 css */
         .idx-btn {
@@ -140,7 +140,7 @@
                 <ul>
                     <th:block th:each="i : ${#numbers.sequence(0, total_size - 1)}">
                         <li th:id="'li' + ${i}">
-                            <th:block th:if="${user_page > i and i != page}">
+                            <th:block th:if="${user_page >= i and i != page}">
                                 <form th:action="@{/video/player}" method="post">
                                     <input type="hidden" name="cno" th:value="${cno}">
                                     <input type="hidden" name="lno" th:value="${lno}">
@@ -149,7 +149,7 @@
                                            th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
                                 </form>
                             </th:block>
-                            <th:block th:if="${user_page == i and i != page}">
+                            <!--<th:block th:if="${user_page == i and i != page}">
                                 <form th:action="@{/video/player}" method="post">
                                     <input type="hidden" name="cno" th:value="${cno}">
                                     <input type="hidden" name="lno" th:value="${lno}">
@@ -157,7 +157,7 @@
                                     <input type="submit" class="idx-btn-now" title="해당 영상으로 넘어가기, 현재 여기까지 수강했습니다."
                                            th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
                                 </form>
-                            </th:block>
+                            </th:block>-->
                             <th:block th:if="${user_page < i or i == page}">
                                 <span th:id="'btn' + ${i}" th:text="${i + 1} + '번 영상'"></span>
                             </th:block>
@@ -166,7 +166,7 @@
                 </ul>
             </div>
 
-            <div style="float: left">
+            <div style="float: left; width: 300px;">
                 <!-- 이전 영상으로 넘어가기 -->
                 <th:block th:if="${page > 0}">
                     <form th:action="@{/video/player}" method="post" onsubmit="return videoBack()">

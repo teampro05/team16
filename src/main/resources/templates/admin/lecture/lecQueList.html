@@ -39,6 +39,12 @@
                                     <th:block th:if="${dto.ans} eq null">
                                         <a th:href="@{/admin/ansInsert(no=${dto.no})}" class="btn btn-primary">답변하기</a>
                                     </th:block>
+
+                                    <th:block th:if="${dto.ans} ne null">
+                                        <a th:href="@{/admin/ansUpdate(no=${dto.no})}" class="btn btn-primary">답변수정</a>
+                                    </th:block>
+
+                                    <a th:href="@{/admin/ansDelete(no=${dto.no})}" class="btn btn-danger">제거</a>
                                 </td>
                             </tr>
                         </th:block>
