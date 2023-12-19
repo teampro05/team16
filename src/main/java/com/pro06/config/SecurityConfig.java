@@ -36,8 +36,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests
                             .requestMatchers("/course/**", "/error/**", "/Ebook/**").permitAll()
-                            .requestMatchers("/user/**", "/board/**", "/mycourse/**", "/video/**", "/myvideo/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
                             .requestMatchers("/admin/**").hasAuthority("ADMIN") // admin만 접근 가능
+                            .requestMatchers("/user/**", "/board/**", "/mycourse/**", "/video/**", "/myvideo/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
                             .requestMatchers("/css/**", "/js/**", "/upload/**", "/cleditor/**", "/scss/**",
                                     "/vendors/**", "/ckeditor/**", "/webfonts/**", "/resource/**", "/assets/**", "/shop/**")
                             .permitAll() // 모두 접근 가능

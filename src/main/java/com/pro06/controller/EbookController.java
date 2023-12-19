@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import java.util.*;
 
 @Controller
 @Slf4j
+@Transactional
 //@CrossOrigin("http://localhost:8085")
 @RequestMapping("/Ebook/*")
 public class EbookController {
@@ -290,6 +292,7 @@ public class EbookController {
 
         // Create the 'board' object
         Ebook ebook = new Ebook();
+        ebook.setNo(postNo);
         ebook.setId(params.get("id"));
         ebook.setTitle(params.get("title"));
         ebook.setContent(params.get("content"));
@@ -303,6 +306,7 @@ public class EbookController {
         log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
         log.info(" 요청 URL : " + req.getServletPath());
         log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        log.info(" ebook : " + ebook);
         //여러 파일 반복 저장
         List<EbookImg> fileList = new ArrayList<>();
 
@@ -310,6 +314,7 @@ public class EbookController {
 
         for (MultipartFile file : files) {
             if (!file.getOriginalFilename().isEmpty()) {
+                log.info(" file : " + file);
 
                 // 파일 처리 로직 시작
                 String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
@@ -318,6 +323,7 @@ public class EbookController {
                 String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
 
                 EbookImg data = new EbookImg();
+                data.setNo(postNo);
                 data.setSavefolder(uploadFolder);
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
@@ -328,6 +334,7 @@ public class EbookController {
                 fileList.add(data);
 
                 File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+                log.info(" fileList : " + fileList);
 
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
@@ -338,18 +345,24 @@ public class EbookController {
                 }
             } else {
                 checkFile = false;
-                break;
+//                break;
             }
         }
+        log.info(" checkFile1 : " + checkFile);
 
-        if(checkFile) { // 파일이 있는 경우
+        if(checkFile == true) { // 파일이 있는 경우
             List<EbookImg> fileList2 = eBookService.getFileGroupList(postNo);
             for (EbookImg ebookImg : fileList2) {
                 File file = new File(uploadFolder + "/" + ebookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
                 }
+                log.info(" ebookImg : " + ebookImg);
             }
+
+            log.info(" fileListㅡㅡㅡㅡㅡㅡㅡㅡㅡ : " + fileList);
+            log.info(" ebookㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ : " + ebook);
+
             eBookService.removeFileAll(postNo);
             fileboard.setFileList(fileList); // 파일
             fileboard.setFileBoard(ebook); //글 제목 내용
