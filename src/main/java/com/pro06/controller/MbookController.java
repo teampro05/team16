@@ -95,19 +95,6 @@ public class MbookController {
         mbook.setPrice(Integer.valueOf(params.get("price")));
         mbook.setPublish(params.get("publish"));
 
-/*
-        // 가격에 대한 String 값을 BigDecimal로 변환
-        String priceString = params.get("price");
-        BigDecimal price = new BigDecimal(priceString);
-        ebook.setPrice(price);
-
-        // 출간일에 대한 String 값을 LocalDate로 변환
-        String publishString = params.get("publish");
-        LocalDate publish = LocalDate.parse(publishString);
-        ebook.setPublish(publish);
-*/
-
-
         File folder = new File(uploadFolder);
         if (!folder.exists())
             folder.mkdirs();
@@ -174,7 +161,7 @@ public class MbookController {
         return "redirect:/Mbook/MbookList";
     }
 
-    // 거래글 수정폼 이동
+    // 수정 폼 이동
     @GetMapping("MbookUpdate")
     public String modifyFileboard(@RequestParam("no") Integer postNo, Model model) throws Exception {
         Mbook mbook = mBookService.getMbook(postNo);
@@ -185,15 +172,16 @@ public class MbookController {
     }
 
     @PostMapping("MbookUpdate")
-    public String fileUpload(@RequestParam("Mbno") Integer postNo,
-                             @RequestParam("files") List<MultipartFile> files,
-                             @RequestParam Map<String, String> params,
-                             HttpServletRequest req,
-                             Model model) throws Exception {
+    public String modifyFileboard2(@RequestParam("Mbno") Integer postNo,
+                                   @RequestParam("files") List<MultipartFile> files,
+                                   @RequestParam Map<String, String> params,
+                                   HttpServletRequest req, Model model) throws Exception {
+        MbookVO fileboard = new MbookVO();
+
 
         // Create the 'board' object
         Mbook mbook = new Mbook();
-        // mbook.setNo(params.get("no"));
+        mbook.setNo(postNo);
         mbook.setId(params.get("id"));
         mbook.setTitle(params.get("title"));
         mbook.setContent(params.get("content"));
@@ -201,65 +189,77 @@ public class MbookController {
         mbook.setPrice(Integer.valueOf(params.get("price")));
         mbook.setPublish(params.get("publish"));
 
-/*
-        // 가격에 대한 String 값을 BigDecimal로 변환
-        String priceString = params.get("price");
-        BigDecimal price = new BigDecimal(priceString);
-        ebook.setPrice(price);
 
-        // 출간일에 대한 String 값을 LocalDate로 변환
-        String publishString = params.get("publish");
-        LocalDate publish = LocalDate.parse(publishString);
-        ebook.setPublish(publish);
-*/
-
-        File folder = new File(uploadFolder);
-        if (!folder.exists())
-            folder.mkdirs();
         log.info("-----------------------------------");
         log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
-        log.info(" 지정한 경로 : " + uploadFolder);
+        log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
         log.info(" 요청 URL : " + req.getServletPath());
         log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        log.info(" mbook : " + mbook);
+
 
         //여러 파일 반복 저장
         List<MbookImg> fileList = new ArrayList<>();
-        // 파일 리스트를 순회하며 각 파일 처리
+
+        boolean checkFile = true;
+
         for (MultipartFile file : files) {
             if (!file.getOriginalFilename().isEmpty()) {
+                log.info(" file : " + file);
+
                 // 파일 처리 로직 시작
                 String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
                 String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
                 String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
                 String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
 
-                // ... (기존 파일 처리 로직)
+
                 MbookImg data = new MbookImg();
+
+                data.setNo(postNo);
                 data.setSavefolder(uploadFolder);
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
                 data.setFilesize(file.getSize());
+
                 Date today = new Date();
                 data.setUploaddate(today.toString());
+                data.setMbno(postNo);
                 fileList.add(data);
+                File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+                log.info(" fileList : " + fileList);
 
-                // 파일 저장
-                File saveFile = new File(uploadFolder, saveFileName);
                 try {
-                    file.transferTo(saveFile);
+                    file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
+//                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
                 }
+            } else {
+                checkFile = false;
+//                break;
             }
         }
-
-        MbookVO fileboard = new MbookVO();
-        fileboard.setFileList(fileList);
-        fileboard.setFileBoard(mbook);
-        mBookService.insertFileboard(fileboard);
-
+        log.info(" checkFile1 : " + checkFile);
+        if(checkFile == true) { // 파일이 있는 경우
+            List<MbookImg> fileList2 = mBookService.getFileGroupList(postNo);
+            for (MbookImg mbookImg : fileList2) {
+                File file = new File(uploadFolder + "/" + mbookImg.getSavefile());
+                if (file.exists()) { // 해당 파일이 존재하면
+                    file.delete(); // 파일 삭제
+                }
+                log.info(" mbookImg : " + mbookImg);
+            }
+            mBookService.removeFileAll(postNo);
+            fileboard.setFileList(fileList); // 파일
+            fileboard.setFileBoard(mbook); //글 제목 내용
+            mBookService.updateFileboard(fileboard); // 모든 내용 업데이트
+        } else { // 파일이 없는 경우
+            mBookService.updateMbook(mbook); // 글 제목 내용만 업데이트
+        }
         return "redirect:/Mbook/getMbook?no=" + postNo;
     }
+
 
 }

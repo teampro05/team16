@@ -31,29 +31,29 @@
                     <div class="faq-list">
                         <ul>
                             <th:block th:each="faq, noo: ${faqList}">
-<!--                                <li>카운트</li>-->
-<!--                                <li th:text="${noo.count}"></li>-->
+                                <li>카운트</li>
+                                <li th:text="${noo.count}"></li>
 
-<!--                                <li>No</li>-->
-<!--                                <li th:text="${faq.no}"></li>-->
+                                <li>No</li>
+                                <li th:text="${faq.no}"></li>
 
-<!--                                <li>제목</li>-->
-<!--                                <li th:text="${faq.title}"></li>-->
+                                <li>제목</li>
+                                <li th:text="${faq.title}"></li>
 
-<!--                                <li>내용</li>-->
-<!--                                <li th:text="${faq.content}"></li>-->
+                                <li>내용</li>
+                                <li th:text="${faq.content}"></li>
 
-                                    <li data-aos="fade-up" >
-                                        <form th:action="@{/admin/post}" method="post" onsubmit="abi()">
-                                            <i class="bx bx-help-circle icon-help"></i>
-                                            <input data-bs-toggle="collapse" name="title" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.title}" />
-                                            <input data-bs-toggle="collapse" name="no" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.no}" />
-    <!--                                        <div th:id="'faq-list-' + ${faq.count}" class="collapse show" data-bs-parent=".faq-list">-->
-                                                <input data-bs-toggle="collapse" name="content" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.content}" />
-    <!--                                        </div>-->
-                                            <button type="submit" class="btn2 btn-primary modifyBtn" id="update_btn" style="display: block">수정완료하기</button>
-                                        </form>
-                                    </li>
+<!--                                    <li data-aos="fade-up" >-->
+<!--                                        <form th:action="@{/admin/post}" method="post" onsubmit="abi()">-->
+<!--                                            <i class="bx bx-help-circle icon-help"></i>-->
+<!--                                            <input data-bs-toggle="collapse" name="title" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.title}" />-->
+<!--                                            <input data-bs-toggle="collapse" name="no" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.no}" />-->
+<!--    &lt;!&ndash;                                        <div th:id="'faq-list-' + ${faq.count}" class="collapse show" data-bs-parent=".faq-list">&ndash;&gt;-->
+<!--                                                <input data-bs-toggle="collapse" name="content" class="collapse faqinput" th:data-bs-target="'#faq-list-'+ ${noo.count}" th:value="${faq.content}" />-->
+<!--    &lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                                            <button type="submit" class="btn2 btn-primary modifyBtn" id="update_btn" style="display: block">수정완료하기</button>-->
+<!--                                        </form>-->
+<!--                                    </li>-->
                             </th:block>
                             <th:block th:if="${faqList.size() <= 0}">
                                 <li data-aos="fade-up" >

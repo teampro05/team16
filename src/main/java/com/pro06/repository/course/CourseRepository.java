@@ -12,6 +12,6 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Integer> {
     
     // 수강생이 다 차지 않은 강좌만 불러오기
-    @Query("select c from Course c where c.peo < c.peo_max")
+    @Query("select c from Course c where c.peo < c.peo_max and c.copen=1")
     List<Course> courseList();
 }

@@ -174,6 +174,7 @@ public class TbookController {
     }
 
 
+    // 수정 폼 이동
     @GetMapping("TbookUpdate")
     public String modifyFileboard(@RequestParam("no") Integer postNo, Model model) throws Exception {
         Tbook tbook = tBookService.getTbook(postNo);
@@ -188,11 +189,12 @@ public class TbookController {
                                    @RequestParam("files") List<MultipartFile> files,
                                    @RequestParam Map<String, String> params,
                                    HttpServletRequest req, Model model) throws Exception {
-
         TbookVO fileboard = new TbookVO();
+
 
         // Create the 'board' object
         Tbook tbook = new Tbook();
+        tbook.setNo(postNo);
         tbook.setId(params.get("id"));
         tbook.setTitle(params.get("title"));
         tbook.setContent(params.get("content"));
@@ -206,6 +208,9 @@ public class TbookController {
         log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
         log.info(" 요청 URL : " + req.getServletPath());
         log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        log.info(" tbook : " + tbook);
+
+
         //여러 파일 반복 저장
         List<TbookImg> fileList = new ArrayList<>();
 
@@ -213,6 +218,7 @@ public class TbookController {
 
         for (MultipartFile file : files) {
             if (!file.getOriginalFilename().isEmpty()) {
+                log.info(" file : " + file);
 
                 // 파일 처리 로직 시작
                 String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
@@ -220,17 +226,21 @@ public class TbookController {
                 String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
                 String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
 
+
                 TbookImg data = new TbookImg();
+
+                data.setNo(postNo);
                 data.setSavefolder(uploadFolder);
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
                 data.setFilesize(file.getSize());
+
                 Date today = new Date();
                 data.setUploaddate(today.toString());
                 data.setTbno(postNo);
                 fileList.add(data);
-
                 File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+                log.info(" fileList : " + fileList);
 
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
@@ -241,17 +251,18 @@ public class TbookController {
                 }
             } else {
                 checkFile = false;
-                break;
+//                break;
             }
         }
-
-        if(checkFile) { // 파일이 있는 경우
+        log.info(" checkFile1 : " + checkFile);
+        if(checkFile == true) { // 파일이 있는 경우
             List<TbookImg> fileList2 = tBookService.getFileGroupList(postNo);
             for (TbookImg tbookImg : fileList2) {
                 File file = new File(uploadFolder + "/" + tbookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
                 }
+                log.info(" tbookImg : " + tbookImg);
             }
             tBookService.removeFileAll(postNo);
             fileboard.setFileList(fileList); // 파일
@@ -260,8 +271,8 @@ public class TbookController {
         } else { // 파일이 없는 경우
             tBookService.updateTbook(tbook); // 글 제목 내용만 업데이트
         }
-
         return "redirect:/Tbook/getTbook?no=" + postNo;
     }
+
 
 }
