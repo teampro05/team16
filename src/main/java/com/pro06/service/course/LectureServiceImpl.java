@@ -74,16 +74,18 @@ public class LectureServiceImpl {
     }
 
     // 강의, 파일, 시험 정보 가져오기
-    public LectureVO getLectureVo(Integer lno, Integer cno) throws Exception {
+    public LectureVO getLectureVo(Integer cno, Integer lno) throws Exception {
         // 강의 정보 추출
         Optional<Lecture> lec = lectureRepository.findById(lno);
         LectureDto lecDto = modelMapper.map(lec, LectureDto.class);
-        
+//        log.warn("lecDto : " + lecDto.toString());
+
         // 영상 정보 추출
         List<Video> vilst = videoRepository.videoList(cno, lno);
         List<VideoDto> videoDtoList = vilst.stream().map(video ->
                 modelMapper.map(video, VideoDto.class))
                 .collect(Collectors.toList());
+//        log.warn("videoList : " + videoDtoList.toString());
         
         // 시험 정보 추출
         LecTest test = lecTestRepository.getLecTest(cno, lno);

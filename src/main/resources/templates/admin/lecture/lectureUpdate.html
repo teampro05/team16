@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label for="keyword" class="form-label">키워드</label>
                             <input type="text" name="keyword" id="keyword" class="form-control"
-                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="100" required>
+                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="100" th:value="${lecDto.keyword}" required>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
                             </div>
@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label for="content" class="form-label">내용</label>
                             <input type="text" name="content" id="content" class="form-control"
-                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="1000" required>
+                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="1000" th:value="${lecDto.content}" required>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
                             </div>
@@ -63,15 +63,9 @@
                             <!-- 강의 영상 input 태그를 5개 만듬 -->
                             <th:block th:each="i : ${#numbers.sequence(1, 5)}">
                                 <div class="form-group">
-                                    <label th:for="'file' + ${i}" class="form-label" th:text="'강의 영상 ' + ${i}"></label>
+                                    <label th:for="'file' + ${i}" class="form-label" th:text="'강의 영상 ' + ${i} + '  ' + '기존 영상 : ' + ${videoDtoList.get(i - 1).originfile}"></label>
                                     <input type="file" class="file form-control" th:name="'file' + ${i}"
                                            th:id="'file' + ${i}" accept="video/mp4" required>
-                                    <div class="valid-feedback">
-                                        형식에 알맞습니다.
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        파일 형식이 맞지 않습니다.
-                                    </div>
                                 </div>
                             </th:block>
                         </div>
@@ -84,7 +78,8 @@
                                     <div class="form-group">
                                         <label th:for="'exam' + ${i}" class="form-label" th:text="'문제 ' + ${i}"></label>
                                         <input type="text" class="exam form-control" th:name="'exam' + ${i}"
-                                               th:id="'exam' + ${i}" pattern="^[ㄱ-ㅎ가-힣a-zA-Z]+$" maxlength="100" required>
+                                               th:id="'exam' + ${i}" th:value="${examList.get(i - 1)}"
+                                               pattern="^[ㄱ-ㅎ가-힣a-zA-Z]+$" maxlength="100" required>
                                         <div class="valid-feedback">
                                             형식에 알맞습니다.
                                         </div>
@@ -96,7 +91,8 @@
                                     <div class="form-group">
                                         <label th:for="'answer' + ${i}" class="form-label" th:text="'답 ' + ${i}"></label>
                                         <input type="text" class="exam form-control" th:name="'answer' + ${i}"
-                                               th:id="'answer' + ${i}" pattern="^[ㄱ-ㅎ가-힣a-zA-Z]+$" maxlength="100" required>
+                                               th:id="'answer' + ${i}" th:value="${ansList.get(i - 1)}"
+                                               pattern="^[ㄱ-ㅎ가-힣a-zA-Z]+$" maxlength="100" required>
                                         <div class="valid-feedback">
                                             형식에 알맞습니다.
                                         </div>

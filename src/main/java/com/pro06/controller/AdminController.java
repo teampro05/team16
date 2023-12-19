@@ -360,9 +360,25 @@ public class AdminController {
             List<VideoDto> videoDtoList = vo.getFileList();
             LecTestDto testDto = vo.getLecTest();
 
+            List<String> examList = new ArrayList<>();
+            examList.add(testDto.getExam1());
+            examList.add(testDto.getExam2());
+            examList.add(testDto.getExam3());
+            examList.add(testDto.getExam4());
+            examList.add(testDto.getExam5());
+
+            List<String> ansList = new ArrayList<>();
+            ansList.add(testDto.getAnswer1());
+            ansList.add(testDto.getAnswer2());
+            ansList.add(testDto.getAnswer3());
+            ansList.add(testDto.getAnswer4());
+            ansList.add(testDto.getAnswer5());
+
             model.addAttribute("lecDto", lecDto);
             model.addAttribute("videoDtoList", videoDtoList);
             model.addAttribute("testDto", testDto);
+            model.addAttribute("examList", examList);
+            model.addAttribute("ansList", ansList);
             model.addAttribute("id", principal.getName());
             return "admin/lecture/lectureUpdate";
         } else {
