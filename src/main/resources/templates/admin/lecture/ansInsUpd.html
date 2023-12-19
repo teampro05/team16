@@ -24,7 +24,7 @@
                 <h1>관리자페이지</h1>
                 <h2>답변 등록</h2>
                 <hr style="border-top: 1px solid #333">
-                <div class="card p-3">
+                <div class="card p-3" style="display: inline-block; width: 100%; height: 80%">
                     <div style="width: 700px; float: left">
                         <h3>비디오</h3>
                         <video
@@ -50,18 +50,22 @@
                     <div style="width: 400px; float: left">
                         <h3>질문한 위치</h3>
                         <div id="time"></div>
+                        <br>
+
                         <h3>질문 내용</h3>
                         <div th:text="${dto.que}"></div>
+
                         <br>
                         <hr>
                         <br>
 
-                        <div>
-                            <h3>답변 등록</h3>
-                            <form th:action="@{/admin/ansInsert}" method="post" onsubmit="return answerCheck();">
+                        <div class="form-group">
+                            <h3>답변 등록 / 수정</h3>
+                            <form th:action="@{/admin/ansInsUpd}" method="post" onsubmit="return answerCheck();">
                                 <div>
                                     <input type="hidden" name="no" id="no" th:value="${dto.no}">
-                                    <input type="text" name="ans" id="ans" maxlength="1000" required>
+                                    <input type="text" name="ans" id="ans" class="form-control" maxlength="500"
+                                           th:value="${dto.ans} eq null ? '' : ${dto.ans}" required>
                                 </div>
                                 <div>
                                     <span id="warn"></span>
@@ -74,15 +78,14 @@
                             </form>
                         </div>
                     </div>
-
-                    <footer class="footer">
-                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-                        </div>
-                    </footer>
                 </div>
             </div>
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+                </div>
+            </footer>
         </div>
     </div>
 </div>

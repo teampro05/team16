@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface LecQueRepository extends JpaRepository<LecQue, Integer> {
-    @Query("select lq from LecQue lq where lq.lecture.no = :lno and lq.course.no = :cno and lq.id = :id and lq.page = :page")
-    List<LecQue> lecQueList(String id, Integer page, Integer cno, Integer lno);
+    @Query("select lq from LecQue lq where lq.lecture.no = :lno and lq.course.no = :cno and lq.id = :id and lq.page = :page and lq.deleteYn = :deleteYn")
+    List<LecQue> lecQueList(String id, Integer page, Integer cno, Integer lno, String deleteYn);
+
+    List<LecQue> findByDeleteYn(String deleteYn);
 }

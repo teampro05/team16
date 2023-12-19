@@ -34,6 +34,9 @@ public class LecQueDto extends BaseDto {
     private Integer page;       // 영상 위치
 
     @NotNull
+    private String deleteYn;    // 제거 여부 확인
+
+    @NotNull
     private CourseDto course;        // 강좌 번호 외래키 지정
 
     @NotNull

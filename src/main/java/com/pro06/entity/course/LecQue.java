@@ -3,6 +3,7 @@ package com.pro06.entity.course;
 import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -33,6 +34,9 @@ public class LecQue extends BaseEntity {
     private String ans;        // 관리자가 작성한 답안
     private Integer sec;       // 영상의 시간 (초)
     private Integer page;       // 영상 위치
+
+    @ColumnDefault("'n'")
+    private String deleteYn;    // 제거 여부 확인
     
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "cno", referencedColumnName = "no")
@@ -44,5 +48,9 @@ public class LecQue extends BaseEntity {
 
     public void answer(String ans) {
         this.ans = ans;
+    }
+
+    public void delete(String deleteYn) {
+        this.deleteYn = deleteYn;
     }
 }
