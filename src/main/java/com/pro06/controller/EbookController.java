@@ -94,19 +94,6 @@ public class EbookController {
         ebook.setPrice(Integer.valueOf(params.get("price")));
         ebook.setPublish(params.get("publish"));
 
-/*
-        // 가격에 대한 String 값을 BigDecimal로 변환
-        String priceString = params.get("price");
-        BigDecimal price = new BigDecimal(priceString);
-        ebook.setPrice(price);
-
-        // 출간일에 대한 String 값을 LocalDate로 변환
-        String publishString = params.get("publish");
-        LocalDate publish = LocalDate.parse(publishString);
-        ebook.setPublish(publish);
-*/
-
-
         File folder = new File(uploadFolder);
         if (!folder.exists())
             folder.mkdirs();
@@ -182,7 +169,6 @@ public class EbookController {
         model.addAttribute("fileList", fileList);
         return "Ebook/EbookUpdate";
     }
-
 
     @PostMapping("EbookUpdate")
     public String modifyFileboard2(@RequestParam("Ebno") Integer postNo,

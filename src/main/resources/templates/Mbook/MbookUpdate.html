@@ -23,6 +23,7 @@
         <form th:action="@{/Mbook/MbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="id">작성자</label>
+                <input type="hidden" name="Mbno" th:value="${Mbook.no}" />
                 <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
                        th:value="관리자"
                        minlength="4" maxlength="16"
