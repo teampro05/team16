@@ -37,4 +37,7 @@ public class LectureDto extends BaseDto {
 
     @NotNull
     private CourseDto course;        // 강좌 번호 외래키 지정
+
+    @NotNull
+    private String deleteYn;        // 삭제 여부
 }

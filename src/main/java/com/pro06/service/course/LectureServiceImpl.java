@@ -7,8 +7,10 @@ import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +19,14 @@ import java.util.stream.Collectors;
 @Transactional
 @Log4j2
 public class LectureServiceImpl {
+
+    // 실제 업로드 디렉토리
+    // thymeleaf 에서는 외부에 지정하여 사용해야 한다.
+    // jsp와는 다르게 webapp이 없기 때문이다.
+    // resources는 정적이라 업데이트 되어도 파일을 못 찾기에 서버를 재 시작 해야함
+    @Value("${spring.servlet.multipart.location}")
+    String uploadFolder;
+
     @Autowired
     private CourseRepository courseRepository;
 
@@ -34,6 +44,9 @@ public class LectureServiceImpl {
 
     @Autowired
     private LecQueRepository lecQueRepository;
+
+    @Autowired
+    private VideoServiceImpl videoService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -73,6 +86,54 @@ public class LectureServiceImpl {
         lecTestRepository.save(lt);
     }
 
+    // 강의 정보 + 파일 수정 + 시험 정보 수정
+    public void LectureVoUpdate(LectureVO vo) throws Exception {
+
+        LectureDto lectureDto = vo.getLecture();
+        List<VideoDto> fileList = vo.getFileList();
+        LecTestDto lecTestDto = vo.getLecTest();
+
+        CourseDto coudto = new CourseDto();
+        coudto.setNo(lectureDto.getCourse().getNo());
+
+        // 강의 정보 확인
+        Optional<Lecture> lec = lectureRepository.findById(lectureDto.getNo());
+        Lecture lecRes = lec.orElseThrow();
+        lecRes.change(lectureDto);
+        lectureRepository.save(lecRes);
+        log.warn("lecRes : " + lecRes.toString());
+
+        // 기존 비디오 리스트 추출
+        List<VideoDto> videoDtoList = videoService.videoList(coudto.getNo(), lectureDto.getNo());
+
+        // 강의 영상 수정
+        for(int i=0; i<videoDtoList.size(); i++) {
+            VideoDto file = fileList.get(i);
+            if(file.getOriginfile() != null) {
+                Optional<Video> video = videoRepository.findById(videoDtoList.get(i).getNo());
+                Video resVdo = video.orElseThrow();
+                resVdo.change(file);
+                videoRepository.save(resVdo);
+
+                // 파일 삭제
+                File file2 = new File(uploadFolder + "/" + videoDtoList.get(i).getSavefile());
+                if (file2.exists()) { // 해당 파일이 존재하면
+                    file2.delete(); // 파일 삭제
+                }
+                log.warn("video 정보 수정");
+            } else {
+                log.warn("video 정보 수정 안함");
+            }
+        }
+
+        // 시험 정보 수정
+        Optional<LecTest> lecTest = lecTestRepository.findById(lecTestDto.getNo());
+        LecTest resTest = lecTest.orElseThrow();
+        resTest.change(lecTestDto);
+        lecTestRepository.save(resTest);
+        log.warn("resTest : " + resTest.toString());
+    }
+
     // 강의, 파일, 시험 정보 가져오기
     public LectureVO getLectureVo(Integer cno, Integer lno) throws Exception {
         // 강의 정보 추출
@@ -98,6 +159,25 @@ public class LectureServiceImpl {
         return lectureVO;
     }
 
+    // 강좌 삭제, 복구
+    public void lecDelRec(LectureDto dto) {
+        Optional<Lecture> lecture = lectureRepository.findById(dto.getNo());
+        Lecture res = lecture.orElseThrow();
+        res.delete(dto.getDeleteYn());
+        lectureRepository.save(res);
+    }
+    
+    // 어드민
+    // 해당강의의 강좌 목록 불러오기
+    public List<LectureDto> admlectureList(Integer cno) {
+        List<Lecture> lst = lectureRepository.admLectureList(cno);
+        List<LectureDto> lectureDtoList = lst.stream().map(lecture ->
+                        modelMapper.map(lecture, LectureDto.class))
+                .collect(Collectors.toList());
+        return lectureDtoList;
+    }
+    
+    // 유저
     // 해당강의의 강좌 목록 불러오기
     public List<LectureDto> lectureCnoList(Integer cno) {
         List<Lecture> lst = lectureRepository.lectureCnoList(cno);

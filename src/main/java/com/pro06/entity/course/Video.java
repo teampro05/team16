@@ -1,5 +1,6 @@
 package com.pro06.entity.course;
 
+import com.pro06.dto.course.VideoDto;
 import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,4 +45,11 @@ public class Video extends BaseEntity {
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "lno", referencedColumnName = "no")
     private Lecture lecture;        // 강의 번호 외래키 지정
+
+    // video 정보 수정에 필요한 메소드
+    public void change(VideoDto dto) {
+        this.originfile = dto.getOriginfile();
+        this.savefile = dto.getSavefile();
+        this.filesize = dto.getFilesize();
+    }
 }

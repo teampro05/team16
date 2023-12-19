@@ -11,11 +11,13 @@ import java.util.List;
 
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Integer> {
+    // 유저용
     // cno로 강의 리스트 정보 추출
-    @Query("select l from Lecture l where l.course.no = :cno")
+    @Query("select l from Lecture l where l.course.no = :cno and l.deleteYn = 'n'")
     List<Lecture> lectureCnoList(Integer cno);
-
-    // 해당 강좌, 강의 영상 정보 추출
-    @Query("select l from Lecture l where l.no = :lno and l.course.no = :cno")
-    Lecture videoList(@Param("cno") Integer cno, @Param("lno") Integer lno);
+    
+    // 관리자용
+    // 강의 리스트 정보 추출
+    @Query("select l from Lecture l where l.course.no = :cno")
+    List<Lecture> admLectureList(Integer cno);
 }
