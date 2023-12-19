@@ -2,11 +2,13 @@ package com.pro06.controller;
 
 import com.pro06.dto.BoardDTO;
 import com.pro06.dto.EbookVO;
+import com.pro06.dto.MbookVO;
 import com.pro06.dto.UserDTO;
 import com.pro06.dto.course.*;
 import com.pro06.entity.*;
 import com.pro06.service.BoardService;
 import com.pro06.service.Book.EBookServiceImpl;
+import com.pro06.service.Book.MBookServiceImpl;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
@@ -476,21 +478,6 @@ public class AdminController {
         return "admin/Ebook/EbookList";
     }
 
-    @GetMapping("getEbook")
-    public String getFileboard(@RequestParam("no") int no, Model model) throws Exception{
-        EbookVO fileboard = new EbookVO();
-
-        Ebook ebook = eBookService.getEbook(no);
-        List<EbookImg> fileList = eBookService.getFileGroupList(no);
-        fileboard.setFileBoard(ebook);
-        fileboard.setFileList(fileList);
-
-        model.addAttribute("Ebook", fileboard);
-        model.addAttribute("fileList", fileboard.getFileList());
-
-        return "admin/Ebook/getEbook";
-    }
-
     @GetMapping("EbookInsert")
     public String EbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
         model.addAttribute("name", name);
@@ -675,8 +662,6 @@ public class AdminController {
                 }
                 log.info(" ebookImg : " + ebookImg);
             }
-            log.info(" fileListㅡㅡㅡㅡㅡㅡㅡㅡㅡ : " + fileList);
-            log.info(" ebookㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ : " + ebook);
             eBookService.removeFileAll(postNo);
             fileboard.setFileList(fileList); // 파일
             fileboard.setFileBoard(ebook); //글 제목 내용
@@ -684,8 +669,224 @@ public class AdminController {
         } else { // 파일이 없는 경우
             eBookService.updateEbook(ebook); // 글 제목 내용만 업데이트
         }
-        return "redirect:admin/Ebook/getEbook?no=" + postNo;
+        return "redirect:Ebook/getEbook?no=" + postNo;
     }
 
+    // 중학 교재
+
+    @Autowired
+    private MBookServiceImpl mBookService;
+
+    @GetMapping("MbookList")
+    public String MbookList(Model model) throws Exception{
+        List<Mbook> mbookList = mBookService.MbookList();
+
+        List<MbookVO> voList = new ArrayList<>();
+        for (Mbook mbook:mbookList) {
+            MbookVO vo = new MbookVO();
+            vo.setFileBoard(mbook);
+            MbookImg mbookImg = mBookService.thmbn(mbook.getNo());
+            List<MbookImg> fileList = new ArrayList<>();
+            fileList.add(mbookImg);
+            vo.setFileList(fileList);
+            voList.add(vo);
+        }
+        model.addAttribute("MbookList", voList);
+
+        return "admin/Mbook/MbookList";
+    }
+
+    @GetMapping("MbookInsert")
+    public String MbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
+        model.addAttribute("name", name);
+        return "admin/Mbook/MbookInsert";
+    }
+
+    @GetMapping("Mbook/fileUpload")
+    public String fileUploadForm2() {
+        return "admin/Mbook/MbookInsert";
+    }
+
+    @PostMapping("Mbook/fileUpload")
+    public String fileUpload2(@RequestParam("files") List<MultipartFile> files,
+                             @RequestParam Map<String, String> params,
+                             HttpServletRequest req,
+                             Model model) throws Exception {
+
+        // Create the 'board' object
+        Mbook mbook = new Mbook();
+        mbook.setId(params.get("id"));
+        mbook.setTitle(params.get("title"));
+        mbook.setContent(params.get("content"));
+        mbook.setServecontent(params.get("servecontent"));
+        mbook.setPrice(Integer.valueOf(params.get("price")));
+        mbook.setPublish(params.get("publish"));
+
+        File folder = new File(uploadFolder);
+        if (!folder.exists())
+            folder.mkdirs();
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" 지정한 경로 : " + uploadFolder);
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+
+        //여러 파일 반복 저장
+        List<MbookImg> fileList = new ArrayList<>();
+        // 파일 리스트를 순회하며 각 파일 처리
+        for (MultipartFile file : files) {
+            if (!file.getOriginalFilename().isEmpty()) {
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                // ... (기존 파일 처리 로직)
+                MbookImg data = new MbookImg();
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+                Date today = new Date();
+                data.setUploaddate(today.toString());
+                fileList.add(data);
+
+                // 파일 저장
+                File saveFile = new File(uploadFolder, saveFileName);
+                try {
+                    file.transferTo(saveFile);
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            }
+        }
+
+        MbookVO fileboard = new MbookVO();
+        fileboard.setFileList(fileList);
+        fileboard.setFileBoard(mbook);
+        mBookService.insertFileboard(fileboard);
+
+        return "redirect:/admin/MbookList";
+    }
+
+    @GetMapping("MbookDelete")
+    public String MbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
+
+        //실제 파일 삭제 로직
+        //파일 경로 지정
+
+        List<MbookImg> fileList = mBookService.getFileGroupList(postNo);
+        for (MbookImg mbookImg : fileList) {
+            File file = new File(uploadFolder + "/" + mbookImg.getSavefile());
+            if (file.exists()) { // 해당 파일이 존재하면
+                file.delete(); // 파일 삭제
+            }
+        }
+        //데이터베이스의 파일 자료실과 파일의 내용 삭제
+        int ck = mBookService.removeFileboard(postNo);
+        return "redirect:/admin/MbookList";
+    }
+
+    // 수정 폼 이동
+    @GetMapping("MbookUpdate")
+    public String modifyFileboard2(@RequestParam("no") Integer postNo, Model model) throws Exception {
+        Mbook mbook = mBookService.getMbook(postNo);
+        List<MbookImg> fileList = mBookService.getFileGroupList(postNo);
+        model.addAttribute("Mbook", mbook);
+        model.addAttribute("fileList", fileList);
+        return "admin/Mbook/MbookUpdate";
+    }
+
+    @PostMapping("MbookUpdate")
+    public String modifyFileboard3(@RequestParam("Mbno") Integer postNo,
+                                   @RequestParam("files") List<MultipartFile> files,
+                                   @RequestParam Map<String, String> params,
+                                   HttpServletRequest req, Model model) throws Exception {
+        MbookVO fileboard = new MbookVO();
+
+
+        // Create the 'board' object
+        Mbook mbook = new Mbook();
+        mbook.setNo(postNo);
+        mbook.setId(params.get("id"));
+        mbook.setTitle(params.get("title"));
+        mbook.setContent(params.get("content"));
+        mbook.setServecontent(params.get("servecontent"));
+        mbook.setPrice(Integer.valueOf(params.get("price")));
+        mbook.setPublish(params.get("publish"));
+
+
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        log.info(" mbook : " + mbook);
+
+
+        //여러 파일 반복 저장
+        List<MbookImg> fileList = new ArrayList<>();
+
+        boolean checkFile = true;
+
+        for (MultipartFile file : files) {
+            if (!file.getOriginalFilename().isEmpty()) {
+                log.info(" file : " + file);
+
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+
+                MbookImg data = new MbookImg();
+
+                data.setNo(postNo);
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+
+                Date today = new Date();
+                data.setUploaddate(today.toString());
+                data.setMbno(postNo);
+                fileList.add(data);
+                File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+                log.info(" fileList : " + fileList);
+
+                try {
+                    file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
+//                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            } else {
+                checkFile = false;
+//                break;
+            }
+        }
+        log.info(" checkFile1 : " + checkFile);
+        if(checkFile == true) { // 파일이 있는 경우
+            List<MbookImg> fileList2 = mBookService.getFileGroupList(postNo);
+            for (MbookImg mbookImg : fileList2) {
+                File file = new File(uploadFolder + "/" + mbookImg.getSavefile());
+                if (file.exists()) { // 해당 파일이 존재하면
+                    file.delete(); // 파일 삭제
+                }
+                log.info(" mbookImg : " + mbookImg);
+            }
+            mBookService.removeFileAll(postNo);
+            fileboard.setFileList(fileList); // 파일
+            fileboard.setFileBoard(mbook); //글 제목 내용
+            mBookService.updateFileboard(fileboard); // 모든 내용 업데이트
+        } else { // 파일이 없는 경우
+            mBookService.updateMbook(mbook); // 글 제목 내용만 업데이트
+        }
+        return "redirect:Mbook/getMbook?no=" + postNo;
+    }
 
 }
