@@ -75,7 +75,7 @@
     <insert id="fileUpdate">
         <choose>
             <when test="originfile != null and originfile.trim() != ''">
-                insert into ebookImg values (default, #{Ebno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
+                insert into ebookImg values (default, #{Ebno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, default)
             </when>
             <otherwise>
                 -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
