@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+    <title>관리자페이지: F.A.Q 목록</title>
+    <style>
+        .table-faq {
+            display: block;
+        }
+
+        tr {
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+        <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/}"> HOME </a> &gt; <span> F.A.Q </span></p>
+            </div>
+            <div class="content-wrapper">
+                <h1>F.A.Q</h1>
+                <div class="card p-3">
+                    <table class="table text-center mb-3" th:if="${not #lists.isEmpty(faqList)}">
+                        <tbody>
+                        <th:block th:each="faq, num: ${faqList}">
+                            <div class="table-faq" style="float: left">
+                                <tr>
+                                    <th>No : [[${num.count}]]</th>
+                                </tr>
+                                <tr>
+                                    <th>제목 : [[${faq.title}]]</th>
+                                </tr>
+                                <tr>
+                                    <th>내용 : [[${faq.content}]]</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </div>
+                            <div class="table-faq">
+                                <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn1 right1" onclick="eventremove()">삭제하기</a>
+                                <button type="button" class="btn1 right1" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${#lists.isEmpty(faqList)}">
+                            <tr>
+                                <th colspan="4">목록이 없습니다.</th>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <button type="button" onclick="reco()" class="btn1 right1"> 글쓰기 </button>
+                </div>
+            </div>
+            <footer class="footer">
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script th:inline="javascript">
+    function eventremove(){
+        confirm("삭제하시겠습니까?")
+    }
+
+    function reco() {
+        let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
+        let popupUrl = '/admin/faqAdd_Admin';
+        window.open(popupUrl, 'child', popupOption);
+    }
+    function Edit(no) {
+        let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
+        let popupUrl = '/admin/faqEdit_Admin?no='+no;
+        window.open(popupUrl, 'child', popupOption);
+    }
+</script>
