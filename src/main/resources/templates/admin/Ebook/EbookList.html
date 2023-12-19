@@ -59,15 +59,15 @@
 
                 <td>
 <!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                        <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                        <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+                        <a th:href="@{/admin/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                        <a th:href="@{/admin/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
 <!--                    </th:block>-->
                 </td>
             </tr>
             </tbody>
         </table>
 <!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                <a th:href="@{/Ebook/fileUpload}" class="btn btn-primary">작성</a>
+                <a th:href="@{/admin/fileUpload}" class="btn btn-primary">작성</a>
 <!--        </th:block>-->
     </div>
 </div>
