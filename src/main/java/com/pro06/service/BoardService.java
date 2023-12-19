@@ -17,7 +17,7 @@ public interface BoardService {
 
     // FAQ
     public void faqInsert(BoardDTO boardDTO);
-    public void faqUpdate(BoardDTO boardDTO);
+    public void faqUpdate(Faq faq);
     public void faqDelete(Integer no);
     public List<BoardDTO> faqList();
     public BoardDTO faqGet(Integer no);

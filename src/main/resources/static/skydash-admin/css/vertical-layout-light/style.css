@@ -30606,23 +30606,10 @@ div.tagsinput span.tag a {
 .btn1 {
     color: #fff;
     background: var(--primary);
-    padding: 5px 20px;
+    padding: 5px 10px;
     display: inline-block;
     border: none;
     margin-left: 10px;
-    width: 120px;
-    border-radius: 4px;
-    text-align: center;
-}
-
-.btn1:hover {
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--white);
-}
-
-.right1{
-    float: right;
 }
 
 

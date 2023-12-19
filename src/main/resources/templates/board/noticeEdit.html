@@ -14,9 +14,7 @@
                 <div class="form-outline">
                     <label class="form-label" for="title">제목</label>
                     <input type="text" name="title" id="title" class="form-control" th:value="${notice.title}"/>
-                    <input type="hidden" name="author" id="author" th:value="${notice.author}" readonly/>
-                    <input type="hidden" name="no" id="no" th:value="${notice.no }" readonly/>
-
+                    <input type="hidden" name="author" id="author" th:value="${notice.author}"/>
                 </div>
                 <div class="form-outline">
                     <label class="form-label" for="content">내용</label>

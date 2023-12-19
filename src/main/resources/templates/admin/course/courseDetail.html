@@ -35,6 +35,7 @@
                             <th>키워드</th>
                             <th>작성자</th>
                             <th>등록일</th>
+                            <th>삭제여부</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -46,6 +47,15 @@
                                 <td th:text="${lecture.keyword}"></td>
                                 <td th:text="${lecture.id}"></td>
                                 <td th:text="${#temporals.format(lecture.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
+                                <td>
+                                    <form th:action="@{/admin/lecDelRec(cno=${course.no}, no=${lecture.no})}" method="post">
+                                        <select name="deleteYn" id="deleteYn" class="select-box">
+                                            <option value="y" th:selected="${lecture.deleteYn} eq 'y'">삭제</option>
+                                            <option value="n" th:selected="${lecture.deleteYn} eq 'n'">생성</option>
+                                        </select>
+                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                    </form>
+                                </td>
                                 <td><a th:href="@{/admin/lectureUpdate(cno=${course.no}, lno=${lecture.no})}" class="btn btn-primary">강의수정</a></td>
                             </tr>
                         </th:block>

@@ -9,15 +9,8 @@
 <script th:inline="javascript">
     var msg = [[${msg}]]
     var url = [[${url}]]
-
-    if(url == 1){
-        window.close();
-        opener.location.reload()
-    } else {
-        alert(msg);
-        location.href = url;
-    }
-
+    alert(msg);
+    location.href=url;
 </script>
 </body>
 </html>

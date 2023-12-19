@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강좌상세</title>
+    <title>답변등록수정</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
     <!-- video.js api 가져오기 -->
     <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
@@ -22,7 +22,7 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <h1>관리자페이지</h1>
-                <h2>답변 등록</h2>
+                <h2>답변 등록 / 수정</h2>
                 <hr style="border-top: 1px solid #333">
                 <div class="card p-3" style="display: inline-block; width: 100%; height: 80%">
                     <div style="width: 700px; float: left">
@@ -64,8 +64,8 @@
                             <form th:action="@{/admin/ansInsUpd}" method="post" onsubmit="return answerCheck();">
                                 <div>
                                     <input type="hidden" name="no" id="no" th:value="${dto.no}">
-                                    <input type="text" name="ans" id="ans" class="form-control" maxlength="500"
-                                           th:value="${dto.ans} eq null ? '' : ${dto.ans}" required>
+                                    <textarea name="ans" id="ans" class="form-control" rows="20"
+                                              th:text="${dto.ans} eq null ? '' : ${dto.ans}"></textarea>
                                 </div>
                                 <div>
                                     <span id="warn"></span>
@@ -106,13 +106,22 @@
             // 비디오가 로드 되었을 때
             video.addEventListener('loadedmetadata', function() {
                 // 시간 구하기
-                const hours = Math.floor(sec / 3600); // 시간
-                const minutes = Math.floor((sec % 3600) / 60); // 분
-                const seconds = Math.floor(sec % 60); // 초
-                $("#time").text(`질문한 시간 위치: ${hours} 시간  ${minutes} 분  ${seconds} 초`);
+                let hours = Math.floor(sec / 3600); // 시간
+                let minutes = Math.floor((sec % 3600) / 60); // 분
+                let seconds = Math.floor(sec % 60); // 초
+                if(hours < 10) {
+                    hours = "0" + hours;
+                }
+                if(minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                if(seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+                $("#time").text(`${hours} : ${minutes} : ${seconds}  (시 : 분 : 초)`);
             });
         } else {
-            $("#time").text(`질문한 시간 위치: 0 시간  0 분  0 초`);
+            $("#time").text(`00 : 00 : 00  (시 : 분 : 초)`);
         }
     });
 

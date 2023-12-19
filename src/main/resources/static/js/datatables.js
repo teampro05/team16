@@ -64,12 +64,12 @@ $(document).ready(function () {
 
     $('.dataTables_filter').remove();
 
-    $('.select_filter').change(function () {
+    $('.select_filter').change(function () { // select 선택값에 따라  해당 선택 열 input이 검색하는곳 변경
         $table.columns('').search('').draw();
         $table.columns(Number($('.select_filter').val())).search($('.search_filter').val()).draw();
     });
 
-    $('.search_filter').keyup(function () {
+    $('.search_filter').keyup(function () { //input의 값대로 search
         let $value = $(this).val();
         $table.columns(Number($('.select_filter').val())).search($value).draw();
     })

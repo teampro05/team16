@@ -67,8 +67,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void faqUpdate(BoardDTO boardDTO) {
-        Faq faq = modelMapper.map(boardDTO, Faq.class);
+    public void faqUpdate(Faq faq) {
+//        Faq faq = modelMapper.map(boardDTO, Faq.class);
         faqRepository.save(faq);
     }
 

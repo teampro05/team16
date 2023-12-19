@@ -162,8 +162,9 @@ public class HomeController {
 
     @GetMapping("/noticeGet")
     public String noticeGet(Model model, Integer no) {
-        BoardDTO notice = boardService.NoticeGet(no);
-        model.addAttribute("notice", notice);
+        BoardDTO boardDTO = boardService.NoticeGet(no);
+        model.addAttribute("notice", boardDTO);
+        log.info("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + boardDTO);
         return "/board/noticeGet";
     }
 
@@ -171,6 +172,7 @@ public class HomeController {
     @GetMapping("/noticeadd")
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
+        model.addAttribute("prin", principal.getName());
         model.addAttribute("prin", principal.getName());
         return "/board/noticeadd";
     }
@@ -190,9 +192,8 @@ public class HomeController {
 
     @PostMapping("noticeEdit")
     public String noticeEdit(BoardDTO boardDTO){
-        Integer no = boardDTO.getNo();
-        boardService.NoticeUpdate(boardDTO);
-        return "redirect:/noticeGet?no="+no;
+        boardService.NoticeInsert(boardDTO);
+        return "redirect:/notice";
     }
 
     @GetMapping("/noticeDelete")

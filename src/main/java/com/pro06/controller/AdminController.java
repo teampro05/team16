@@ -1,14 +1,17 @@
 package com.pro06.controller;
 
 import com.pro06.dto.BoardDTO;
+import com.pro06.dto.EbookVO;
 import com.pro06.dto.UserDTO;
 import com.pro06.dto.course.*;
 import com.pro06.entity.*;
 import com.pro06.service.BoardService;
+import com.pro06.service.Book.EBookServiceImpl;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
 import com.pro06.service.course.VideoServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,13 +30,11 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Log4j2
-@Controller
 @Component
+@Controller
 @RequestMapping("/admin/*")
 public class AdminController {
 
@@ -84,7 +85,7 @@ public class AdminController {
         model.addAttribute("course", course);
 
         // 강의 목록
-        List<LectureDto> lectureList = lectureService.lectureCnoList(no);
+        List<LectureDto> lectureList = lectureService.admlectureList(no);
         model.addAttribute("lectureList", lectureList);
         return "admin/course/courseDetail";
     }
@@ -121,16 +122,16 @@ public class AdminController {
         return "redirect:/admin/courseList";
     }
 
-    // 강좌 삭제
-    @GetMapping("courseDelete")
-    public String courseDelete(@RequestParam("no") Integer no) {
-        courseService.courseDelete(no);
+    // 강좌 삭제, 복구
+    @PostMapping("couDelRec")
+    public String couDelRec(CourseDto courseDto) {
+        courseService.couDelRec(courseDto);
         return "redirect:/admin/courseList";
     }
 
 
     // lecture
-    // 강의 생성폼 이동
+    // 강의 생성 폼 이동
     @GetMapping("lectureInsert")
     public String lectureInsert(Principal principal, @RequestParam("cno") Integer cno, Model model) {
         String id = principal.getName();
@@ -154,8 +155,13 @@ public class AdminController {
         List<VideoDto> fileList = new ArrayList<>();
 
         // 파일 저장
-        for (int i = 0; i < req.getFiles("files").size(); i++) {
-            files.add(req.getFiles("files").get(i));
+        for (int i = 1; i <= 5; i++) {
+            files.add(req.getFile("file" + i));
+        }
+
+        // 파일 추출 데이터 확인
+        for (int i = 0; i < files.size(); i++) {
+            log.warn("files.get(" + i + ").toString() : " + files.get(i).toString());             // 입력된 파일의 개수 출력
         }
 
         // 강의정보 저장
@@ -180,20 +186,6 @@ public class AdminController {
         lecTest.setAnswer3(req.getParameter("answer3"));
         lecTest.setAnswer4(req.getParameter("answer4"));
         lecTest.setAnswer5(req.getParameter("answer5"));
-
-        // 파일 추출 테스트
-        for (int i = 0; i < req.getFiles("files").size(); i++) {
-            log.info("req.getParameter(\"title\") : " + req.getParameter("title"));
-            log.info("req.getFile(\"files\") : " + req.getFile("files"));
-            log.info("req.getFile(\"files\").getOriginalFilename() : " +
-                    req.getFiles("files").get(i).getOriginalFilename());      // 실제 파일이름 출력
-            log.info("req.getFiles(\"files\").get(" + i + ").getBytes() : " +
-                    req.getFiles("files").get(i).getBytes());                 // 파일의 용량 출력
-            log.info("req.getFiles(\"files\").get(" + i + ").getName() : " +
-                    req.getFiles("files").get(i).getName());                  // name 속성값 출력
-            log.info("req.getFiles(\"files\").size() : " +
-                    req.getFiles("files").size());                            // 입력된 파일의 개수 출력
-        }
 
         // 만약 저장 폴더가 없다면 생성
         File folder = new File(uploadFolder);
@@ -243,6 +235,156 @@ public class AdminController {
         return "redirect:/admin/courseDetail?no=" + cno;
     }
 
+    
+    // 강의 수정 폼 이동
+    @GetMapping("lectureUpdate")
+    public String lectureUpdate(@RequestParam("lno") Integer lno,
+                                @RequestParam("cno") Integer cno,
+                                Principal principal, Model model) throws Exception {
+
+        if(principal.getName() != null) {
+            LectureVO vo = lectureService.getLectureVo(cno, lno);
+            LectureDto lecDto = vo.getLecture();
+            List<VideoDto> videoDtoList = vo.getFileList();
+            LecTestDto testDto = vo.getLecTest();
+
+            List<String> examList = new ArrayList<>();
+            examList.add(testDto.getExam1());
+            examList.add(testDto.getExam2());
+            examList.add(testDto.getExam3());
+            examList.add(testDto.getExam4());
+            examList.add(testDto.getExam5());
+
+            List<String> ansList = new ArrayList<>();
+            ansList.add(testDto.getAnswer1());
+            ansList.add(testDto.getAnswer2());
+            ansList.add(testDto.getAnswer3());
+            ansList.add(testDto.getAnswer4());
+            ansList.add(testDto.getAnswer5());
+
+            model.addAttribute("lecDto", lecDto);
+            model.addAttribute("videoDtoList", videoDtoList);
+            model.addAttribute("testDto", testDto);
+            model.addAttribute("examList", examList);
+            model.addAttribute("ansList", ansList);
+            model.addAttribute("id", principal.getName());
+            return "admin/lecture/lectureUpdate";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    // spring boot 3 이상부터 이런식으로 사용해야 함
+    // 강의 수정
+    // 강의 정보, 강좌 번호, 파일 추출
+    @PostMapping("lectureUpdate")
+    public String lectureUpdatePro(MultipartHttpServletRequest req) throws Exception {
+
+        Integer cno = Integer.parseInt(req.getParameter("cno"));
+        Integer lno = Integer.parseInt(req.getParameter("lno"));
+        Integer tno = Integer.parseInt(req.getParameter("tno"));    // lecTest no
+
+        // 입력된 파일목록
+        List<MultipartFile> files = new ArrayList<>();
+        // 강의 정보
+        LectureDto lecture = new LectureDto();
+        // 여러 파일 반복 저장
+        List<VideoDto> fileList = new ArrayList<>();
+
+        // 파일 저장
+        for (int i = 1; i <= 5; i++) {
+            files.add(req.getFile("file" + i));
+        }
+
+        // 파일 추출 데이터 확인
+        for (int i = 0; i < files.size(); i++) {
+            log.warn("files.get(" + i + ").toString() : " + files.get(0).toString());             // 입력된 파일의 개수 출력
+        }
+
+        // 강의정보 저장
+        CourseDto course = new CourseDto();
+        course.setNo(cno);
+        lecture.setNo(lno);
+        lecture.setCourse(course);      // cno 저장
+        lecture.setId(req.getParameter("id"));
+        lecture.setTitle(req.getParameter("title"));
+        lecture.setContent(req.getParameter("content"));
+        lecture.setKeyword(req.getParameter("keyword"));
+
+        // 시험정보 저장
+        LecTestDto lecTest = new LecTestDto();
+        lecTest.setNo(tno);
+        lecTest.setExam1(req.getParameter("exam1"));
+        lecTest.setExam2(req.getParameter("exam2"));
+        lecTest.setExam3(req.getParameter("exam3"));
+        lecTest.setExam4(req.getParameter("exam4"));
+        lecTest.setExam5(req.getParameter("exam5"));
+        lecTest.setAnswer1(req.getParameter("answer1"));
+        lecTest.setAnswer2(req.getParameter("answer2"));
+        lecTest.setAnswer3(req.getParameter("answer3"));
+        lecTest.setAnswer4(req.getParameter("answer4"));
+        lecTest.setAnswer5(req.getParameter("answer5"));
+
+        // 만약 저장 폴더가 없다면 생성
+        File folder = new File(uploadFolder);
+        if (!folder.exists()) folder.mkdirs();
+
+        // log 출력
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 파일 저장 경로 : " + uploadFolder);
+
+        for (MultipartFile file : files) {
+            if(!file.isEmpty()) {      // 새로운 파일이 들어온 경우, 파일이 있는 경우
+                log.warn("!file.isEmpty() : " + !file.isEmpty());
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                // 저장위치, 실제파일이름, 저장될 파일이름, 파일크기 정보를 저장
+                VideoDto data = new VideoDto();
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+                fileList.add(data);
+
+                // 파일 저장
+                File saveFile = new File(uploadFolder, saveFileName);
+                try {
+                    file.transferTo(saveFile); // 실제 upload 위치에 파일 저장
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            } else {    // 새로운 파일이 없는 경우 null 값 객체 주입
+                VideoDto data = new VideoDto();
+                fileList.add(data);
+            }
+        }
+
+        // VO를 통해 db에 저장
+        LectureVO lectureVO = new LectureVO();
+        lectureVO.setLecture(lecture);
+        lectureVO.setFileList(fileList);
+        lectureVO.setLecTest(lecTest);
+        lectureVO.setCno(cno);
+        lectureService.LectureVoUpdate(lectureVO); // 강의와 비디오, 시험을 같이 저장
+
+        return "redirect:/admin/courseDetail?no=" + cno;
+    }
+
+    // 강의 삭제, 복구
+    // 강좌 삭제, 복구
+    @PostMapping("lecDelRec")
+    public String lecDelRec(@RequestParam("cno") Integer cno, LectureDto dto) {
+        lectureService.lecDelRec(dto);
+        return "redirect:/admin/courseDetail?no=" + cno;
+    }
+
     // 질문 목록
     @GetMapping("lecQueList")
     public String lecQueList(Model model) {
@@ -252,8 +394,8 @@ public class AdminController {
     }
 
     // 질문의 답변 상세 폼 이동
-    @GetMapping("ansInsert")
-    public String ansInsert(@RequestParam("no") Integer no, Model model) {
+    @GetMapping("ansInsUpd")
+    public String ansInsUpd(@RequestParam("no") Integer no, Model model) {
         LecQueDto dto = lectureService.getLecQue(no);
 
         // 영상의 파일 정보 추출
@@ -263,13 +405,34 @@ public class AdminController {
 
         model.addAttribute("savefile", savefile);
         model.addAttribute("dto", dto);
-        return "admin/lecture/ansInsert";
+        return "admin/lecture/ansInsUpd";
     }
     
     // 질문의 답변 작성, 수정
-    @PostMapping("ansInsert")
-    public String ansInsertPro(LecQueDto lecQueDto) {
+    @PostMapping("ansInsUpd")
+    public String ansInsUpdPro(LecQueDto lecQueDto) {
         lectureService.lecQueAnsInsUpd(lecQueDto);
+        return "redirect:/admin/lecQueList";
+    }
+
+    // 질문의 답변 삭제
+/*    @GetMapping("ansDelete")
+    public String ansDelete(LecQueDto lecQueDto) {
+        lectureService.lecQueDelete(lecQueDto.getNo());
+        return "redirect:/admin/lecQueList";
+    }*/
+
+    // 질문의 답변 삭제, 복구
+    @PostMapping("ansDelRec")
+    public String ansDelRec(LecQueDto lecQueDto) {
+        lectureService.lecQueDelete(lecQueDto);
+        return "redirect:/admin/lecQueList";
+    }
+
+    // 질문의 답변 복구
+    @GetMapping("ansRecover")
+    public String ansRecover(LecQueDto lecQueDto) {
+        lectureService.lecQueAnsRecover(lecQueDto.getNo());
         return "redirect:/admin/lecQueList";
     }
 
@@ -323,16 +486,14 @@ public class AdminController {
 
 
     // 자동으로 개강진행
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 20000)
     @GetMapping("/openCource")
     public void courseOpen () {
         log.info("openCource ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
         List<CourseDto> courseList = courseService.admCourseList();
         LocalDateTime date = LocalDateTime.now();
-        LocalDateTime date2 = LocalDateTime.now().minusDays(30);
         //현재 시간 String으로 변경
         String Local1 = date.format(DateTimeFormatter.BASIC_ISO_DATE);
-        String Local3 = date2.format(DateTimeFormatter.BASIC_ISO_DATE);
 
         for (CourseDto courseDto:courseList){
             //강의 시간 String으로 변경
@@ -364,25 +525,25 @@ public class AdminController {
     public String notice(Model model) {
         List<BoardDTO> noticeList = boardService.NoticeList();
         model.addAttribute("noticeList", noticeList);
-        return "/admin/board/noticeList";
+        return "/admin/noticeList";
     }
 
     @GetMapping("/noticeGet_Admin")
     public String noticeGet(Model model, Integer no) {
         BoardDTO boardDTO = boardService.NoticeGet(no);
         model.addAttribute("notice", boardDTO);
-        return "/admin/board/noticeGet";
+        return "/admin/noticeGet";
     }
 
 
-    @GetMapping("/noticeAdd_Admin")
+    @GetMapping("/noticeadd_Admin")
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
         model.addAttribute("prin", principal.getName());
-        return "/admin/board/noticeAdd";
+        return "/admin/noticeadd";
     }
 
-    @PostMapping("/noticeAdd_Admin")
+    @PostMapping("/noticeadd_Admin")
     public String noticeInsert(BoardDTO boardDTO){
         boardService.NoticeInsert(boardDTO);
         return "redirect:/admin/notice_Admin";
@@ -390,16 +551,15 @@ public class AdminController {
 
     @GetMapping("/noticeEdit_Admin")
     public String noticeEditForm(Model model, Integer no) {
-        BoardDTO notice = boardService.NoticeGet(no);
-        model.addAttribute("notice", notice);
-        return "/admin/board/noticeEdit";
+        BoardDTO boardDTO = boardService.NoticeGet(no);
+        model.addAttribute("notice", boardDTO);
+        return "/admin/noticeEdit";
     }
 
     @PostMapping("noticeEdit_Admin")
     public String noticeEdit(BoardDTO boardDTO){
-        Integer no = boardDTO.getNo();
-        boardService.NoticeUpdate(boardDTO);
-        return "redirect:/admin/noticeGet_Admin?no="+no;
+        boardService.NoticeInsert(boardDTO);
+        return "redirect:/admin/notice_Admin";
     }
 
     @GetMapping("/noticeDelete_Admin")
@@ -415,40 +575,19 @@ public class AdminController {
     public String Faq(Model model) {
         List<BoardDTO> faqList = boardService.faqList();
         model.addAttribute("faqList", faqList);
-        return "/admin/board/faqList";
+        return "/admin/faqlist";
     }
 
-    @GetMapping("/faqAdd_Admin")
+    @GetMapping("/faqadd_Admin")
     public String FaqForm(Model model) {
         model.addAttribute("boarddto", new BoardDTO());
-        return "/admin/board/faqAdd";
+        return "/admin/faqadd";
     }
 
-    @PostMapping("/faqAdd_Admin")
-    public String FaqInsert(BoardDTO boardDTO, Model model){
+    @PostMapping("/faqadd_Admin")
+    public String FaqInsert(BoardDTO boardDTO){
         boardService.faqInsert(boardDTO);
-        model.addAttribute("url", 1);
-        return "/alert";
-    }
-
-    @GetMapping("/faqEdit_Admin")
-    public String FaqEditForm(Model model, Integer no) {
-        BoardDTO faq = boardService.faqGet(no);
-        model.addAttribute("faq", faq);
-        return "/admin/board/faqEdit";
-    }
-
-    @PostMapping("/faqEdit_Admin")
-    public String FaqEdit(BoardDTO boardDTO, Model model){
-        boardService.faqUpdate(boardDTO);
-        model.addAttribute("url", 1);
-        return "/alert";
-    }
-
-    @GetMapping("/faqDel_Admin")
-    public String FaqDel(Model model, Integer no) {
-        boardService.faqDelete(no);
-        return "redirect:/admin/faqList_Admin";
+        return "redirect:/admin/faqlist";
     }
 
 //    @ResponseBody
@@ -468,5 +607,229 @@ public class AdminController {
         return "post success!!!" + msg;
     }
 
+    // 초등 교재
+
+    @Autowired
+    private EBookServiceImpl eBookService;
+
+    @GetMapping("EbookList")
+    public String EbookList(Model model) throws Exception{
+        List<Ebook> ebookList = eBookService.EbookList();
+
+        List<EbookVO> voList = new ArrayList<>();
+        for (Ebook ebook:ebookList) {
+            EbookVO vo = new EbookVO();
+            vo.setFileBoard(ebook);
+            EbookImg ebookImg = eBookService.thmbn(ebook.getNo());
+            List<EbookImg> fileList = new ArrayList<>();
+            fileList.add(ebookImg);
+            vo.setFileList(fileList);
+            voList.add(vo);
+        }
+        model.addAttribute("EbookList", voList);
+
+        log.info(" ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + ebookList);
+        return "admin/Ebook/EbookList";
+    }
+
+    @GetMapping("getEbook")
+    public String getFileboard(@RequestParam("no") int no, Model model) throws Exception{
+        EbookVO fileboard = new EbookVO();
+
+        Ebook ebook = eBookService.getEbook(no);
+        List<EbookImg> fileList = eBookService.getFileGroupList(no);
+        fileboard.setFileBoard(ebook);
+        fileboard.setFileList(fileList);
+
+        model.addAttribute("Ebook", fileboard);
+        model.addAttribute("fileList", fileboard.getFileList());
+
+        return "admin/Ebook/getEbook";
+    }
+
+    @GetMapping("EbookInsert")
+    public String EbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
+        model.addAttribute("name", name);
+        return "admin/Ebook/EbookInsert";
+    }
+
+    @GetMapping("fileUpload")
+    public String fileUploadForm() {
+        return "admin/Ebook/EbookInsert";
+    }
+
+    @PostMapping("fileUpload")
+    public String fileUpload(@RequestParam("files") List<MultipartFile> files,
+                             @RequestParam Map<String, String> params,
+                             HttpServletRequest req,
+                             Model model) throws Exception {
+
+        // Create the 'board' object
+        Ebook ebook = new Ebook();
+        // ebook.setNo(params.get("no"));
+        ebook.setId(params.get("id"));
+        ebook.setTitle(params.get("title"));
+        ebook.setContent(params.get("content"));
+        ebook.setServecontent(params.get("servecontent"));
+        ebook.setPrice(Integer.valueOf(params.get("price")));
+        ebook.setPublish(params.get("publish"));
+
+        File folder = new File(uploadFolder);
+        if (!folder.exists())
+            folder.mkdirs();
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" 지정한 경로 : " + uploadFolder);
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+
+        //여러 파일 반복 저장
+        List<EbookImg> fileList = new ArrayList<>();
+        // 파일 리스트를 순회하며 각 파일 처리
+        for (MultipartFile file : files) {
+            if (!file.getOriginalFilename().isEmpty()) {
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                // ... (기존 파일 처리 로직)
+                EbookImg data = new EbookImg();
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+                Date today = new Date();
+                data.setUploaddate(today.toString());
+                fileList.add(data);
+
+                // 파일 저장
+                File saveFile = new File(uploadFolder, saveFileName);
+                try {
+                    file.transferTo(saveFile);
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            }
+        }
+
+        EbookVO fileboard = new EbookVO();
+        fileboard.setFileList(fileList);
+        fileboard.setFileBoard(ebook);
+        eBookService.insertFileboard(fileboard);
+        return "redirect:admin/Ebook/EbookList";
+    }
+
+    @GetMapping("EbookDelete")
+    public String EbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
+
+        //실제 파일 삭제 로직
+        //파일 경로 지정
+
+        List<EbookImg> fileList = eBookService.getFileGroupList(postNo);
+        for (EbookImg ebookImg : fileList) {
+            File file = new File(uploadFolder + "/" + ebookImg.getSavefile());
+            if (file.exists()) { // 해당 파일이 존재하면
+                file.delete(); // 파일 삭제
+            }
+        }
+        //데이터베이스의 파일 자료실과 파일의 내용 삭제
+        int ck = eBookService.removeFileboard(postNo);
+        return "redirect:/admin/Ebook/EbookList";
+    }
+
+    // 수정 폼 이동
+    @GetMapping("EbookUpdate")
+    public String modifyFileboard(@RequestParam("no") Integer postNo, Model model) throws Exception {
+        Ebook ebook = eBookService.getEbook(postNo);
+        List<EbookImg> fileList = eBookService.getFileGroupList(postNo);
+        model.addAttribute("Ebook", ebook);
+        model.addAttribute("fileList", fileList);
+        return "admin/Ebook/EbookUpdate";
+    }
+
+    /*@PostMapping("EbookUpdate")
+    public String modifyFileboard2(@RequestParam("Ebno") Integer postNo,
+                                   @RequestParam("files") List<MultipartFile> files,
+                                   @RequestParam Map<String, String> params,
+                                   HttpServletRequest req, Model model) throws Exception {
+
+        EbookVO fileboard = new EbookVO();
+
+        // Create the 'board' object
+        Ebook ebook = new Ebook();
+        ebook.setId(params.get("id"));
+        ebook.setTitle(params.get("title"));
+        ebook.setContent(params.get("content"));
+        ebook.setServecontent(params.get("servecontent"));
+        ebook.setPrice(Integer.valueOf(params.get("price")));
+        ebook.setPublish(params.get("publish"));
+
+
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        //여러 파일 반복 저장
+        List<EbookImg> fileList = new ArrayList<>();
+
+        boolean checkFile = true;
+
+        for (MultipartFile file : files) {
+            if (!file.getOriginalFilename().isEmpty()) {
+
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                EbookImg data = new EbookImg();
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+                Date today = new Date();
+                data.setUploaddate(today.toString());
+                data.setEbno(postNo);
+                fileList.add(data);
+
+                File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+
+                try {
+                    file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
+//                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            } else {
+                checkFile = false;
+                break;
+            }
+        }
+
+        if(checkFile) { // 파일이 있는 경우
+            List<EbookImg> fileList2 = eBookService.getFileGroupList(postNo);
+            for (EbookImg ebookImg : fileList2) {
+                File file = new File(uploadFolder + "/" + ebookImg.getSavefile());
+                if (file.exists()) { // 해당 파일이 존재하면
+                    file.delete(); // 파일 삭제
+                }
+            }
+            eBookService.removeFileAll(postNo);
+            fileboard.setFileList(fileList); // 파일
+            fileboard.setFileBoard(ebook); //글 제목 내용
+            eBookService.updateFileboard(fileboard); // 모든 내용 업데이트
+        } else { // 파일이 없는 경우
+            eBookService.updateEbook(ebook); // 글 제목 내용만 업데이트
+        }
+
+        return "redirect:/admin/Ebook/getEbook?no=" + postNo;
+    }
+*/
 
 }
