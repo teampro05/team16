@@ -525,25 +525,25 @@ public class AdminController {
     public String notice(Model model) {
         List<BoardDTO> noticeList = boardService.NoticeList();
         model.addAttribute("noticeList", noticeList);
-        return "/admin/noticeList";
+        return "/admin/board/noticeList";
     }
 
     @GetMapping("/noticeGet_Admin")
     public String noticeGet(Model model, Integer no) {
         BoardDTO boardDTO = boardService.NoticeGet(no);
         model.addAttribute("notice", boardDTO);
-        return "/admin/noticeGet";
+        return "/admin/board/noticeGet";
     }
 
 
-    @GetMapping("/noticeadd_Admin")
+    @GetMapping("/noticeAdd_Admin")
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
         model.addAttribute("prin", principal.getName());
-        return "/admin/noticeadd";
+        return "/admin/board/noticeAdd";
     }
 
-    @PostMapping("/noticeadd_Admin")
+    @PostMapping("/noticeAdd_Admin")
     public String noticeInsert(BoardDTO boardDTO){
         boardService.NoticeInsert(boardDTO);
         return "redirect:/admin/notice_Admin";
@@ -551,15 +551,16 @@ public class AdminController {
 
     @GetMapping("/noticeEdit_Admin")
     public String noticeEditForm(Model model, Integer no) {
-        BoardDTO boardDTO = boardService.NoticeGet(no);
-        model.addAttribute("notice", boardDTO);
-        return "/admin/noticeEdit";
+        BoardDTO notice = boardService.NoticeGet(no);
+        model.addAttribute("notice", notice);
+        return "/admin/board/noticeEdit";
     }
 
     @PostMapping("noticeEdit_Admin")
     public String noticeEdit(BoardDTO boardDTO){
-        boardService.NoticeInsert(boardDTO);
-        return "redirect:/admin/notice_Admin";
+        Integer no = boardDTO.getNo();
+        boardService.NoticeUpdate(boardDTO);
+        return "redirect:/admin/noticeGet_Admin?no="+no;
     }
 
     @GetMapping("/noticeDelete_Admin")
@@ -575,31 +576,41 @@ public class AdminController {
     public String Faq(Model model) {
         List<BoardDTO> faqList = boardService.faqList();
         model.addAttribute("faqList", faqList);
-        return "/admin/faqlist";
+        return "/admin/board/faqList";
     }
 
-    @GetMapping("/faqadd_Admin")
+    @GetMapping("/faqAdd_Admin")
     public String FaqForm(Model model) {
         model.addAttribute("boarddto", new BoardDTO());
-        return "/admin/faqadd";
+        return "/admin/board/faqAdd";
     }
 
-    @PostMapping("/faqadd_Admin")
-    public String FaqInsert(BoardDTO boardDTO){
+    @PostMapping("/faqAdd_Admin")
+    public String FaqInsert(BoardDTO boardDTO, Model model){
         boardService.faqInsert(boardDTO);
-        return "redirect:/admin/faqlist";
+        model.addAttribute("url", 1);
+        return "/alert";
     }
 
-//    @ResponseBody
-//    @PostMapping(value = "/${no}", consumes = MediaType.APPLICATION_JSON_VALUE )
-//    public Map<String,Integer> FaqEdit(@PathVariable("no") Integer no, @RequestBody Faq faq ){
-//        faq.setNo(no);
-//        boardService.faqUpdate(faq);
-//        Map<String, Integer> resultMap = new HashMap<>();
-//        resultMap.put("no", no);
-//        return resultMap;
-//    }
-//
+    @GetMapping("/faqEdit_Admin")
+    public String FaqEditForm(Model model, Integer no) {
+        BoardDTO faq = boardService.faqGet(no);
+        model.addAttribute("faq", faq);
+        return "/admin/board/faqEdit";
+    }
+
+    @PostMapping("/faqEdit_Admin")
+    public String FaqEdit(BoardDTO boardDTO, Model model){
+        boardService.faqUpdate(boardDTO);
+        model.addAttribute("url", 1);
+        return "/alert";
+    }
+
+    @GetMapping("/faqDel_Admin")
+    public String FaqDel(Model model, Integer no) {
+        boardService.faqDelete(no);
+        return "redirect:/admin/faqList_Admin";
+    }
 
     @ResponseBody
     @PostMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE )
