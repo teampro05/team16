@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초등 교재 추가</title>
-    <th:block th:replace="include/head :: head" ></th:block>
-    <link rel="stylesheet" th:href="@{/assets/css/product-filelist.css}">
+    <title>초등 교재</title>
+    <th:block th:replace="/include/adminhead :: head"></th:block>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -17,89 +15,100 @@
 
 </head>
 <body>
-<th:block th:replace="include/header :: header" ></th:block>
-<div style="min-height: 100vh">
-    <div class="section properties">
-        <div class="container">
-            <div class="container" style="width:1280px;margin:20px auto;">
-                <form th:action="@{/Ebook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="id">작성자</label>
-                        <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
-                               th:value="관리자"
-                               minlength="4" maxlength="16"
-                               pattern="^[a-z0-9]*$" readonly/>
-                    </div>
-                    <br><br>
-                    <div class="form-group">
-                        <label for="title">교재 제목</label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="교재 제목" minlength="1"
-                               maxlength="30" required/>
-                    </div>
-                    <br><br>
-                    <div class="form-group">
-                        <label for="content">교재 설명</label>
-                        <input type="text" class="form-control" name="content" id="content" placeholder="교재 설명" minlength="1"
-                               maxlength="30" required/>
-                    </div>
-                    <br><br>
-                    <div class="form-group">
-                        <label for="servecontent">교재 요약 설명</label>
-                        <input type="text" class="form-control" name="servecontent" id="servecontent" placeholder="교재 요약" minlength="1"
-                               maxlength="30" required/>
-                    </div>
-                    <br><br>
-                    <div class="form-group">
-                        <label for="price">가격</label>
-                        <input type="number" class="form-control" name="price" id="price" placeholder="가격"
-                               pattern="\d*" maxlength="7"
-                               oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required/>
-                    </div>
-                    <br><br>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>관리자페이지</h1>
+                <h2>초등 교재 등록</h2>
+                <div class="card p-3">
+                    <form th:action="@{/admin/Ebook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="id">작성자</label>
+                            <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
+                                   th:value="관리자"
+                                   minlength="4" maxlength="16"
+                                   pattern="^[a-z0-9]*$" readonly/>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <label for="title">교재 제목</label>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="교재 제목" minlength="1"
+                                   maxlength="30" required/>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <label for="content">교재 설명</label>
+                            <input type="text" class="form-control" name="content" id="content" placeholder="교재 설명" minlength="1"
+                                   maxlength="30" required/>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <label for="servecontent">교재 요약 설명</label>
+                            <input type="text" class="form-control" name="servecontent" id="servecontent" placeholder="교재 요약" minlength="1"
+                                   maxlength="30" required/>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <label for="price">가격</label>
+                            <input type="number" class="form-control" name="price" id="price" placeholder="가격"
+                                   pattern="\d*" maxlength="7"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required/>
+                        </div>
+                        <br><br>
 
-                    <div class="form-group">
-                        <label for="publish">출간일</label>
-                        <input type="text" class="form-control" name="publish" id="publish" placeholder="출간일" required/>
-                    </div>
-                    <br><br>
+                        <div class="form-group">
+                            <label for="publish">출간일</label>
+                            <input type="text" class="form-control" name="publish" id="publish" placeholder="출간일" required/>
+                        </div>
+                        <br><br>
 
 
-                    <div class="form-group">
-                        <label for="file" id="file-js-example1">
-                            <span style="padding:5px;margin:5px">파일 : </span>
-                            <input type="file" class="form-control" name="file" id="file" onchange="addFile(this);"
-                                   accept="image/png, image/jpeg" required>
-                            <div class="file-list"></div>
-                            <span class="file-cta">
+                        <div class="form-group">
+                            <label for="files" id="file-js-example1">
+                                <span style="padding:5px;margin:5px">파일 : </span>
+                                <input type="file" class="form-control" name="files" id="files" onchange="addFile(this);"
+                                       accept="image/png, image/jpeg" required>
+                                <div class="file-list"></div>
+                                <span class="file-cta">
                                 <span class="file-icon">
                                     <i class="fas fa-upload"></i>
                                 </span>
                             </span>
-                        </label>
-                    </div>
-                    <br><br>
+                            </label>
+                        </div>
+                        <br><br>
 
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="작성">
-                        <input type="reset" class="btn btn-danger" value="초기화">
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="작성">
+                            <input type="reset" class="btn btn-danger" value="초기화">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-<th:block th:replace="include/footer :: footer" ></th:block>
-        <!-- Datepicker Initialization -->
-        <script>
-            $(function() {
-                // Datepicker 초기화
-                $("#publish").datepicker({
-                    dateFormat: "yy-mm-dd", // 날짜 형식 지정
-                    changeMonth: true,       // 월 변경 가능
-                    changeYear: true,        // 년 변경 가능
-                });
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+        </div>
+    </footer>
+    <!-- Datepicker Initialization -->
+    <script>
+        $(function() {
+            // Datepicker 초기화
+            $("#publish").datepicker({
+                dateFormat: "yy-mm-dd", // 날짜 형식 지정
+                changeMonth: true,       // 월 변경 가능
+                changeYear: true,        // 년 변경 가능
             });
-        </script>
-<script th:src="@{/js/file.js}"></script>
+        });
+    </script>
+    <script th:src="@{/js/file.js}"></script>
+        </div>
+    </div>
+</div>
 </body>
 </html>

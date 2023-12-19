@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 초등 교재 수정 </title>
-    <th:block th:replace="include/head :: head" ></th:block>
-    <link rel="stylesheet" th:href="@{/assets/css/product-filelist.css}">
+    <title>강좌수정</title>
+    <th:block th:replace="/include/adminhead :: head"></th:block>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -16,97 +14,109 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
-<th:block th:replace="include/header :: header" ></th:block>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <h1>관리자페이지</h1>
+                <h2>초등 교재 수정</h2>
+                <div class="card p-3">
+                    <form th:action="@{/Ebook/EbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="id">작성자</label>
+                            <input type="hidden" name="Ebno" th:value="${Ebook.no}" />
+                            <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
+                                   th:value="관리자"
+                                   minlength="4" maxlength="16"
+                                   pattern="^[a-z0-9]*$" readonly/>
+                        </div>
 
-<div class="section properties">
-    <div class="container">
-        <form th:action="@{/Ebook/EbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="id">작성자</label>
-                <input type="hidden" name="Ebno" th:value="${Ebook.no}" />
-                <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
-                       th:value="관리자"
-                       minlength="4" maxlength="16"
-                       pattern="^[a-z0-9]*$" readonly/>
-            </div>
+                        <div class="form-group">
+                            <label for="title"> 제목 </label>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Title" minlength="1"
+                                   maxlength="30" th:value="${Ebook.title}" required/>
+                        </div>
 
-            <div class="form-group">
-                <label for="title"> 제목 </label>
-                <input type="text" class="form-control" name="title" id="title" placeholder="Title" minlength="1"
-                           maxlength="30" th:value="${Ebook.title}" required/>
-            </div>
+                        <div class="form-group">
+                            <label for="content"> 요약 내용 </label>
+                            <textarea name="servecontent" class="form-control" id="servecontent" required>[[${Ebook.servecontent}]]</textarea>
+                        </div>
 
-            <div class="form-group">
-                <label for="content"> 요약 내용 </label>
-                <textarea name="servecontent" class="form-control" id="servecontent" required>[[${Ebook.servecontent}]]</textarea>
-            </div>
+                        <div class="form-group">
+                            <label for="content" class="form-label mt-4"> 내용 </label>
+                            <textarea name="content" class="form-control" id="content" required>[[${Ebook.content}]]</textarea>
+                            <input type="hidden" id="ck" value="no">
+                        </div>
 
-            <div class="form-group">
-                <label for="content" class="form-label mt-4"> 내용 </label>
-                <textarea name="content" class="form-control" id="content" required>[[${Ebook.content}]]</textarea>
-                <input type="hidden" id="ck" value="no">
-            </div>
+                        <div class="form-group">
+                            <label for="price" class="mt-4"> 가격 </label>
+                            <input type="text" class="form-control" name="price" id="price" placeholder="가격"
+                                   pattern="\d*" maxlength="7"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required th:value="${Ebook.price}"/>
+                        </div>
 
-            <div class="form-group">
-                <label for="price" class="mt-4"> 가격 </label>
-                <input type="text" class="form-control" name="price" id="price" placeholder="가격"
-                   pattern="\d*" maxlength="7"
-                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required th:value="${Ebook.price}"/>
-            </div>
-
-            <div class="form-group">
-                <label for="publish" class="form-label mt-4"> 출판일 </label>
-                <input type="text" name="publish" class="form-control datepicker" id="publish" required
-                       th:value="${Ebook.publish}" readonly/>
-                <input type="hidden" value="no">
-            </div>
+                        <div class="form-group">
+                            <label for="publish" class="form-label mt-4"> 출판일 </label>
+                            <input type="text" name="publish" class="form-control datepicker" id="publish" required
+                                   th:value="${Ebook.publish}" readonly/>
+                            <input type="hidden" value="no">
+                        </div>
 
 
-            <div class="form-group mt-4">
-                <label>기존파일</label><br>
-                <th:block th:each="file, status : ${fileList}">
+                        <div class="form-group mt-4">
+                            <label>기존파일</label><br>
+                            <th:block th:each="file, status : ${fileList}">
                     <span style="margin-right: 10px">
                         <i class="fa-solid fa-file"></i> <span th:id="'file'+${status.count}" th:text="${file.getOriginfile()}"></span>
                     </span>
-                </th:block>
-                <th:block th:if="${fileList == null}">
-                    첨부된 파일이 없습니다.
-                </th:block>
-            </div>
+                            </th:block>
+                            <th:block th:if="${fileList == null}">
+                                첨부된 파일이 없습니다.
+                            </th:block>
+                        </div>
 
-            <div class="form-group mt-4">
-                <div class="form-group">
-                    <label for="files" id="file-js-example1" class="d-block">
-                        <input type="file" class="form-control border-0 mb-2" name="files" id="files" onchange="addFile(this);"
-                               accept="image/png, image/jpeg" required> <!-- -->
-                        <div class="file-list"></div>
-                    </label>
+                        <div class="form-group mt-4">
+                            <div class="form-group">
+                                <label for="files" id="file-js-example1" class="d-block">
+                                    <input type="file" class="form-control border-0 mb-2" name="files" id="files" onchange="addFile(this);"
+                                           accept="image/png, image/jpeg" required> <!-- -->
+                                    <div class="file-list"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-dark" value="수정">
+                                <input type="reset" class="btn btn-danger" value="초기화">
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end mt-4">
-                <div class="form-group">
-                    <input type="submit" class="btn btn-dark" value="수정">
-                    <input type="reset" class="btn btn-danger" value="초기화">
+
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
                 </div>
-            </div>
-        </form>
+            </footer>
+
+            <script th:src="@{/js/file.js}"></script>
+            <script>
+                $(function() {
+                    // datepicker 초기화
+                    $(".datepicker").datepicker({
+                        dateFormat: 'yy-mm-dd',
+                        changeMonth: true,
+                        changeYear: true
+                    });
+                });
+            </script>
+        </div>
     </div>
 </div>
-
-
-<th:block th:replace="include/footer :: footer" ></th:block>
-<script th:src="@{/js/file.js}"></script>
-<script>
-    $(function() {
-        // datepicker 초기화
-        $(".datepicker").datepicker({
-            dateFormat: 'yy-mm-dd',
-            changeMonth: true,
-            changeYear: true
-        });
-    });
-</script>
-
 </body>
 </html>

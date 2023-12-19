@@ -473,7 +473,6 @@ public class AdminController {
         }
         model.addAttribute("EbookList", voList);
 
-        log.info(" ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + ebookList);
         return "admin/Ebook/EbookList";
     }
 
@@ -498,12 +497,12 @@ public class AdminController {
         return "admin/Ebook/EbookInsert";
     }
 
-    @GetMapping("fileUpload")
+    @GetMapping("Ebook/fileUpload")
     public String fileUploadForm() {
         return "admin/Ebook/EbookInsert";
     }
 
-    @PostMapping("fileUpload")
+    @PostMapping("Ebook/fileUpload")
     public String fileUpload(@RequestParam("files") List<MultipartFile> files,
                              @RequestParam Map<String, String> params,
                              HttpServletRequest req,
@@ -564,7 +563,8 @@ public class AdminController {
         fileboard.setFileList(fileList);
         fileboard.setFileBoard(ebook);
         eBookService.insertFileboard(fileboard);
-        return "redirect:admin/Ebook/EbookList";
+
+        return "redirect:/admin/EbookList";
     }
 
     @GetMapping("EbookDelete")
@@ -582,7 +582,7 @@ public class AdminController {
         }
         //데이터베이스의 파일 자료실과 파일의 내용 삭제
         int ck = eBookService.removeFileboard(postNo);
-        return "redirect:/admin/Ebook/EbookList";
+        return "redirect:/admin/EbookList";
     }
 
     // 수정 폼 이동
@@ -595,16 +595,17 @@ public class AdminController {
         return "admin/Ebook/EbookUpdate";
     }
 
-    /*@PostMapping("EbookUpdate")
+    @PostMapping("EbookUpdate")
     public String modifyFileboard2(@RequestParam("Ebno") Integer postNo,
                                    @RequestParam("files") List<MultipartFile> files,
                                    @RequestParam Map<String, String> params,
                                    HttpServletRequest req, Model model) throws Exception {
-
         EbookVO fileboard = new EbookVO();
+
 
         // Create the 'board' object
         Ebook ebook = new Ebook();
+        ebook.setNo(postNo);
         ebook.setId(params.get("id"));
         ebook.setTitle(params.get("title"));
         ebook.setContent(params.get("content"));
@@ -618,6 +619,9 @@ public class AdminController {
         log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
         log.info(" 요청 URL : " + req.getServletPath());
         log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        log.info(" ebook : " + ebook);
+
+
         //여러 파일 반복 저장
         List<EbookImg> fileList = new ArrayList<>();
 
@@ -625,6 +629,7 @@ public class AdminController {
 
         for (MultipartFile file : files) {
             if (!file.getOriginalFilename().isEmpty()) {
+                log.info(" file : " + file);
 
                 // 파일 처리 로직 시작
                 String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
@@ -632,17 +637,21 @@ public class AdminController {
                 String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
                 String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
 
+
                 EbookImg data = new EbookImg();
+
+                data.setNo(postNo);
                 data.setSavefolder(uploadFolder);
                 data.setOriginfile(file.getOriginalFilename());
                 data.setSavefile(saveFileName);
                 data.setFilesize(file.getSize());
+
                 Date today = new Date();
                 data.setUploaddate(today.toString());
                 data.setEbno(postNo);
                 fileList.add(data);
-
                 File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+                log.info(" fileList : " + fileList);
 
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
@@ -653,18 +662,21 @@ public class AdminController {
                 }
             } else {
                 checkFile = false;
-                break;
+//                break;
             }
         }
-
-        if(checkFile) { // 파일이 있는 경우
+        log.info(" checkFile1 : " + checkFile);
+        if(checkFile == true) { // 파일이 있는 경우
             List<EbookImg> fileList2 = eBookService.getFileGroupList(postNo);
             for (EbookImg ebookImg : fileList2) {
                 File file = new File(uploadFolder + "/" + ebookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
                 }
+                log.info(" ebookImg : " + ebookImg);
             }
+            log.info(" fileListㅡㅡㅡㅡㅡㅡㅡㅡㅡ : " + fileList);
+            log.info(" ebookㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ : " + ebook);
             eBookService.removeFileAll(postNo);
             fileboard.setFileList(fileList); // 파일
             fileboard.setFileBoard(ebook); //글 제목 내용
@@ -672,9 +684,8 @@ public class AdminController {
         } else { // 파일이 없는 경우
             eBookService.updateEbook(ebook); // 글 제목 내용만 업데이트
         }
-
-        return "redirect:/admin/Ebook/getEbook?no=" + postNo;
+        return "redirect:admin/Ebook/getEbook?no=" + postNo;
     }
-*/
+
 
 }
