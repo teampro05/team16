@@ -3,14 +3,14 @@ var filesArr = new Array();
 
 /* 첨부파일 추가 */
 function addFile(obj){
-    var maxFileCnt = 5;   // 첨부파일 최대 개수
+    var maxFileCnt = 1;   // 첨부파일 최대 개수
     var attFileCnt = document.querySelectorAll('.filebox').length;    // 기존 추가된 첨부파일 개수
     var remainFileCnt = maxFileCnt - attFileCnt;    // 추가로 첨부가능한 개수
     var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
 
     // 첨부파일 개수 확인
     if (curFileCnt > remainFileCnt) {
-        alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+        alert("첨부파일은 최대 1개 까지 첨부 가능합니다!");
         // 초기화
         document.querySelector("input[type=file]").value = "";
         $('.file-list').empty();

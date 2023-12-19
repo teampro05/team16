@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초등 교재 수정</title>
+    <title>중학 교재 수정</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
 
     <!-- jQuery -->
@@ -20,12 +20,12 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <h1>관리자페이지</h1>
-                <h2>초등 교재 수정</h2>
+                <h2>중학 교재 수정</h2>
                 <div class="card p-3">
-                    <form th:action="@{/Ebook/EbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
+                    <form th:action="@{/Mbook/MbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="id">작성자</label>
-                            <input type="hidden" name="Ebno" th:value="${Ebook.no}" />
+                            <input type="hidden" name="Mbno" th:value="${Mbook.no}" />
                             <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
                                    th:value="관리자"
                                    minlength="4" maxlength="16"
@@ -35,17 +35,17 @@
                         <div class="form-group">
                             <label for="title"> 제목 </label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="Title" minlength="1"
-                                   maxlength="30" th:value="${Ebook.title}" required/>
+                                   maxlength="30" th:value="${Mbook.title}" required/>
                         </div>
 
                         <div class="form-group">
                             <label for="content"> 요약 내용 </label>
-                            <textarea name="servecontent" class="form-control" id="servecontent" required>[[${Ebook.servecontent}]]</textarea>
+                            <textarea name="servecontent" class="form-control" id="servecontent" required>[[${Mbook.servecontent}]]</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="content" class="form-label mt-4"> 내용 </label>
-                            <textarea name="content" class="form-control" id="content" required>[[${Ebook.content}]]</textarea>
+                            <textarea name="content" class="form-control" id="content" required>[[${Mbook.content}]]</textarea>
                             <input type="hidden" id="ck" value="no">
                         </div>
 
@@ -53,13 +53,13 @@
                             <label for="price" class="mt-4"> 가격 </label>
                             <input type="text" class="form-control" name="price" id="price" placeholder="가격"
                                    pattern="\d*" maxlength="7"
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required th:value="${Ebook.price}"/>
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required th:value="${Mbook.price}"/>
                         </div>
 
                         <div class="form-group">
                             <label for="publish" class="form-label mt-4"> 출판일 </label>
                             <input type="text" name="publish" class="form-control datepicker" id="publish" required
-                                   th:value="${Ebook.publish}" readonly/>
+                                   th:value="${Mbook.publish}" readonly/>
                             <input type="hidden" value="no">
                         </div>
 

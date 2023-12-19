@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초등 교재</title>
+    <title>중학 교재</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
 
     <!-- jQuery -->
@@ -21,9 +21,9 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <h1>관리자페이지</h1>
-                <h2>초등 교재 등록</h2>
+                <h2>중학 교재 등록</h2>
                 <div class="card p-3">
-                    <form th:action="@{/admin/Ebook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
+                    <form th:action="@{/admin/Mbook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="id">작성자</label>
                             <input type="text" class="form-control bg-secondary text-white" name="id" id="id"
