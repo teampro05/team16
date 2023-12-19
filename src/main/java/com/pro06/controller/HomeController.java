@@ -173,7 +173,6 @@ public class HomeController {
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
         model.addAttribute("prin", principal.getName());
-        model.addAttribute("prin", principal.getName());
         return "/board/noticeadd";
     }
 

@@ -1,8 +1,6 @@
 package com.pro06.repository.course;
 
-import com.pro06.entity.course.Course;
 import com.pro06.entity.course.LecQue;
-import com.pro06.entity.course.Lecture;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
