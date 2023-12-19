@@ -54,6 +54,7 @@
                     <div>
                         <th:block sec:authorize="hasAuthority('ADMIN')">
                             <a th:href="@{/admin/lectureInsert(cno=${course.no})}" class="btn btn-primary">강의등록</a>
+                            <a th:href="@{/admin/lectureInsert2(cno=${course.no})}" class="btn btn-primary">강의등록2</a>
                         </th:block>
                     </div>
                 </div>

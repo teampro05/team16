@@ -73,6 +73,29 @@ public class LectureServiceImpl {
         lecTestRepository.save(lt);
     }
 
+    // 강의, 파일, 시험 정보 가져오기
+    public LectureVO getLectureVo(Integer lno, Integer cno) throws Exception {
+        // 강의 정보 추출
+        Optional<Lecture> lec = lectureRepository.findById(lno);
+        LectureDto lecDto = modelMapper.map(lec, LectureDto.class);
+        
+        // 영상 정보 추출
+        List<Video> vilst = videoRepository.videoList(cno, lno);
+        List<VideoDto> videoDtoList = vilst.stream().map(video ->
+                modelMapper.map(video, VideoDto.class))
+                .collect(Collectors.toList());
+        
+        // 시험 정보 추출
+        LecTest test = lecTestRepository.getLecTest(cno, lno);
+        LecTestDto testDto = modelMapper.map(test, LecTestDto.class);
+
+        LectureVO lectureVO = new LectureVO();
+        lectureVO.setLecture(lecDto);
+        lectureVO.setLecTest(testDto);
+        lectureVO.setFileList(videoDtoList);
+        return lectureVO;
+    }
+
     // 해당강의의 강좌 목록 불러오기
     public List<LectureDto> lectureCnoList(Integer cno) {
         List<Lecture> lst = lectureRepository.lectureCnoList(cno);

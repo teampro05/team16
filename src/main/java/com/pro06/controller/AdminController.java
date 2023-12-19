@@ -243,6 +243,234 @@ public class AdminController {
         return "redirect:/admin/courseDetail?no=" + cno;
     }
 
+
+    @GetMapping("lectureInsert2")
+    public String lectureInsert2(Principal principal, @RequestParam("cno") Integer cno, Model model) {
+        String id = principal.getName();
+
+        model.addAttribute("id", id);
+        model.addAttribute("cno", cno);
+        return "admin/lecture/lectureInsert2";
+    }
+
+    // spring boot 3 이상부터 이런식으로 사용해야 함
+    // 강의 생성
+    // 강의 정보, 강좌 번호, 파일 추출
+    @PostMapping("lectureInsert2")
+    public String lectureInsertPro2(MultipartHttpServletRequest req) throws Exception {
+
+        // 입력된 파일목록
+        List<MultipartFile> files = new ArrayList<>();
+        // 강의 정보
+        LectureDto lecture = new LectureDto();
+        // 여러 파일 반복 저장
+        List<VideoDto> fileList = new ArrayList<>();
+
+        // 파일 저장
+        for (int i = 1; i <= 5; i++) {
+            files.add(req.getFile("file" + i));
+        }
+
+        // 파일 추출 데이터 확인
+        for (int i = 0; i < files.size(); i++) {
+            log.warn("files.get(" + i + ").toString() : " + files.get(i).toString());             // 입력된 파일의 개수 출력
+        }
+
+        // 강의정보 저장
+        CourseDto course = new CourseDto();
+        Integer cno = Integer.parseInt(req.getParameter("cno"));
+        course.setNo(cno);
+        lecture.setCourse(course);      // cno 저장
+        lecture.setId(req.getParameter("id"));
+        lecture.setTitle(req.getParameter("title"));
+        lecture.setContent(req.getParameter("content"));
+        lecture.setKeyword(req.getParameter("keyword"));
+
+        // 시험정보 저장
+        LecTestDto lecTest = new LecTestDto();
+        lecTest.setExam1(req.getParameter("exam1"));
+        lecTest.setExam2(req.getParameter("exam2"));
+        lecTest.setExam3(req.getParameter("exam3"));
+        lecTest.setExam4(req.getParameter("exam4"));
+        lecTest.setExam5(req.getParameter("exam5"));
+        lecTest.setAnswer1(req.getParameter("answer1"));
+        lecTest.setAnswer2(req.getParameter("answer2"));
+        lecTest.setAnswer3(req.getParameter("answer3"));
+        lecTest.setAnswer4(req.getParameter("answer4"));
+        lecTest.setAnswer5(req.getParameter("answer5"));
+
+        // 만약 저장 폴더가 없다면 생성
+        File folder = new File(uploadFolder);
+        if (!folder.exists()) folder.mkdirs();
+
+        // log 출력
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 파일 저장 경로 : " + uploadFolder);
+
+        // 첨부된 파일(MultipartFile) 처리
+        if (files != null && files.size() > 0) {
+            for (MultipartFile file : files) {
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                // 저장위치, 실제파일이름, 저장될 파일이름, 파일크기 정보를 저장
+                VideoDto data = new VideoDto();
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+                fileList.add(data);
+
+                // 파일 저장
+                File saveFile = new File(uploadFolder, saveFileName);
+                try {
+                    file.transferTo(saveFile); // 실제 upload 위치에 파일 저장
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            }
+        }
+        // VO를 통해 db에 저장
+        LectureVO lectureVO = new LectureVO();
+        lectureVO.setLecture(lecture);
+        lectureVO.setFileList(fileList);
+        lectureVO.setLecTest(lecTest);
+        lectureVO.setCno(cno);
+        lectureService.LectureVoInsert(lectureVO); // 강의와 비디오를 같이 저장
+
+        return "redirect:/admin/courseDetail?no=" + cno;
+    }
+
+    
+    // 강의 수정 폼 이동
+    @GetMapping("lectureUpdate")
+    public String lectureUpdate(@RequestParam("lno") Integer lno,
+                                @RequestParam("cno") Integer cno,
+                                Principal principal, Model model) throws Exception {
+
+        if(principal.getName() != null) {
+            LectureVO vo = lectureService.getLectureVo(cno, lno);
+            LectureDto lecDto = vo.getLecture();
+            List<VideoDto> videoDtoList = vo.getFileList();
+            LecTestDto testDto = vo.getLecTest();
+
+            model.addAttribute("lecDto", lecDto);
+            model.addAttribute("videoDtoList", videoDtoList);
+            model.addAttribute("testDto", testDto);
+            model.addAttribute("id", principal.getName());
+            return "admin/lecture/lectureUpdate";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    // spring boot 3 이상부터 이런식으로 사용해야 함
+    // 강의 수정
+    // 강의 정보, 강좌 번호, 파일 추출
+    @PostMapping("lectureUpdate")
+    public String lectureUpdatePro2(MultipartHttpServletRequest req) throws Exception {
+
+        Integer cno = Integer.parseInt(req.getParameter("cno"));
+        Integer no = Integer.parseInt(req.getParameter("no"));      // lno
+
+        List<VideoDto> videoDtoList = videoService.videoList(cno, no);
+
+
+        // 입력된 파일목록
+        List<MultipartFile> files = new ArrayList<>();
+        // 강의 정보
+        LectureDto lecture = new LectureDto();
+        // 여러 파일 반복 저장
+        List<VideoDto> fileList = new ArrayList<>();
+
+        // 파일 저장
+        for (int i = 1; i <= 5; i++) {
+            files.add(req.getFile("file" + i));
+        }
+
+        // 파일 추출 데이터 확인
+        for (int i = 0; i < files.size(); i++) {
+            log.warn("files.get(" + i + ").toString() : " + files.get(0).toString());             // 입력된 파일의 개수 출력
+        }
+
+        // 강의정보 저장
+        CourseDto course = new CourseDto();
+        course.setNo(cno);
+        lecture.setCourse(course);      // cno 저장
+        lecture.setId(req.getParameter("id"));
+        lecture.setTitle(req.getParameter("title"));
+        lecture.setContent(req.getParameter("content"));
+        lecture.setKeyword(req.getParameter("keyword"));
+
+        // 시험정보 저장
+        LecTestDto lecTest = new LecTestDto();
+        lecTest.setExam1(req.getParameter("exam1"));
+        lecTest.setExam2(req.getParameter("exam2"));
+        lecTest.setExam3(req.getParameter("exam3"));
+        lecTest.setExam4(req.getParameter("exam4"));
+        lecTest.setExam5(req.getParameter("exam5"));
+        lecTest.setAnswer1(req.getParameter("answer1"));
+        lecTest.setAnswer2(req.getParameter("answer2"));
+        lecTest.setAnswer3(req.getParameter("answer3"));
+        lecTest.setAnswer4(req.getParameter("answer4"));
+        lecTest.setAnswer5(req.getParameter("answer5"));
+
+        // 만약 저장 폴더가 없다면 생성
+        File folder = new File(uploadFolder);
+        if (!folder.exists()) folder.mkdirs();
+
+        // log 출력
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 파일 저장 경로 : " + uploadFolder);
+
+        // 첨부된 파일(MultipartFile) 처리
+        if (files != null && files.size() > 0) {
+            for (MultipartFile file : files) {
+                if(file != null) {      // 새로운 파일이 들어온 경우
+                    // 파일 처리 로직 시작
+                    String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                    String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                    String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                    String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                    // 저장위치, 실제파일이름, 저장될 파일이름, 파일크기 정보를 저장
+                    VideoDto data = new VideoDto();
+                    data.setSavefolder(uploadFolder);
+                    data.setOriginfile(file.getOriginalFilename());
+                    data.setSavefile(saveFileName);
+                    data.setFilesize(file.getSize());
+                    fileList.add(data);
+
+                    // 파일 저장
+                    File saveFile = new File(uploadFolder, saveFileName);
+                    try {
+                        file.transferTo(saveFile); // 실제 upload 위치에 파일 저장
+                    } catch (IllegalStateException | IOException e) {
+                        e.printStackTrace();
+                        // 예외 처리
+                    }
+                }
+            }
+        }
+        // VO를 통해 db에 저장
+        LectureVO lectureVO = new LectureVO();
+        lectureVO.setLecture(lecture);
+        lectureVO.setFileList(fileList);
+        lectureVO.setLecTest(lecTest);
+        lectureVO.setCno(cno);
+        lectureService.LectureVoInsert(lectureVO); // 강의와 비디오를 같이 저장
+
+        return "redirect:/admin/courseDetail?no=" + cno;
+    }
+
     // 질문 목록
     @GetMapping("lecQueList")
     public String lecQueList(Model model) {
