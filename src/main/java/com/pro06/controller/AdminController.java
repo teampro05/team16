@@ -1,13 +1,11 @@
 package com.pro06.controller;
 
-import com.pro06.dto.BoardDTO;
-import com.pro06.dto.EbookVO;
-import com.pro06.dto.MbookVO;
-import com.pro06.dto.UserDTO;
+import com.pro06.dto.*;
 import com.pro06.dto.course.*;
 import com.pro06.entity.*;
 import com.pro06.service.BoardService;
 import com.pro06.service.Book.EBookServiceImpl;
+import com.pro06.service.Book.HBookServiceImpl;
 import com.pro06.service.Book.MBookServiceImpl;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
@@ -887,6 +885,223 @@ public class AdminController {
             mBookService.updateMbook(mbook); // 글 제목 내용만 업데이트
         }
         return "redirect:Mbook/getMbook?no=" + postNo;
+    }
+
+    // 수능 교재
+
+    @Autowired
+    private HBookServiceImpl hBookService;
+
+    @GetMapping("HbookList")
+    public String HbookList(Model model) throws Exception{
+        List<Hbook> hbookList = hBookService.HbookList();
+
+        List<HbookVO> voList = new ArrayList<>();
+        for (Hbook hbook:hbookList) {
+            HbookVO vo = new HbookVO();
+            vo.setFileBoard(hbook);
+            HbookImg hbookImg = hBookService.thmbn(hbook.getNo());
+            List<HbookImg> fileList = new ArrayList<>();
+            fileList.add(hbookImg);
+            vo.setFileList(fileList);
+            voList.add(vo);
+        }
+        model.addAttribute("HbookList", voList);
+
+        return "admin/Hbook/HbookList";
+    }
+
+    @GetMapping("HbookInsert")
+    public String HbookInsertForm(@RequestParam("name") String name, Model model) throws Exception {
+        model.addAttribute("name", name);
+        return "admin/Hbook/HbookInsert";
+    }
+
+    @GetMapping("Hbook/fileUpload")
+    public String fileUploadForm3() {
+        return "admin/Hbook/HbookInsert";
+    }
+
+    @PostMapping("Hbook/fileUpload")
+    public String fileUpload3(@RequestParam("files") List<MultipartFile> files,
+                              @RequestParam Map<String, String> params,
+                              HttpServletRequest req,
+                              Model model) throws Exception {
+
+        // Create the 'board' object
+        Hbook hbook = new Hbook();
+        hbook.setId(params.get("id"));
+        hbook.setTitle(params.get("title"));
+        hbook.setContent(params.get("content"));
+        hbook.setServecontent(params.get("servecontent"));
+        hbook.setPrice(Integer.valueOf(params.get("price")));
+        hbook.setPublish(params.get("publish"));
+
+        File folder = new File(uploadFolder);
+        if (!folder.exists())
+            folder.mkdirs();
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" 지정한 경로 : " + uploadFolder);
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+
+        //여러 파일 반복 저장
+        List<HbookImg> fileList = new ArrayList<>();
+        // 파일 리스트를 순회하며 각 파일 처리
+        for (MultipartFile file : files) {
+            if (!file.getOriginalFilename().isEmpty()) {
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+                // ... (기존 파일 처리 로직)
+                HbookImg data = new HbookImg();
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+                Date today = new Date();
+                data.setUploaddate(today.toString());
+                fileList.add(data);
+
+                // 파일 저장
+                File saveFile = new File(uploadFolder, saveFileName);
+                try {
+                    file.transferTo(saveFile);
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            }
+        }
+
+        HbookVO fileboard = new HbookVO();
+        fileboard.setFileList(fileList);
+        fileboard.setFileBoard(hbook);
+        hBookService.insertFileboard(fileboard);
+
+        return "redirect:/admin/HbookList";
+    }
+
+    @GetMapping("HbookDelete")
+    public String HbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
+
+        //실제 파일 삭제 로직
+        //파일 경로 지정
+
+        List<HbookImg> fileList = hBookService.getFileGroupList(postNo);
+        for (HbookImg hbookImg : fileList) {
+            File file = new File(uploadFolder + "/" + hbookImg.getSavefile());
+            if (file.exists()) { // 해당 파일이 존재하면
+                file.delete(); // 파일 삭제
+            }
+        }
+        //데이터베이스의 파일 자료실과 파일의 내용 삭제
+        int ck = hBookService.removeFileboard(postNo);
+        return "redirect:/admin/HbookList";
+    }
+
+    // 수정 폼 이동
+    @GetMapping("HbookUpdate")
+    public String modifyFileboard3(@RequestParam("no") Integer postNo, Model model) throws Exception {
+        Hbook hbook = hBookService.getHbook(postNo);
+        List<HbookImg> fileList = hBookService.getFileGroupList(postNo);
+        model.addAttribute("Hbook", hbook);
+        model.addAttribute("fileList", fileList);
+        return "admin/Hbook/HbookUpdate";
+    }
+
+    @PostMapping("HbookUpdate")
+    public String modifyFileboard4(@RequestParam("Hbno") Integer postNo,
+                                   @RequestParam("files") List<MultipartFile> files,
+                                   @RequestParam Map<String, String> params,
+                                   HttpServletRequest req, Model model) throws Exception {
+        HbookVO fileboard = new HbookVO();
+
+
+        // Create the 'board' object
+        Hbook hbook = new Hbook();
+        hbook.setNo(postNo);
+        hbook.setId(params.get("id"));
+        hbook.setTitle(params.get("title"));
+        hbook.setContent(params.get("content"));
+        hbook.setServecontent(params.get("servecontent"));
+        hbook.setPrice(Integer.valueOf(params.get("price")));
+        hbook.setPublish(params.get("publish"));
+
+
+        log.info("-----------------------------------");
+        log.info(" 현재 프로젝트 홈 : " + req.getContextPath());
+        log.info(" dispatcher-servlet에서 지정한 경로 : " + uploadFolder);
+        log.info(" 요청 URL : " + req.getServletPath());
+        log.info(" 프로젝트 저장 경로 : " + uploadFolder);
+        log.info(" hbook : " + hbook);
+
+
+        //여러 파일 반복 저장
+        List<HbookImg> fileList = new ArrayList<>();
+
+        boolean checkFile = true;
+
+        for (MultipartFile file : files) {
+            if (!file.getOriginalFilename().isEmpty()) {
+                log.info(" file : " + file);
+
+                // 파일 처리 로직 시작
+                String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+                String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+                String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+                String saveFileName = randomUUID + Extension;  // 저장할 파일 이름 생성
+
+
+                HbookImg data = new HbookImg();
+
+                data.setNo(postNo);
+                data.setSavefolder(uploadFolder);
+                data.setOriginfile(file.getOriginalFilename());
+                data.setSavefile(saveFileName);
+                data.setFilesize(file.getSize());
+
+                Date today = new Date();
+                data.setUploaddate(today.toString());
+                data.setHbno(postNo);
+                fileList.add(data);
+                File saveFile = new File(uploadFolder, saveFileName); //실제 파일 객체 생성
+                log.info(" fileList : " + fileList);
+
+                try {
+                    file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
+//                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                    // 예외 처리
+                }
+            } else {
+                checkFile = false;
+//                break;
+            }
+        }
+        log.info(" checkFile1 : " + checkFile);
+        if(checkFile == true) { // 파일이 있는 경우
+            List<HbookImg> fileList2 = hBookService.getFileGroupList(postNo);
+            for (HbookImg hbookImg : fileList2) {
+                File file = new File(uploadFolder + "/" + hbookImg.getSavefile());
+                if (file.exists()) { // 해당 파일이 존재하면
+                    file.delete(); // 파일 삭제
+                }
+                log.info(" hbookImg : " + hbookImg);
+            }
+            hBookService.removeFileAll(postNo);
+            fileboard.setFileList(fileList); // 파일
+            fileboard.setFileBoard(hbook); //글 제목 내용
+            hBookService.updateFileboard(fileboard); // 모든 내용 업데이트
+        } else { // 파일이 없는 경우
+            hBookService.updateHbook(hbook); // 글 제목 내용만 업데이트
+        }
+        return "redirect:Hbook/getHbook?no=" + postNo;
     }
 
 }
