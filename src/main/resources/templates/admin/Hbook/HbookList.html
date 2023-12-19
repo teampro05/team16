@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초등 교재 목록</title>
+    <title>수능 교재 목록</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
     <style>
         td form {
@@ -24,10 +24,10 @@
 
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{/}"> HOME </a> &gt; <span> 교재 </span> &gt; <span> 초등 교재 </span></p>
+                <p><a th:href="@{/}"> HOME </a> &gt; <span> 교재 </span> &gt; <span> 수능 교재 </span></p>
             </div>
             <div class="content-wrapper">
-                <h1>초등 교재</h1>
+                <h1>수능 교재</h1>
                 <div class="card p-3">
                     <table class="table" id="myTable">
                         <thead class="thead-light">
@@ -41,41 +41,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="Ebook, status : ${EbookList}">
+                        <tr th:each="Hbook, status : ${HbookList}">
                             <td style="width: 250px;">
-                                <th:block th:if="${Ebook != null}">
-                                    <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
+                                <th:block th:if="${Hbook != null}">
+                                    <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Hbook.fileList[0].savefile}">
                                 </th:block>
 
                             </td>
 
                             <td>
-                                <p><a th:href="@{/Ebook/getEbook(no=${Ebook.fileBoard.no})}">[[${Ebook.fileBoard.title}]]</a></p>
+                                <p><a th:href="@{/Hbook/getHbook(no=${Hbook.fileBoard.no})}">[[${Hbook.fileBoard.title}]]</a></p>
                             </td>
 
                             <td>
-                                <p>[[${Ebook.fileBoard.servecontent}]]</p>
+                                <p>[[${Hbook.fileBoard.servecontent}]]</p>
                             </td>
 
                             <td>
-                                <p>[[${Ebook.fileBoard.price}]]원</p>
+                                <p>[[${Hbook.fileBoard.price}]]원</p>
                             </td>
 
                             <td>
-                                <p>[[${Ebook.fileBoard.publish}]]</p>
+                                <p>[[${Hbook.fileBoard.publish}]]</p>
                             </td>
 
                             <td>
                                 <!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                                <a th:href="@{/admin/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                                <a th:href="@{/admin/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+                                <a th:href="@{/admin/HbookUpdate(no=${Hbook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                                <a th:href="@{/admin/HbookDelete(no=${Hbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
                                 <!--                    </th:block>-->
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                    <a th:href="@{/admin/Ebook/fileUpload}" class="btn btn-primary">작성</a>
+                    <a th:href="@{/admin/Hbook/fileUpload}" class="btn btn-primary">작성</a>
                     <!--        </th:block>-->
                 </div>
             </div>
