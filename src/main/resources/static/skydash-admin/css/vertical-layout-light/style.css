@@ -8675,6 +8675,7 @@
   --gray-lightest: #e6e9ed;
   --black: #000000;
   --primary: #4B49AC;
+    --back: #F5F7FF;
   --secondary: #a3a4a5;
   --success: #57B657;
   --info: #248AFD;
@@ -10180,7 +10181,7 @@ pre code {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #F5F7FF;
+  background-color: var(--back);
 }
 
 .table-hover tbody tr:hover {
@@ -19059,7 +19060,7 @@ a.text-dark:hover, a.text-dark:focus {
   .table, .jsgrid .jsgrid-table {
     border-collapse: collapse !important;
   }
-  
+
   .table td,
   .jsgrid .jsgrid-table td, .table th, .jsgrid .jsgrid-table th {
     background-color: #ffffff !important;
@@ -19699,7 +19700,7 @@ code {
 
 /* Footer */
 .footer {
-  background: #F5F7FF;
+  background: var(--back);
   padding: 30px 2.45rem;
   transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
@@ -19994,7 +19995,7 @@ code {
   padding-top: 16px;
   padding-bottom: 16px;
   z-index: 10;
-  background: #F5F7FF;
+  background: var(--back);
 }
 
 .doc-content {
@@ -22620,6 +22621,7 @@ code {
 /* Forms */
 .form-group {
   margin-bottom: 1.5rem;
+    width: 40rem;
 }
 
 .input-group-append,
@@ -28431,8 +28433,8 @@ div.tagsinput span.tag a {
   padding-top: 0;
 }
 
-.main-panel {
-  transition: width 0.25s ease, margin 0.25s ease;
+.main-panel {background: var(--back);
+    transition: width 0.25s ease, margin 0.25s ease;
   width: calc(100% - 235px);
   min-height: calc(100vh - 60px);
   display: -webkit-flex;
@@ -28449,7 +28451,7 @@ div.tagsinput span.tag a {
 }
 
 .content-wrapper {
-  background: #F5F7FF;
+  background: var(--back);
   padding: 2.375rem 2.375rem;
   width: 100%;
   -webkit-flex-grow: 1;

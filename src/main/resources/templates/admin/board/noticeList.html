@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
@@ -22,13 +23,21 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{/}"> HOME </a> &gt; <span> 공지사항 </span></p>
+                <p><a th:href="@{/static}"> HOME </a> &gt; <span> 공지사항 </span></p>
             </div>
             <div class="content-wrapper">
                 <h1>공지사항</h1>
+                <div class="search_from" style="text-align: center">
+                    <select name="select_filter" class="select_filter">
+                        <option value="1">제목</option>
+                        <option value="2">작성자</option>
+                        <option value="3">등록일</option>
+                    </select>
+                    <input type="text" name="search_filter" class="search_filter">
+                </div>
                 <div class="card p-3">
 <!--                    <div th:replace="/include/searchList :: fragment-search('/admin/userList', 'id:아이디,name:이름,tel:전화번호')"></div>-->
-                    <table id="myTable" class="table text-center mb-3" th:if="${not #lists.isEmpty(noticeList)}">
+                    <table id="myTable" class="table text-center mb-3">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -38,29 +47,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="noticeList, notice : ${noticeList}">
-                            <tr>
-                                <td>[[${notice.count}]]</td>
-                                <td><a th:href="@{/admin/noticeGet_Admin(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
-                                <td>[[${noticeList.author}]]</td>
-                                <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
-                            </tr>
-                        </th:block>
-                        <th:block th:if="${noticeList.size() <= 0}">
-                            <tr>
-                                <td colspan="4">목록이 없습니다.</td>
-                            </tr>
-                        </th:block>
+                            <th:block th:each="noticeList, notice : ${noticeList}">
+                                <tr>
+                                    <td>[[${notice.count}]]</td>
+                                    <td><a th:href="@{/admin/noticeGet_Admin(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
+                                    <td>[[${noticeList.author}]]</td>
+                                    <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
+                                </tr>
+                            </th:block>
+                            <th:block th:if="${noticeList.size() <= 0}">
+                                <tr>
+                                    <td colspan="4">목록이 없습니다.</td>
+                                </tr>
+                            </th:block>
                         </tbody>
                     </table>
-                    <a th:href="@{/admin/noticeadd_Admin}" class="btn btn-primary">글쓰기</a>
-
-<!--                    <th:block th:if="${not #lists.isEmpty(userList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/admin/userList')"></div></th:block>-->
-                    <div th:if="${#lists.isEmpty(noticeList)}" class="text-center">목록이 비어있습니다.</div>
+                    <div>
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
+                            <a th:href="@{/admin/noticeAdd_Admin}" class="btn btn-primary">글쓰기</a>
+                        </th:block>
+                    </div>
                 </div>
             </div>
             <footer class="footer">
-                <script th:src="@{/js/datatables.js}"></script>
             </footer>
         </div>
     </div>

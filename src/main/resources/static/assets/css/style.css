@@ -2816,20 +2816,22 @@ canvas {
   font-size:14px;
 }
 
-.join_area.join #id {
-  width:calc(100% - 150px);margin-right:10px;display:inline-block;vertical-align:top;
-}
 
 .join_area .check_btn {
-  line-height:36px;padding-top:0;padding-bottom:0;vertical-align:top;
+  color: #fff;
+  background: var(--main);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
 }
 
-.join_area #address1, .join_area #address2 {
+.join_area #addr1, .join_area #addr2 {
   margin-bottom:5px;
 }
 
 .join_area #postcode {
-  width:160px;float:left;margin-right:20px;
+  width:180px;;margin-right:20px;
 }
 
 .join_area input::-webkit-input-placeholder {

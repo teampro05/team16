@@ -9,12 +9,17 @@
     <title>관리자페이지: F.A.Q 목록</title>
     <style>
         .table-faq {
-            display: block;
+            display: inline-block;
         }
 
-        tr {
-            float: left;
+        table .faqCon {
+            display: none;
         }
+
+        table .faqCon:target {
+            display: contents;
+        }
+
 
     </style>
 </head>
@@ -28,37 +33,43 @@
             </div>
             <div class="content-wrapper">
                 <h1>F.A.Q</h1>
+                <div class="search_from" style="text-align: center"></div>
                 <div class="card p-3">
-                    <table class="table text-center mb-3" th:if="${not #lists.isEmpty(faqList)}">
+
+                    <table id="myTable" class="table text-center mb-3" th:if="${not #lists.isEmpty(faqList)}">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th style="text-align: left">제목</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
                         <tbody>
-                        <th:block th:each="faq, num: ${faqList}">
-                            <div class="table-faq" style="float: left">
+                            <th:block th:each="faq, num: ${faqList}">
                                 <tr>
-                                    <th>No : [[${num.count}]]</th>
+                                    <td th:text="${num.count}" style="text-align: left"></td>
+                                    <td colspan="2" style="text-align: left">
+                                        <a th:href="'#faqCon'+${num.count}">[[${faq.title}]]</a>
+                                    </td>
+                                    <td></td>
                                 </tr>
-                                <tr>
-                                    <th>제목 : [[${faq.title}]]</th>
+                                <tr class="faqCon" th:id="'faqCon'+${num.count}" >
+                                        <td colspan="3">
+                                            <textarea type="text" name="content" id="content" class="form-control" cols="100" rows="10" maxlength="500" readonly>[[${faq.content}]]</textarea>
+                                        </td>
+                                    <td class="table-faq">
+                                        <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn1" onclick="eventremove()">삭제하기</a>
+                                        <button type="button" class="btn1" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <th>내용 : [[${faq.content}]]</th>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                </tr>
-                            </div>
-                            <div class="table-faq">
-                                <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn1 right1" onclick="eventremove()">삭제하기</a>
-                                <button type="button" class="btn1 right1" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
-                            </div>
-                        </th:block>
-                        <th:block th:if="${#lists.isEmpty(faqList)}">
-                            <tr>
-                                <th colspan="4">목록이 없습니다.</th>
-                            </tr>
-                        </th:block>
+                            </th:block>
                         </tbody>
                     </table>
-                    <button type="button" onclick="reco()" class="btn1 right1"> 글쓰기 </button>
+                    <div>
+                        <button type="button" onclick="reco()" class="btn1"> 글쓰기 </button>
+
+                    </div>
                 </div>
             </div>
             <footer class="footer">
