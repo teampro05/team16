@@ -1,8 +1,11 @@
 package com.pro06.entity.course;
 
+import com.pro06.dto.course.LectureDto;
 import com.pro06.entity.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -41,4 +44,18 @@ public class Lecture extends BaseEntity {
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "cno", referencedColumnName = "no")
     private Course course;        // 강좌 번호 외래키 지정
+
+    @ColumnDefault("'n'")
+    private String deleteYn;      // 삭제 여부
+
+    // 강의 정보 수정에 필요한 메소드
+    public void change(LectureDto dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.keyword = dto.getKeyword();
+    }
+
+    public void delete(String deleteYn) {
+        this.deleteYn = deleteYn;
+    }
 }

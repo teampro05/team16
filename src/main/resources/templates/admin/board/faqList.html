@@ -24,38 +24,38 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{/}"> HOME </a> &gt; <span> F.A.Q </span></p>
+                <p><a th:href="@{/static}"> HOME </a> &gt; <span> F.A.Q </span></p>
             </div>
             <div class="content-wrapper">
                 <h1>F.A.Q</h1>
                 <div class="card p-3">
                     <table class="table text-center mb-3" th:if="${not #lists.isEmpty(faqList)}">
                         <tbody>
-                            <th:block th:each="faq, num: ${faqList}">
-                                <div class="table-faq" style="float: left">
-                                    <tr>
-                                        <th>No : [[${num.count}]]</th>
-                                    </tr>
-                                    <tr>
-                                        <th>제목 : [[${faq.title}]]</th>
-                                    </tr>
-                                    <tr>
-                                        <th>내용 : [[${faq.content}]]</th>
-                                    </tr>
-                                    <tr>
-                                        <th></th>
-                                    </tr>
-                                </div>
-                                <div class="table-faq">
-                                    <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn1 right1" onclick="eventremove()">삭제하기</a>
-                                    <button type="button" class="btn1 right1" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
-                                </div>
-                            </th:block>
-                            <th:block th:if="${#lists.isEmpty(faqList)}">
+                        <th:block th:each="faq, num: ${faqList}">
+                            <div class="table-faq" style="float: left">
                                 <tr>
-                                    <th colspan="4">목록이 없습니다.</th>
+                                    <th>No : [[${num.count}]]</th>
                                 </tr>
-                            </th:block>
+                                <tr>
+                                    <th>제목 : [[${faq.title}]]</th>
+                                </tr>
+                                <tr>
+                                    <th>내용 : [[${faq.content}]]</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </div>
+                            <div class="table-faq">
+                                <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn1 right1" onclick="eventremove()">삭제하기</a>
+                                <button type="button" class="btn1 right1" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${#lists.isEmpty(faqList)}">
+                            <tr>
+                                <th colspan="4">목록이 없습니다.</th>
+                            </tr>
+                        </th:block>
                         </tbody>
                     </table>
                     <button type="button" onclick="reco()" class="btn1 right1"> 글쓰기 </button>

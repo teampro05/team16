@@ -60,6 +60,9 @@ public class Course extends BaseEntity {
 
     private Integer copen;    // 오픈여부
 
+    @ColumnDefault("'n'")
+    private String deleteYn;        // 삭제 여부
+
     public void peoUp(){
         this.peo = this.peo + 1;
     }
@@ -71,6 +74,10 @@ public class Course extends BaseEntity {
         this.title = title;
         this.content = content;
         this.copen = copen;
+    }
+
+    public void delete(String deleteYn) {
+        this.deleteYn = deleteYn;
     }
 
 }

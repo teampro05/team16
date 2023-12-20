@@ -13,11 +13,11 @@ import java.util.List;
 public interface MyCourseRepository extends JpaRepository<MyCourse, Integer> {
     
     // 내 강좌 목록 보기
-    @Query("select mc from MyCourse mc where mc.id = :id")
+    @Query("select mc from MyCourse mc where mc.id = :id and mc.course.deleteYn = 'n'")
     List<MyCourse> myCourseList(@Param("id") String id);
     
     // 해당 유저가 해당 강좌를 수강하는지 확인
-    @Query("select count(mc) from MyCourse mc where mc.id = :id and mc.course.no = :cno")
+    @Query("select count(mc) from MyCourse mc where mc.id = :id and mc.course.no = :cno and mc.course.deleteYn = 'n'")
     Integer getMyCourse(@Param("id") String id, @Param("cno") Integer cno);
 
     // 해당 강좌를 몇 명이 듣고 있는지 확인

@@ -10,8 +10,8 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
-<div style="min-height: 100vh">
-    <div class="container con-tb">
+<section class="table-list">
+    <div class="container">
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
@@ -21,7 +21,7 @@
             </select>
             <input type="text" name="search_filter" class="search_filter">
         </div>
-        <table class="table" id="myTable">
+        <table class="List-table" id="myTable">
             <thead class="thead-light">
             <tr>
                 <th>교재</th>
@@ -36,8 +36,9 @@
             <tr th:each="Ebook, status : ${EbookList}">
                 <td style="width: 250px;">
                     <th:block th:if="${Ebook != null}">
-                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="|@{/upload/} + ${Ebook.fileList[0].savefile}|">
+                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
                     </th:block>
+
                 </td>
 
                 <td>
@@ -69,7 +70,7 @@
                 <a th:href="@{/Ebook/fileUpload}" class="btn btn-primary">작성</a>
 <!--        </th:block>-->
     </div>
-</div>
+</section>
 <th:block th:replace="include/footer :: footer" ></th:block>
 </body>
 </html>

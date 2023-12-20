@@ -48,6 +48,13 @@
                                 <th:block th:if="${dto.level ne '수능'}">
                                     <option value="수능">수능</option>
                                 </th:block>
+
+                                <th:block th:if="${dto.level eq '토익'}">
+                                    <option value="토익" selected>토익</option>
+                                </th:block>
+                                <th:block th:if="${dto.level ne '토익'}">
+                                    <option value="토익">토익</option>
+                                </th:block>
                             </select>
                         </div>
 

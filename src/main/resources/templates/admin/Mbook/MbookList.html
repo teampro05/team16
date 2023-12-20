@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중등 교재 목록</title>
+    <th:block th:replace="/include/adminhead :: head"></th:block>
+    <style>
+        td form {
+            display: inline-flex;
+        }
+        select {
+            width: 150px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+        <th:block th:replace="/include/adminheader :: header"></th:block>
+
+        <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/}"> HOME </a> &gt; <span> 교재 </span> &gt; <span> 중학 교재 </span></p>
+            </div>
+            <div class="content-wrapper">
+                <h1>중학 교재</h1>
+                <div class="card p-3">
+                    <table class="table" id="myTable">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>교재</th>
+                            <th>제목</th>
+                            <th>내용</th>
+                            <th>가격</th>
+                            <th>출간일</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="Mbook, status : ${MbookList}">
+                            <td style="width: 250px;">
+                                <th:block th:if="${Mbook != null}">
+                                    <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Mbook.fileList[0].savefile}">
+                                </th:block>
+
+                            </td>
+
+                            <td>
+                                <p><a th:href="@{/Mbook/getMbook(no=${Mbook.fileBoard.no})}">[[${Mbook.fileBoard.title}]]</a></p>
+                            </td>
+
+                            <td>
+                                <p>[[${Mbook.fileBoard.servecontent}]]</p>
+                            </td>
+
+                            <td>
+                                <p>[[${Mbook.fileBoard.price}]]원</p>
+                            </td>
+
+                            <td>
+                                <p>[[${Mbook.fileBoard.publish}]]</p>
+                            </td>
+
+                            <td>
+                                <!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
+                                <a th:href="@{/admin/MbookUpdate(no=${Mbook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                                <a th:href="@{/admin/MbookDelete(no=${Mbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+                                <!--                    </th:block>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
+                    <a th:href="@{/admin/Mbook/fileUpload}" class="btn btn-primary">작성</a>
+                    <!--        </th:block>-->
+                </div>
+            </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <script th:src="@{/js/datatables.js}"></script>
+            </footer>
+        </div>
+</body>
+</html>
