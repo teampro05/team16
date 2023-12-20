@@ -52,7 +52,9 @@ h5,
 h6 {
   font-family: 'EASTARJET-Medium';
 }
-
+h2 {
+  margin-left: 16rem;
+}
 ul, li{
   list-style:none;
   padding: 0px;
@@ -78,6 +80,10 @@ textarea {
   resize: none;
 }
 
+.container-List {
+  margin-left: 16rem;
+  margin-bottom: 2rem;
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -125,7 +131,7 @@ textarea {
 --------------------------------------------------------------*/
 #topBar {
   background: var(--sub3);
-  font-size: 14px;
+  font-size: 15px;
   padding: 0;
   color: rgba(255, 255, 255, 0.8);
   height: 40px;
@@ -182,6 +188,7 @@ textarea {
   transition: all 0.5s;
   z-index: 997;
   background: #fff;
+  border-bottom: 0.5px solid var(--sub);
 }
 
 #header.header-fixed {
@@ -207,6 +214,7 @@ textarea {
   margin: 0;
   height: 120px;
   width: 230px;
+  overflow: hidden;
 }
 
 .scrolled-offset {
@@ -244,8 +252,8 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px 10px 30px;
-  font-size: 16px;
+  padding: 10px 10px 10px 50px;
+  font-size: 20px;
   font-weight: bold;
   font-family: 'EASTARJET-Medium';
   color: #635551;
@@ -972,6 +980,7 @@ section {
   transition: 0.3s;
   transition: ease-in-out 0.4s;
   border-radius: 5px;
+  width: 100%;
 }
 
 .values .card-title {
@@ -2721,8 +2730,8 @@ canvas {
 /* 버튼 */
 .btn1 {
   color: #fff;
-  background: var(--primary);
-  padding: 5px 20px;
+  background: var(--main);
+  padding: 10px 20px;
   display: inline-block;
   border: none;
   margin-left: 10px;
@@ -2782,5 +2791,63 @@ canvas {
   padding-bottom: 27px;
 }
 
-.breadcrumb a { color: var(--sub);
+.breadcrumb a {
+  color: var(--sub);
   }
+
+/* 회원 약관 */
+.join_area .logo, .join_agree .logo, .join_finish .logo {
+  display:block;
+}
+
+.join_area .card {
+  border-radius:15px;}
+.join_area .no_check {
+  color:red;}
+.join_area .no_check {
+  color:red;
+}
+
+.join_area .info {
+  font-size:12px;
+}
+
+.join_area #msg {
+  font-size:14px;
+}
+
+.join_area.join #id {
+  width:calc(100% - 150px);margin-right:10px;display:inline-block;vertical-align:top;
+}
+
+.join_area .check_btn {
+  line-height:36px;padding-top:0;padding-bottom:0;vertical-align:top;
+}
+
+.join_area #address1, .join_area #address2 {
+  margin-bottom:5px;
+}
+
+.join_area #postcode {
+  width:160px;float:left;margin-right:20px;
+}
+
+.join_area input::-webkit-input-placeholder {
+  font-size:16px;
+}
+
+.join_area input:-ms-input-placeholder {
+  font-size:16px;
+}
+
+.join_agree label {
+  display:block;
+}
+
+.join_agree .agree_fr {
+  border:2px solid #eee;height:400px;overflow-y:auto;white-space:pre-wrap;padding:24px;
+}
+
+.login-text {
+  color: var(--main);
+}

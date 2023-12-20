@@ -1,7 +1,7 @@
 .search_from {
     text-align: right;
     font-size: 18px;
-    margin-bottom: 20px; /* 아래쪽 여백 추가 */
+    margin: 20px; /* 여백 추가 */
 }
 .select_filter {
     padding: 5px; /* 셀렉트 박스 내부 패딩 추가 */
@@ -23,4 +23,9 @@
 .select_filter option:checked {
     background-color: #f2f2f2;
     font-weight: bold;
+}
+
+.previous + .next{
+    margin: 0 2rem;
+
 }

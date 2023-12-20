@@ -10,8 +10,12 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Ebook/EbookList}"> 초등 교재 </a></p>
+</div>
 <section class="table-list">
     <div class="container">
+        <h2> 초등 교재 </h2>
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>

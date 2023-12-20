@@ -9,6 +9,9 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/course/list}"> 강좌 </a></p>
+</div>
 <section class="table-list">
     <div class="container">
         <h2>강좌목록</h2>

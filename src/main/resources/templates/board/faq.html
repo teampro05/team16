@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="include/head :: head" ></th:block>
-    <title>FAQ</title>
+    <title>F.A.Q</title>
 </head>
 <body>
     <th:block th:replace="include/header :: header" ></th:block>
-
+    <div class="breadcrumb">
+        <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/faq}"> F.A.Q </a></p>
+    </div>
     <section id="faq" class="faq section-bg">
         <div class="container">
             <div class="section-title">
@@ -34,9 +36,12 @@
                         </li>
                     </th:block>
                 </ul>
+                <br>
+                <br>
+                <div>
+                   <a th:href="@{/faqadd}" class="btn1 right1" style="padding: 10px 20px;">글쓰기</a>
+                </div>
             </div>
-
-            <a th:href="@{/faqadd}" class="btn1 right1">글쓰기</a>
         </div>
     </section>
     <th:block th:replace="/include/footer :: footer"></th:block>

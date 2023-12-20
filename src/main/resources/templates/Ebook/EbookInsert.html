@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초등 교재 추가</title>
+    <title>초등 교재 추가하기</title>
     <th:block th:replace="include/head :: head" ></th:block>
     <link rel="stylesheet" th:href="@{/assets/css/product-filelist.css}">
 
@@ -18,9 +18,13 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Ebook/EbookList}"> 초등 교재 </a> > <span> 추가하기 </span></p>
+</div>
 <div style="min-height: 100vh">
     <div class="section properties">
         <div class="container">
+            <h2> 추가하기 </h2>
             <div class="container" style="width:1280px;margin:20px auto;">
                 <form th:action="@{/Ebook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
                     <div class="form-group">

@@ -136,6 +136,13 @@ public class HomeController {
         return "/alert";
     }
 
+    @GetMapping("/userEdit")
+    public String userEdit(Model model, Principal principal){
+        UserDTO user = userService.getId(principal.getName());
+        model.addAttribute("user", user);
+        return "/user/userEdit";
+    }
+
 
 
     // Faq

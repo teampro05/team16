@@ -10,6 +10,9 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/myPage}"> 회원정보 </a></p>
+</div>
 <section id="contact" class="contact">
     <div class="container">
         <h2>회원정보</h2>
@@ -52,6 +55,8 @@
             </table>
         </div>
         <button type="button" onclick="eventremove()" class="btn1 center1"> 탈퇴하기 </button>
+        <a th:href="@{/userEdit}" class="btn1 center1">수정하기</a>
+
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>

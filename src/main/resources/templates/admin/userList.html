@@ -52,9 +52,9 @@
                                 <td>
                                     <form th:action="@{/admin/changeStatus_list(id=${user.getId()})}" method="post">
                                         <select name="status" id="status" class="select-box" >
-                                            <option value="ACTIVE" th:selected="${user.status} eq 'ACTIVE'">ACTIVE</option>
-                                            <option value="REST" th:selected="${user.status} eq 'REST'">REST</option>
-                                            <option value="OUT" th:selected="${user.status} eq 'OUT'">OUT</option>
+                                            <option value="ACTIVE" th:selected="${user.status} eq 'ACTIVE'">활동</option>
+                                            <option value="REST" th:selected="${user.status} eq 'REST'">휴면</option>
+                                            <option value="OUT" th:selected="${user.status} eq 'OUT'">탈퇴</option>
                                         </select>
                                         <button type="submit" class="btn2 btn-primary" >상태 변경</button>
                                     </form>
@@ -62,9 +62,9 @@
                                 <td>
                                     <form th:action="@{/admin/role_list(id=${user.getId()})}" method="post">
                                         <select name="role" id="role" class="select-box" >
-                                            <option value="ADMIN" th:selected="${user.role} eq 'ADMIN'">ADMIN</option>
-                                            <option value="USER" th:selected="${user.role} eq 'USER'">USER</option>
-                                            <option value="TEACHER" th:selected="${user.role} eq 'TEACHER'">TEACHER</option>
+                                            <option value="ADMIN" th:selected="${user.role} eq 'ADMIN'">관리자</option>
+                                            <option value="USER" th:selected="${user.role} eq 'USER'">유저</option>
+                                            <option value="TEACHER" th:selected="${user.role} eq 'TEACHER'">선생님</option>
                                         </select>
                                         <button type="submit" class="btn2 btn-primary" >권한 변경</button>
                                     </form>
@@ -74,13 +74,6 @@
                     </table>
 <!--                    <th:block th:if="${not #lists.isEmpty(userList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/admin/userList')"></div></th:block>-->
                     <div th:if="${#lists.isEmpty(userList)}" class="text-center">목록이 비어있습니다.</div>
-                </div>
-                <div class="admin-p-wrapper">
-                    <p class="admin-p">※상태 설정</p>
-                    <p class="admin-p">ACTIVE: 활동 / REST: 휴면 / OUT: 탈퇴</p>
-                    <br>
-                    <p class="admin-p">※권한 설정</p>
-                    <p class="admin-p">ADMIN: 관리자 / USER: 유저 / TEACHER: 선생님</p>
                 </div>
             </div>
             <footer class="footer">

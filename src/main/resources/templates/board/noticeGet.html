@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항 글</title>
+    <title>공지사항 상세보기</title>
     <th:block th:replace="include/head :: head" ></th:block>
 
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
 <div class="breadcrumb">
-    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{notice}"> 공지사항 </a> > <span> 글쓰기 </span></p>
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{notice}"> 공지사항 </a> > <span> 상세보기 </span></p>
 </div>
 <section id="contact" class="contact">
     <div class="container">
-        <h2>글 정보</h2>
+        <h2>공지사항 상세보기</h2>
         <table class="List-table">
             <tbody>
                 <tr>
@@ -32,6 +32,7 @@
                 </tr>
                 <tr>
                     <th colspan="4" >내용</th>
+                    <td></td>
                 </tr>
                 <tr>
                     <td colspan="4" th:text="${notice.content}"></td>

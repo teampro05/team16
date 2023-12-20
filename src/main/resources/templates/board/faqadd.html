@@ -2,11 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Faq 글쓰기</title>
+    <title>F.A.Q 글쓰기</title>
     <th:block th:replace="include/head :: head" ></th:block>
 </head>
 <body>
     <th:block th:replace="include/header :: header"></th:block>
+    <div class="breadcrumb">
+        <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/faq}"> F.A.Q </a> > <span> 글쓰기 </span></p>
+    </div>
     <section class="input-form">
         <div class="container-form">
             <h2>글쓰기</h2>

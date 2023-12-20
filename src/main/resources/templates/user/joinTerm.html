@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>TSellpa::회원약관</title>
+    <title>회원약관</title>
     <th:block th:replace="include/head :: head" ></th:block>
     <style>
 
@@ -16,7 +16,7 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card">
                         <div class="card-body p-4">
-<!--                            <a class="logo text-center font-weight-bold text-secondary" href="/" style="font-size:35px;"><img src="/resources/image/common/logo.png" title="TSellpa 로고" alt="TSellpa 로고" />TSellpa</a>-->
+                            <a class="logo text-center font-weight-bold text-secondary" href="/" style="font-size:35px;"><img th:src="@{/assets/img/logo.PNG}" alt="로고 이미지"/>Word Master</a>
                             <h2 class="text-uppercase text-center mt-3 mb-5">회원 약관 동의</h2>
                             <div class="d-flex justify-content">
                                 <article class="agree_fr">

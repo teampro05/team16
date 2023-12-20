@@ -2,14 +2,17 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Notice 글쓰기</title>
+    <title>공지사항 수정하기</title>
     <th:block th:replace="include/head :: head" ></th:block>
 </head>
 <body>
     <th:block th:replace="include/header :: header"></th:block>
+    <div class="breadcrumb">
+        <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/notice}"> 공지사항 </a> > <span> 수정하기 </span></p>
+    </div>
     <section class="input-form">
         <div class="container-form">
-          <h2>글쓰기</h2>
+          <h2>수정하기</h2>
             <form name="frm1" id="frm1" th:action="@{/noticeEdit}" method="post" >
                 <div class="form-outline">
                     <label class="form-label" for="title">제목</label>
