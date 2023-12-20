@@ -64,9 +64,10 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a th:href="@{/admin/ansInsUpd(no=${dto.no})}" class="btn"
-                                    th:text="${dto.ans} eq null ? '답변하기' : '답변수정'" th:class="${dto.ans} eq null ? 'btn btn-primary' : 'btn btn-success'"></a>
-
+                                    <th:block th:if="${dto.deleteYn} eq 'n'">
+                                        <a th:href="@{/admin/ansInsUpd(no=${dto.no})}" class="btn"
+                                           th:text="${dto.ans} eq null ? '답변하기' : '답변수정'" th:class="${dto.ans} eq null ? 'btn btn-primary' : 'btn btn-success'"></a>
+                                    </th:block>
 <!--                                    <th:block th:if="${dto.deleteYn} eq 'n'">
                                         <a th:href="@{/admin/ansDelete(no=${dto.no})}" class="btn btn-danger">제거</a>
                                     </th:block>

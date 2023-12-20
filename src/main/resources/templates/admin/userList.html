@@ -52,10 +52,9 @@
                                 <td>
                                     <form th:action="@{/admin/changeStatus_list(id=${user.getId()})}" method="post">
                                         <select name="status" id="status" class="select-box" >
-                                            <option value="[[${user.getStatus()}]]">현재: [[${user.getStatus()}]]</option>
-                                            <option value="ACTIVE">ACTIVE</option>
-                                            <option value="REST">REST</option>
-                                            <option value="OUT">OUT</option>
+                                            <option value="ACTIVE" th:selected="${user.status} eq 'ACTIVE'">ACTIVE</option>
+                                            <option value="REST" th:selected="${user.status} eq 'REST'">REST</option>
+                                            <option value="OUT" th:selected="${user.status} eq 'OUT'">OUT</option>
                                         </select>
                                         <button type="submit" class="btn2 btn-primary" >상태 변경</button>
                                     </form>
@@ -63,10 +62,9 @@
                                 <td>
                                     <form th:action="@{/admin/role_list(id=${user.getId()})}" method="post">
                                         <select name="role" id="role" class="select-box" >
-                                            <option value="[[${user.getRole()}]]">현재: [[${user.getRole()}]]</option>
-                                            <option value="ADMIN">ADMIN</option>
-                                            <option value="USER">USER</option>
-                                            <option value="TEACHER">TEACHER</option>
+                                            <option value="ADMIN" th:selected="${user.role} eq 'ADMIN'">ADMIN</option>
+                                            <option value="USER" th:selected="${user.role} eq 'USER'">USER</option>
+                                            <option value="TEACHER" th:selected="${user.role} eq 'TEACHER'">TEACHER</option>
                                         </select>
                                         <button type="submit" class="btn2 btn-primary" >권한 변경</button>
                                     </form>
