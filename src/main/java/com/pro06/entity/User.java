@@ -60,19 +60,4 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;          //회원 권한
 
-
-    public static User create(UserDTO userDTO) {
-        User user = new User();
-        user.setPw(userDTO.getPw());
-        user.setName(userDTO.getName());
-        user.setTel(userDTO.getTel());
-        user.setEmail(userDTO.getEmail());
-        user.setAddr1(userDTO.getAddr1());
-        user.setAddr2(userDTO.getAddr2());
-        user.setPostcode(userDTO.getPostcode());
-        user.setImg(userDTO.getImg());
-        user.setStatus(userDTO.getStatus());
-        user.setRole(userDTO.getRole());
-        return user;
-    }
 }

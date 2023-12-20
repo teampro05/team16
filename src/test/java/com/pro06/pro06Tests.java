@@ -1,21 +1,29 @@
 package com.pro06;
 
+import com.pro06.dto.email.EmailMessage;
+import com.pro06.dto.email.EmailPostDto;
 import com.pro06.entity.Notice;
 import com.pro06.entity.Role;
 import com.pro06.entity.User;
 import com.pro06.repository.NoticeRepository;
 import com.pro06.repository.UserRepository;
+import com.pro06.service.EmailService;
+import groovy.util.logging.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
-
 
 @SpringBootTest
 public class pro06Tests {
@@ -27,6 +35,7 @@ public class pro06Tests {
 
     @Autowired
     private NoticeRepository noticeRepository;
+
 //
 //    @Test
 //    public void Userinsert(){

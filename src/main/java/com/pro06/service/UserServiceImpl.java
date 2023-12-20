@@ -49,8 +49,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void userInsert(UserDTO userDTO) {
+        String ppw = passwordEncoder.encode(userDTO.getPw());
+        userDTO.setPw(ppw);
+        userDTO.setRole(Role.USER);
+        userDTO.setStatus(Status.ACTIVE);
         User user = modelMapper.map(userDTO, User.class);
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean idCheck(String id) {
+            boolean pass = true;
+            int cnt = userRepository.countById(id);
+            if(cnt > 0) pass = false;
+            return pass;
     }
 
     @Override

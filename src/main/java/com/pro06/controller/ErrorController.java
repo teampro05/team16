@@ -45,5 +45,6 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
         model.addAttribute("code", "이유를 알 수 없습니다.");
         return "/error";
     }
+
 }
 

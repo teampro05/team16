@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select m from User m where m.id = :id")
     User getId(@Param("id") String id);
 
-
+    Integer countById(@Param("id") String id);
 
 }

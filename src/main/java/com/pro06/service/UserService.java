@@ -18,5 +18,5 @@ public interface UserService {
     public void userUpdate(UserDTO userDTO);
     public void userDelete(Integer id);
     public int loginPro(String id);
-
+    public boolean idCheck(String id);
 }
