@@ -60,15 +60,9 @@
                                 <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
                                 <td>
                                     <form th:action="@{/admin/openCource_admin(no=${course.getNo()})}" method="post">
-                                        <select name="copen" id="copen" class="select-box" >
-                                            <th:block th:if="${course.getCopen().equals(1)}">
-                                                <option value="[[${course.getCopen()}]]">현재: 열기</option>
-                                            </th:block>
-                                            <th:block th:if="${course.getCopen().equals(0)}">
-                                                <option value="[[${course.getCopen()}]]">현재: 닫기</option>
-                                            </th:block>
-                                            <option value="1">열기</option>
-                                            <option value="0">닫기</option>
+                                        <select name="copen" id="copen" class="select-box">
+                                            <option value="1" th:selected="${course.copen} eq '1'">열기</option>
+                                            <option value="0" th:selected="${course.copen} eq '0'">닫기</option>
                                         </select>
                                         <button type="submit" class="btn2 btn-primary" >수정</button>
                                     </form>
@@ -83,8 +77,10 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a th:href="@{/admin/courseDetail(no=${course.no})}" class="btn2 btn-primary">강좌상세</a>
-                                    <a th:href="@{/admin/courseUpdate(no=${course.no})}" class="btn2 btn-primary">강좌수정</a>
+                                    <th:block th:if="${course.deleteYn} eq 'n'">
+                                        <a th:href="@{/admin/courseDetail(no=${course.no})}" class="btn btn-primary">강좌상세</a>
+                                        <a th:href="@{/admin/courseUpdate(no=${course.no})}" class="btn btn-success">강좌수정</a>
+                                    </th:block>
                                 </td>
                             </tr>
                         </th:block>

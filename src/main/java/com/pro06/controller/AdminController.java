@@ -66,7 +66,7 @@ public class AdminController {
 
     @GetMapping("/home")
     public String Home(Model model) {
-        return "/admin/home";
+        return "redirect:/admin/userList";
     }
 
     // 강좌 목록
