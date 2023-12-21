@@ -2238,7 +2238,6 @@ section {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0;
-  font-family: "Raleway", sans-serif;
   color: #656262;
 }
 
@@ -2558,7 +2557,6 @@ section {
 form p {
   letter-spacing: 0.3rem;
   display: flex;
-  justify-content: space-between;
   color: var(--black);
 }
 
@@ -2855,12 +2853,13 @@ canvas {
 /* breadcrumb */
 .breadcrumb {
   clear:both;
-  width:1200px;
+  padding-left: 1700px;
   margin: 0 auto;
   text-align: right;
   color:var(--sub);
   padding-top: 27px;
   padding-bottom: 27px;
+  font-size: 20px;
 }
 
 .breadcrumb a {
@@ -2924,4 +2923,64 @@ canvas {
 
 .login-text {
   color: var(--main);
+}
+
+.blog-banner-area {
+  height: 280px;
+  position: relative;
+  z-index: 1
+}
+
+@media (min-width: 1000px) {
+  .blog-banner-area {
+    height: 410px
+  }
+}
+
+.blog-banner-area .blog-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%)
+}
+
+.blog-banner-area::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*background: #f1f6f7;*/
+  z-index: -1
+}
+
+.banner-breadcrumb {
+  display: inline-block
+}
+
+.banner-breadcrumb .breadcrumb {
+  background: transparent;
+  padding: 0
+}
+
+.banner-breadcrumb .breadcrumb-item {
+  padding: .1rem
+}
+
+.banner-breadcrumb .breadcrumb-item a {
+  text-transform: capitalize;
+  color: #777777
+}
+
+.banner-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  color: #777777;
+  padding-right: .1rem;
+  content: "-"
+}
+
+.banner-breadcrumb .breadcrumb-item.active {
+  color: #777777
 }
