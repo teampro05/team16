@@ -57,7 +57,7 @@
     <insert id="fileInsert">
         <choose>
             <when test="originfile != null and originfile.trim() != ''">
-                insert into mbookImg values (default, #{Mbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
+                insert into mbookImg values (default, #{Mbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, default)
             </when>
             <otherwise>
                 -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
@@ -88,7 +88,7 @@
     <insert id="fileUpdate">
         <choose>
             <when test="originfile != null and originfile.trim() != ''">
-                insert into mbookImg values (default, #{Mbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, #{uploaddate})
+                insert into mbookImg values (default, #{Mbno}, #{savefolder}, #{originfile}, #{savefile}, #{filesize}, default)
             </when>
             <otherwise>
                 -- 조건문 에러 발생 회피하기위해 의미없는 쿼리문 설정함.
