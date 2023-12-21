@@ -1,6 +1,7 @@
 package com.pro06.service.Book;
 
 import com.pro06.dto.TbookVO;
+import com.pro06.entity.Ebook;
 import com.pro06.entity.Tbook;
 import com.pro06.entity.TbookImg;
 import com.pro06.repository.TbookRepository;
@@ -14,6 +15,16 @@ public class TBookServiceImpl implements TBookService {
 
     @Autowired
     private TbookRepository tbookRepository;
+
+    @Override
+    public List<Tbook> admTbookList() {
+        return tbookRepository.admTbookList();
+    }
+
+    @Override
+    public int tbookDelRec(Tbook tbook) {
+        return tbookRepository.tbookDelRec(tbook);
+    }
 
     @Override
     public List<Tbook> TbookList() {

@@ -24,6 +24,11 @@
     Tbook latestFileboard() throws Exception;
 -->
     <select id="TbookList" resultType="com.pro06.entity.Tbook">
+        select * from tbook where deleteyn='n' order by no desc
+    </select>
+
+    <!-- admin 용 ebookList -->
+    <select id="admTbookList" resultType="com.pro06.entity.Tbook">
         select * from tbook order by no desc
     </select>
 
@@ -32,7 +37,7 @@
     </select>
 
     <insert id="insertTbook">
-        insert into tbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into tbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <update id="updateTbook">
@@ -46,7 +51,7 @@
 <!--    //////////////////////////////////////////////////////     -->
 
     <insert id="fileBoardInsert">
-        insert into tbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into tbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <insert id="fileInsert">
@@ -64,6 +69,13 @@
     <select id="getFileGroupList" resultType="com.pro06.entity.TbookImg">
         select * from tbookImg where Tbno=#{Tbno}
     </select>
+
+    <update id="tbookDelRec">
+        update tbook
+        set deleteyn = #{deleteyn}
+        where no = #{no};
+    </update>
+
 
     <delete id="fileBoardDelete">
         delete from tbook where no=#{no}

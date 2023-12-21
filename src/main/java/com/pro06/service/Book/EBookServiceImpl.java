@@ -16,6 +16,16 @@ public class EBookServiceImpl implements EBookService {
     private EbookRepository ebookRepository;
 
     @Override
+    public List<Ebook> admEbookList() {
+        return ebookRepository.admEbookList();
+    }
+
+    @Override
+    public int ebookDelRec(Ebook ebook) {
+        return ebookRepository.ebookDelRec(ebook);
+    }
+
+    @Override
     public List<Ebook> EbookList() {
         return ebookRepository.EbookList();
     }

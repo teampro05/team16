@@ -10,7 +10,9 @@ import java.util.List;
 @Mapper
 public interface EbookRepository {
 
-    List<Ebook> EbookList(); // 초등 교재 리스트
+    List<Ebook> EbookList(); // 초등 교재 리스트, 유저용
+    List<Ebook> admEbookList(); // 초등 교재 리스트, 관리자 용
+    int ebookDelRec(Ebook ebook);  // 초등 교재 삭제, 복구 기능
     Ebook getEbook(Integer no); // 초등 교재 상세
     int insertEbook(Ebook ebook); // 초등 교재 추가
     int updateEbook(Ebook ebook); // 초등 교재 수정

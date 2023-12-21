@@ -1,6 +1,7 @@
 package com.pro06.service.Book;
 
 import com.pro06.dto.TbookVO;
+import com.pro06.entity.Ebook;
 import com.pro06.entity.Tbook;
 import com.pro06.entity.TbookImg;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface TBookService {
 
     public List<Tbook> TbookList(); // 토익 교재 리스트
+    List<Tbook> admTbookList(); // 초등 교재 리스트, 관리자 용
+    int tbookDelRec(Tbook tbook);  // 초등 교재 삭제, 복구 기능
     public Tbook getTbook(Integer no); // 토익 교재 상세
     public int insertTbook(Tbook tbook); // 토익 교재 추가
     public int updateTbook(Tbook tbook); // 토익 교재 수정

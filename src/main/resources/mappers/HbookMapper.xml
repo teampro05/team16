@@ -24,6 +24,11 @@
     Hbook latestFileboard() throws Exception;
 -->
     <select id="HbookList" resultType="com.pro06.entity.Hbook">
+        select * from hbook where deleteyn='n' order by no desc
+    </select>
+
+    <!-- admin 용 ebookList -->
+    <select id="admHbookList" resultType="com.pro06.entity.Hbook">
         select * from hbook order by no desc
     </select>
 
@@ -32,7 +37,7 @@
     </select>
 
     <insert id="insertHbook">
-        insert into hbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into hbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <update id="updateHbook">
@@ -46,7 +51,7 @@
 <!--    //////////////////////////////////////////////////////     -->
 
     <insert id="fileBoardInsert">
-        insert into hbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into hbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <insert id="fileInsert">
@@ -64,6 +69,12 @@
     <select id="getFileGroupList" resultType="com.pro06.entity.HbookImg">
         select * from hbookImg where Hbno=#{Hbno}
     </select>
+
+    <update id="hbookDelRec">
+        update hbook
+        set deleteyn = #{deleteyn}
+        where no = #{no};
+    </update>
 
     <delete id="fileBoardDelete">
         delete from hbook where no=#{no}
