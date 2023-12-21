@@ -131,7 +131,7 @@ textarea {
 --------------------------------------------------------------*/
 #topBar {
   background: var(--sub3);
-  font-size: 15px;
+  font-size: 18px;
   padding: 0;
   color: rgba(255, 255, 255, 0.8);
   height: 40px;
