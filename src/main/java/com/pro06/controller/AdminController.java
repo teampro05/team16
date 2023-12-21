@@ -14,6 +14,7 @@ import com.pro06.service.course.LectureServiceImpl;
 import com.pro06.service.course.VideoServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -704,6 +705,11 @@ public class AdminController {
                 File saveFile = new File(uploadFolder, saveFileName);
                 try {
                     file.transferTo(saveFile);
+                    
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -816,6 +822,10 @@ public class AdminController {
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
 //                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                    // 썸네일 저장 위치경로 + 이름
+                    //썸네일 생성 (복사할파일, 썸네일파일, 가로, 세로)
+                    File thumbsname = new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -832,6 +842,10 @@ public class AdminController {
                 File file = new File(uploadFolder + "/" + ebookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
+
+                    // 썸네일도 삭제
+                    File thumbnailFile = new File(uploadFolder + "\\thumbs_" + ebookImg.getSavefile());
+                    thumbnailFile.delete();
                 }
                 log.info(" ebookImg : " + ebookImg);
             }
@@ -842,7 +856,7 @@ public class AdminController {
         } else { // 파일이 없는 경우
             eBookService.updateEbook(ebook); // 글 제목 내용만 업데이트
         }
-        return "redirect:Ebook/getEbook?no=" + postNo;
+        return "redirect:/admin/EbookList";
     }
 
     // 중학 교재
