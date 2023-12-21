@@ -24,7 +24,7 @@
             <div class="content-wrapper">
                 <h1>토익 교재 수정하기</h1>
                 <div class="card p-3">
-                    <form th:action="@{/Tbook/TbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
+                    <form th:action="@{/admin/TbookUpdate}" method="post" class="mt-4 mb-5" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="id">작성자</label>
                             <input type="hidden" name="Tbno" th:value="${Tbook.no}" />

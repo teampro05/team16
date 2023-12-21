@@ -42,7 +42,7 @@
                 <td th:text="${status.count}"></td>
                 <td style="width: 250px;">
                     <th:block th:if="${Mbook != null}">
-                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="|@{/upload/} + ${Mbook.fileList[0].savefile}|">
+                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + 'thumbs_' + ${Mbook.fileList[0].savefile}">
                     </th:block>
 
                 </td>

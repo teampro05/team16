@@ -943,6 +943,11 @@ public class AdminController {
                 File saveFile = new File(uploadFolder, saveFileName);
                 try {
                     file.transferTo(saveFile);
+
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1053,6 +1058,11 @@ public class AdminController {
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
 //                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1069,6 +1079,10 @@ public class AdminController {
                 File file = new File(uploadFolder + "/" + mbookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
+
+                    // 썸네일도 삭제
+                    File thumbnailFile = new File(uploadFolder + "\\thumbs_" + mbookImg.getSavefile());
+                    thumbnailFile.delete();
                 }
                 log.info(" mbookImg : " + mbookImg);
             }
@@ -1079,7 +1093,7 @@ public class AdminController {
         } else { // 파일이 없는 경우
             mBookService.updateMbook(mbook); // 글 제목 내용만 업데이트
         }
-        return "redirect:Mbook/getMbook?no=" + postNo;
+        return "redirect:/admin/MbookList";
     }
 
     // 수능 교재
@@ -1166,6 +1180,12 @@ public class AdminController {
                 File saveFile = new File(uploadFolder, saveFileName);
                 try {
                     file.transferTo(saveFile);
+
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1276,6 +1296,10 @@ public class AdminController {
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
 //                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1292,6 +1316,10 @@ public class AdminController {
                 File file = new File(uploadFolder + "/" + hbookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
+
+                    // 썸네일도 삭제
+                    File thumbnailFile = new File(uploadFolder + "\\thumbs_" + hbookImg.getSavefile());
+                    thumbnailFile.delete();
                 }
                 log.info(" hbookImg : " + hbookImg);
             }
@@ -1302,7 +1330,7 @@ public class AdminController {
         } else { // 파일이 없는 경우
             hBookService.updateHbook(hbook); // 글 제목 내용만 업데이트
         }
-        return "redirect:Hbook/getHbook?no=" + postNo;
+        return "redirect:/admin/HbookList";
     }
 
     // 토익 교재
@@ -1389,6 +1417,11 @@ public class AdminController {
                 File saveFile = new File(uploadFolder, saveFileName);
                 try {
                     file.transferTo(saveFile);
+
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1499,6 +1532,11 @@ public class AdminController {
                 try {
                     file.transferTo(saveFile);  //실제 디렉토리에 해당파일 저장
 //                file.transferTo(devFile); //개발자용 컴퓨터에 해당파일 저장
+                    // 썸네일 저장 위치경로 + 이름
+                    // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
+                    File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1515,6 +1553,10 @@ public class AdminController {
                 File file = new File(uploadFolder + "/" + tbookImg.getSavefile());
                 if (file.exists()) { // 해당 파일이 존재하면
                     file.delete(); // 파일 삭제
+
+                    // 썸네일도 삭제
+                    File thumbnailFile = new File(uploadFolder + "\\thumbs_" + tbookImg.getSavefile());
+                    thumbnailFile.delete();
                 }
                 log.info(" tbookImg : " + tbookImg);
             }
@@ -1525,7 +1567,7 @@ public class AdminController {
         } else { // 파일이 없는 경우
             tBookService.updateTbook(tbook); // 글 제목 내용만 업데이트
         }
-        return "redirect:Tbook/getTbook?no=" + postNo;
+        return "redirect:/admin/TbookList";
     }
 
 }
