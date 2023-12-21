@@ -55,6 +55,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'junit:junit:4.13.1'
 
+    //이미지썸네일
+    implementation 'net.coobird:thumbnailator:0.4.8'
+
     compileOnly("org.projectlombok:lombok", "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta") // 롬복 외에도 querydsl 어노테이션 추가
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
