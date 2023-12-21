@@ -7,7 +7,7 @@
 */
 :root,
 [data-bs-theme=light] {
-  --main: #e5bb4b;
+  --main: #e7ac11;
   --sub: #757430;
   --sub1: #D0B987;
   --sub2: #AFB3BC;
@@ -15,6 +15,7 @@
   --white: white;
   --black: black;
   --hover: #ff6b3b;
+  --dan: #fb470c;
   --admin: #4B49AC;
 
 }
@@ -52,9 +53,7 @@ h5,
 h6 {
   font-family: 'EASTARJET-Medium';
 }
-h2 {
-  margin-left: 16rem;
-}
+
 ul, li{
   list-style:none;
   padding: 0px;
@@ -78,6 +77,13 @@ select {
 }
 textarea {
   resize: none;
+}
+.btn-team {
+  padding-right: 16rem;
+  margin-top: 8rem;
+}
+.con-title {
+  margin-left: 16rem;
 }
 
 .container-List {
@@ -2739,11 +2745,56 @@ canvas {
   border-radius: 4px;
   text-align: center;
 }
+.btn1 {
+  color: #fff;
+  background: var(--main);
+  padding: 10px 20px;
+  display: inline-block;
+  border: none;
+  margin-left: 10px;
+  width: 120px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.btn2 {
+  color: #fff;
+  background: var(--hover);
+  padding: 10px 20px;
+  display: inline-block;
+  border: none;
+  margin-left: 10px;
+  width: 120px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.btn2:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--dan);
+}
+.check_btn:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--dan);
+}
+.login-btn:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--dan);
+}
+
+
 
 .btn1:hover {
   cursor: pointer;
   text-decoration: none;
   color: var(--white);
+  background: var(--hover);
 }
 
 .right1{

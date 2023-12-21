@@ -15,7 +15,7 @@
     </div>
     <section class="table-list">
         <div class="container">
-            <h2>공지사항</h2>
+            <h2 class="con-title">공지사항</h2>
             <table class="List-table" id="myTable">
                 <thead>
                     <tr>
@@ -36,7 +36,7 @@
                 </th:block>
                 </tbody>
             </table>
-            <th:block sec:authorize="isAuthenticated()">
+            <th:block sec:authorize="hasAuthority('ADMIN')">
                 <a th:href="@{/noticeadd}" class="btn1 center1">글쓰기</a>
             </th:block>
         </div>

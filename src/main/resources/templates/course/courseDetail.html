@@ -14,15 +14,31 @@
 </div>
 <section class="table-list">
     <div class="container">
-        <h2>상세보기</h2>
-        <ul>
-            <li>강좌 이름 : [[${course.title}]]</li>
-            <li>작성자 : [[${course.id}]]</li>
-            <li>현재수강인원 : [[${course.peo}]]</li>
-            <li>최대수강인원 : [[${course.peo_max}]]</li>
-        </ul>
+        <h2 class="con-title">강좌</h2>
+        <table class="List-table">
+            <tbody>
+            <tr>
+                <th>강좌 이름</th>
+                <td>[[${course.title}]]</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>현재수강인원</th>
+                <td>[[${course.peo}]]</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>최대수강인원</th>
+                <td>[[${course.peo_max}]]</td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
 
-        <h3>강의목록</h3>
+        <h3 class="con-title" style="margin-top: 5rem">강의목록</h3>
         <div class="search_from" style="text-align: center">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>

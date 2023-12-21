@@ -8675,7 +8675,7 @@
   --gray-lightest: #e6e9ed;
   --black: #000000;
   --primary: #4B49AC;
-    --back: #F5F7FF;
+  --back: #e4e4f3;
   --secondary: #a3a4a5;
   --success: #57B657;
   --info: #248AFD;
@@ -21545,7 +21545,6 @@ code {
 
 /* Breadcrumbs */
 .breadcrumb {
-  border: 1px solid #CED4DA;
 }
 
 .breadcrumb .breadcrumb-item {

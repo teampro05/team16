@@ -21,6 +21,9 @@
     <div class="container-fluid page-body-wrapper">
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/admin/userList}"> HOME </a> > <span> 질문관리 </span></p>
+            </div>
             <div class="content-wrapper">
                 <h1>질문관리</h1>
                 <div class="search_from" style="text-align: center">
@@ -84,11 +87,6 @@
             </div>
 
             <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-                </div>
-
                 <script th:src="@{/js/datatables.js}"></script>
             </footer>
         </div>

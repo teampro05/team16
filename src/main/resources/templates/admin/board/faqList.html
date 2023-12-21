@@ -6,9 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:replace="/include/adminhead :: head"></th:block>
-    <title>관리자페이지: F.A.Q 목록</title>
+    <title>F.A.Q 관리</title>
     <style>
         .table-faq {
+            border: none;
             display: inline-block;
         }
 
@@ -18,6 +19,11 @@
 
         table .faqCon:target {
             display: contents;
+        }
+
+        textarea {
+            border: none;
+            margin-left: 1rem;
         }
 
 
@@ -39,7 +45,7 @@
                     <table id="myTable" class="table text-center mb-3" th:if="${not #lists.isEmpty(faqList)}">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th style="text-align: left">No</th>
                             <th style="text-align: left">제목</th>
                             <th></th>
                             <th></th>
@@ -59,15 +65,15 @@
                                             <textarea type="text" name="content" id="content" class="form-control" cols="100" rows="10" maxlength="500" readonly>[[${faq.content}]]</textarea>
                                         </td>
                                     <td class="table-faq">
-                                        <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn1" onclick="eventremove()">삭제하기</a>
-                                        <button type="button" class="btn1" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
+                                        <button type="button" class="btn btn-primary" th:com="${faq.getNo() }" onclick="Edit(this.getAttribute('com'))">수정하기</button>
+                                        <a th:href="@{/admin/faqDel_Admin(no=${faq.getNo()})}" class="btn btn-danger" onclick="eventremove()">삭제하기</a>
                                     </td>
                                 </tr>
                             </th:block>
                         </tbody>
                     </table>
                     <div>
-                        <button type="button" onclick="reco()" class="btn1"> 글쓰기 </button>
+                        <button type="button" onclick="reco()" class="btn btn-primary"> 글쓰기 </button>
 
                     </div>
                 </div>

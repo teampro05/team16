@@ -38,7 +38,6 @@
                     <input type="text" name="search_filter" class="search_filter">
                 </div>
                 <div class="card p-3">
-<!--                    <div th:replace="/include/searchList :: fragment-search('/admin/userList', 'id:아이디,name:이름,tel:전화번호')"></div>-->
                     <table id="myTable" class="table text-center mb-3" th:if="${not #lists.isEmpty(userList)}">
                         <thead>
                             <tr>
@@ -67,7 +66,7 @@
                                             <option value="REST" th:selected="${user.status} eq 'REST'">휴면</option>
                                             <option value="OUT" th:selected="${user.status} eq 'OUT'">탈퇴</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                        <button type="submit" class="btn btn-primary" >상태 변경</button>
                                     </form>
                                 </td>
                                 <td>
@@ -77,13 +76,12 @@
                                             <option value="USER" th:selected="${user.role} eq 'USER'">유저</option>
                                             <option value="TEACHER" th:selected="${user.role} eq 'TEACHER'">선생님</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >권한 변경</button>
+                                        <button type="submit" class="btn btn-primary" >권한 변경</button>
                                     </form>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-<!--                    <th:block th:if="${not #lists.isEmpty(userList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/admin/userList')"></div></th:block>-->
                     <div th:if="${#lists.isEmpty(userList)}" class="text-center">목록이 비어있습니다.</div>
                 </div>
             </div>

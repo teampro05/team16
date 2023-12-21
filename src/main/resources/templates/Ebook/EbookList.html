@@ -15,7 +15,7 @@
 </div>
 <section class="table-list">
     <div class="container">
-        <h2> 초등 교재 </h2>
+        <h2 class="con-title"> 초등 교재 </h2>
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
@@ -28,6 +28,7 @@
         <table class="List-table" id="myTable">
             <thead class="thead-light">
             <tr>
+                <th>No</th>
                 <th>교재</th>
                 <th>제목</th>
                 <th>내용</th>
@@ -38,9 +39,10 @@
             </thead>
             <tbody>
             <tr th:each="Ebook, status : ${EbookList}">
+                <td th:text="${status.count}"></td>
                 <td style="width: 250px;">
                     <th:block th:if="${Ebook != null}">
-                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
+                        <img style="max-width: 300px; height: auto" class="pro-img" th:src="|@{/upload/} + ${Ebook.fileList[0].savefile}|">
                     </th:block>
 
                 </td>
@@ -62,17 +64,19 @@
                 </td>
 
                 <td>
-<!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                        <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                        <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
-<!--                    </th:block>-->
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn1 right1">수정</a>
+                        <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn2 right1">삭제</a>
+                    </th:block>
                 </td>
             </tr>
             </tbody>
         </table>
-<!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                <a th:href="@{/Ebook/fileUpload}" class="btn btn-primary">작성</a>
-<!--        </th:block>-->
+        <th:block sec:authorize="hasAuthority('ADMIN')">
+            <div class="btn-team">
+                <a th:href="@{/Ebook/fileUpload}" class="btn1 right1">작성</a>
+            </div>
+        </th:block>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>

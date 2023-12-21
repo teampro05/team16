@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:replace="/include/adminhead :: head"></th:block>
-    <title>관리자페이지: 공지사항 상세보기</title>
+    <title>공지사항 상세보기</title>
 </head>
 <body>
 <div class="container-scroller">
@@ -13,6 +13,9 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
 
         <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/admin/userList}"> HOME </a> > <a th:href="@{/admin/notice_Admin}"> 공지사항 </a> > <span> 상세보기 </span></p>
+            </div>
             <div class="col-lg-8">
                 <div class="d-flex flex-column align-items-center justify-content-center right_side">
                     <h5 class="my-4" style="font-size:2.5em;font-weight:600;">공지사항 상세보기</h5>
@@ -46,12 +49,14 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a th:href="@{/admin/notice_Admin}" class="btn1 right1">목록으로</a>
-                        <a type="button" onclick="eventremove()" class="btn1 right1"> 삭제하기 </a>
-                        <a th:href="@{/admin/noticeEdit_Admin(no=${notice.no})}" class="btn1 right1">수정하기</a>
+                        <a th:href="@{/admin/notice_Admin}" class="btn btn-success">목록으로</a>
+                        <a type="button" onclick="eventremove()" class="btn btn-danger"> 삭제하기 </a>
+                        <a th:href="@{/admin/noticeEdit_Admin(no=${notice.no})}" class="btn btn-primary">수정하기</a>
                     </div>
                 </div>
             </div>
+            <footer class="footer">
+            </footer>
         </div>
     </div>
 </div>

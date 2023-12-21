@@ -24,7 +24,7 @@
 <div style="min-height: 100vh">
     <div class="section properties">
         <div class="container">
-            <h2> 추가하기 </h2>
+            <h2 class="con-title"> 추가하기 </h2>
             <div class="container" style="width:1280px;margin:20px auto;">
                 <form th:action="@{/Mbook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
                     <div class="form-group">
@@ -82,10 +82,9 @@
                         </label>
                     </div>
                     <br><br>
-
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="작성">
-                        <input type="reset" class="btn btn-danger" value="초기화">
+                    <div class="btn-team">
+                        <input type="submit" class="btn1 right1" value="작성">
+                        <input type="reset" class="btn2 right1" value="초기화">
                     </div>
                 </form>
             </div>

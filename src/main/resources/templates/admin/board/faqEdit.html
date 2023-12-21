@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>자주쓰는 답변</title>
-  <th:block th:replace="include/head :: head" ></th:block>
+  <title>F.A.Q 수정하기</title>
+  <th:block th:replace="/include/adminhead :: head"></th:block>
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -16,7 +17,7 @@
     .container {
       width: 80%;
       margin: 50px auto;
-      background-color: #fff;
+      background-color: #dad9fb;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -47,15 +48,6 @@
       border-radius: 4px;
     }
 
-    .btn {
-      padding: 5px 20px;
-      background-color: #4caf50;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
   </style>
 </head>
 <body>
@@ -73,8 +65,8 @@
       <div class="textCount"><span>0</span>/500</div>
     </div>
     <div>
-      <button type="submit" class="btn1">등록</button>
-      <button type="button" onclick="javascript=window.close()" class="btn1">닫기</button>
+      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="button" onclick="javascript=window.close()" class="btn btn-danger">닫기</button>
     </div>
   </form>
 </div>

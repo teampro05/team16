@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강좌 목록</title>
+    <title>강좌 관리</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
     <style>
         td form {
@@ -20,13 +20,12 @@
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper">
         <th:block th:replace="/include/adminheader :: header"></th:block>
-
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{/}"> HOME </a> &gt; <span> 강좌관리 </span></p>
+                <p><a th:href="@{/admin/userList}"> HOME </a> &gt; <span> 강좌 </span></p>
             </div>
             <div class="content-wrapper">
-                <h1>강좌관리</h1>
+                <h1>강좌 관리</h1>
                 <div class="search_from" style="text-align: center">
                     <select name="select_filter" class="select_filter">
                         <option value="1">제목</option>
@@ -64,7 +63,7 @@
                                             <option value="1" th:selected="${course.copen} eq '1'">열기</option>
                                             <option value="0" th:selected="${course.copen} eq '0'">닫기</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >수정</button>
+                                        <button type="submit" class="btn btn-primary" >수정</button>
                                     </form>
                                 </td>
                                 <td>
@@ -73,7 +72,7 @@
                                             <option value="y" th:selected="${course.deleteYn} eq 'y'">삭제</option>
                                             <option value="n" th:selected="${course.deleteYn} eq 'n'">생성</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                        <button type="submit" class="btn btn-primary" >상태 변경</button>
                                     </form>
                                 </td>
                                 <td>

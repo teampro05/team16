@@ -27,7 +27,7 @@
                 <div class="owl-carousel owl-theme s_Product_carousel swiper-wrapper">
                     <div class="swiper-slide" th:each="file, status : ${fileList}">
                         <img class="title-img"
-                             th:src="@{/upload/} + ${file.savefile}">
+                             th:src="|@{/upload/} + ${file.savefile}|">
                     </div>
                 </div>
             </div>
@@ -37,11 +37,12 @@
                     <h5>[[${Tbook.fileBoard.price}]]원</h5>
                     <ul>
                         <li>
-                            <div class="d-flex justify-content-end mt-5">
-<!--									th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">-->
-                                <a th:href="@{/Tbook/TbookUpdate(no=${Tbook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                                <a th:href="@{/Tbook/TbookDelete(no=${Tbook.fileBoard.no})}" class="btn btn-danger">삭제</a>
-                            </div>
+                            <th:block sec:authorize="hasAuthority('ADMIN')">
+                                <div class="btn-team">
+                                    <a th:href="@{/Tbook/TbookUpdate(no=${Tbook.fileBoard.no})}" class="btn1 right1">수정</a>
+                                    <a th:href="@{/Tbook/TbookDelete(no=${Tbook.fileBoard.no})}" class="btn2 right1">삭제</a>
+                                </div>
+                            </th:block>
                         </li>
                     </ul>
                 </div>

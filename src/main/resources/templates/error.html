@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알림창</title>
+</head>
+<body>
+<script th:inline="javascript">
+    var msg = [[${msg}]]
+    var url = [[${url}]]
+
+    if(url == 1){
+        window.close();
+        opener.location.reload()
+    } else {
+        alert(msg);
+        location.href = url;
+    }
+
+</script>
+</body>
+</html>
+

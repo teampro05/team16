@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>토익 교재</title>
+    <title>토익 교재 등록하기</title>
     <th:block th:replace="/include/adminhead :: head"></th:block>
 
     <!-- jQuery -->
@@ -19,9 +19,11 @@
     <div class="container-fluid page-body-wrapper">
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/admin/userList}"> HOME </a> > <a th:href="@{/admin/TbookList}"> 토익 </a> &gt; <span> 등록하기 </span></p>
+            </div>
             <div class="content-wrapper">
-                <h1>관리자페이지</h1>
-                <h2>초등 교재 등록</h2>
+                <h1>토익 교재 등록하기</h1>
                 <div class="card p-3">
                     <form th:action="@{/admin/Tbook/fileUpload}" method="post" style="width:600px;margin:15px auto;" enctype="multipart/form-data">
                         <div class="form-group">
@@ -90,10 +92,6 @@
         </div>
     </div>
     <footer class="footer">
-        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-        </div>
     </footer>
     <!-- Datepicker Initialization -->
     <script>

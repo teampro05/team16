@@ -24,14 +24,24 @@
 
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{/}"> HOME </a> &gt; <span> 교재 </span> &gt; <span> 초등 교재 </span></p>
+                <p><a th:href="@{/admin/userList}"> HOME </a> > <span> 초등 교재 </span></p>
             </div>
             <div class="content-wrapper">
                 <h1>초등 교재</h1>
+                <div class="search_from" style="text-align: center">
+                    <select name="select_filter" class="select_filter">
+                        <option value="1">교재</option>
+                        <option value="2">제목</option>
+                        <option value="3">가격</option>
+                        <option value="4">출간일</option>
+                    </select>
+                    <input type="text" name="search_filter" class="search_filter">
+                </div>
                 <div class="card p-3">
                     <table class="table" id="myTable">
                         <thead class="thead-light">
                         <tr>
+                            <th>No</th>
                             <th>교재</th>
                             <th>제목</th>
                             <th>내용</th>
@@ -42,6 +52,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="Ebook, status : ${EbookList}">
+                            <td th:text="${status.count}"></td>
                             <td style="width: 250px;">
                                 <th:block th:if="${Ebook != null}">
                                     <img style="max-width: 300px; height: auto" class="pro-img" th:src="@{/upload/} + ${Ebook.fileList[0].savefile}">
@@ -74,9 +85,11 @@
                         </tr>
                         </tbody>
                     </table>
-                    <!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                    <a th:href="@{/admin/Ebook/fileUpload}" class="btn btn-primary">작성</a>
-                    <!--        </th:block>-->
+                    <div>
+                        <!--        <th:block sec:authorize="hasAuthority('ADMIN')">-->
+                        <a th:href="@{/admin/Ebook/fileUpload}" class="btn btn-primary">작성</a>
+                        <!--        </th:block>-->
+                    </div>
                 </div>
             </div>
                 </div>

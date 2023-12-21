@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <th:block th:replace="/include/adminhead :: head"></th:block>
-  <title>관리자페이지: 공지사항 등록하기</title>
+  <title>공지사항 등록하기</title>
 </head>
 <body>
 <div class="container-scroller">
@@ -13,8 +13,11 @@
     <th:block th:replace="/include/adminheader :: header"></th:block>
 
     <div class="main-panel">
+      <div class="breadcrumb">
+        <p><a th:href="@{/admin/userList}"> HOME </a> > <a th:href="@{/admin/notice_Admin}"> 공지사항 </a> > <span> 등록하기 </span></p>
+      </div>
       <div class="content-wrapper">
-        <h1>공지등록</h1>
+        <h1>공지사항 등록하기</h1>
         <div class="card p-3">
           <form th:action="@{/admin/noticeAdd_Admin}" method="post" class="text-center mb-3 was-validated">
             <div class="form-group">
@@ -30,8 +33,8 @@
             </div>
 
             <div class="form-group">
-              <button type="submit" class="btn1 right1"> 등록하기 </button>
-              <a class="btn1 right1" th:href="@{/admin/notice_Admin}"> 목록으로</a>
+              <button type="submit" class="btn btn-primary"> 등록하기 </button>
+              <a class="btn btn-success" th:href="@{/admin/notice_Admin}"> 목록으로</a>
 
             </div>
           </form>

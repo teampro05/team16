@@ -14,7 +14,7 @@
 </div>
 <section class="table-list">
     <div class="container">
-        <h2>강좌목록</h2>
+        <h2 class="con-title">강좌목록</h2>
         <div class="search_from" style="text-align: center">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
@@ -53,6 +53,9 @@
             </th:block>
             </tbody>
         </table>
+        <th:block sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin/courseInsert}" class="btn1 center1">글쓰기</a>
+        </th:block>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>
