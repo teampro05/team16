@@ -1,5 +1,6 @@
 package com.pro06.repository;
 
+import com.pro06.entity.Ebook;
 import com.pro06.entity.Tbook;
 import com.pro06.entity.TbookImg;
 import org.apache.ibatis.annotations.Mapper;
@@ -10,6 +11,8 @@ import java.util.List;
 public interface TbookRepository {
 
     List<Tbook> TbookList(); // 토익 교재 리스트
+    List<Tbook> admTbookList(); // 초등 교재 리스트, 관리자 용
+    int tbookDelRec(Tbook tbook);  // 초등 교재 삭제, 복구 기능
     Tbook getTbook(Integer no); // 토익 교재 상세
     int insertTbook(Tbook tbook); // 토익 교재 추가
     int updateTbook(Tbook tbook); // 토익 교재 수정

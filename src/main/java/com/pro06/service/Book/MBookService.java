@@ -1,6 +1,7 @@
 package com.pro06.service.Book;
 
 import com.pro06.dto.MbookVO;
+import com.pro06.entity.Ebook;
 import com.pro06.entity.Mbook;
 import com.pro06.entity.MbookImg;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface MBookService {
 
     public List<Mbook> MbookList(); // 중학 교재 리스트
+    List<Mbook> admMbookList(); // 초등 교재 리스트, 관리자 용
+    int mbookDelRec(Mbook mbook);  // 초등 교재 삭제, 복구 기능
     public Mbook getMbook(Integer no); // 중학 교재 상세
     public int insertMbook(Mbook mbook); // 중학 교재 추가
     public int updateMbook(Mbook mbook); // 중학 교재 수정

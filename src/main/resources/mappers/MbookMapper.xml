@@ -24,6 +24,11 @@
     Mbook latestFileboard() throws Exception;
 -->
     <select id="MbookList" resultType="com.pro06.entity.Mbook">
+        select * from mbook where deleteyn='n' order by no desc
+    </select>
+
+    <!-- admin 용 ebookList -->
+    <select id="admMbookList" resultType="com.pro06.entity.Mbook">
         select * from mbook order by no desc
     </select>
 
@@ -32,7 +37,7 @@
     </select>
 
     <insert id="insertMbook">
-        insert into mbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into mbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <update id="updateMbook">
@@ -46,7 +51,7 @@
 <!--    //////////////////////////////////////////////////////     -->
 
     <insert id="fileBoardInsert">
-        insert into mbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into mbook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <insert id="fileInsert">
@@ -64,6 +69,13 @@
     <select id="getFileGroupList" resultType="com.pro06.entity.MbookImg">
         select * from mbookImg where Mbno=#{Mbno}
     </select>
+
+    <update id="mbookDelRec">
+        update mbook
+        set deleteyn = #{deleteyn}
+        where no = #{no};
+    </update>
+
 
     <delete id="fileBoardDelete">
         delete from mbook where no=#{no}

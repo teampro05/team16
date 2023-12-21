@@ -19,4 +19,5 @@ public class Mbook {
     private String servecontent; // 요약 내용
     private Integer price; // 가격
     private String publish; // 출간일
+    private String deleteyn; // 삭제 여부
 }

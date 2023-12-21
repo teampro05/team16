@@ -2,10 +2,7 @@ package com.pro06.service.Book;
 
 
 import com.pro06.dto.HbookVO;
-import com.pro06.entity.Hbook;
-import com.pro06.entity.HbookImg;
-import com.pro06.entity.Mbook;
-import com.pro06.entity.MbookImg;
+import com.pro06.entity.*;
 import com.pro06.repository.HbookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +14,16 @@ public class HBookServiceImpl implements HBookService {
 
     @Autowired
     private HbookRepository hbookRepository;
+
+    @Override
+    public List<Hbook> admHbookList() {
+        return hbookRepository.admHbookList();
+    }
+
+    @Override
+    public int hbookDelRec(Hbook hbook) {
+        return hbookRepository.hbookDelRec(hbook);
+    }
 
     @Override
     public List<Hbook> HbookList() {

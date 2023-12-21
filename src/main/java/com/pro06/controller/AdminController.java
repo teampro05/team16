@@ -626,7 +626,7 @@ public class AdminController {
 
     @GetMapping("EbookList")
     public String EbookList(Model model) throws Exception{
-        List<Ebook> ebookList = eBookService.EbookList();
+        List<Ebook> ebookList = eBookService.admEbookList();
 
         List<EbookVO> voList = new ArrayList<>();
         for (Ebook ebook:ebookList) {
@@ -719,6 +719,13 @@ public class AdminController {
         return "redirect:/admin/EbookList";
     }
 
+    @PostMapping("EbookDelRec")  // 삭제, 복구
+    public String EbookDelRec(Ebook ebook) {
+        eBookService.ebookDelRec(ebook);
+        return "redirect:/admin/EbookList";
+    }
+
+/*
     @GetMapping("EbookDelete")
     public String EbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
 
@@ -736,6 +743,7 @@ public class AdminController {
         int ck = eBookService.removeFileboard(postNo);
         return "redirect:/admin/EbookList";
     }
+*/
 
     // 수정 폼 이동
     @GetMapping("EbookUpdate")
@@ -844,7 +852,7 @@ public class AdminController {
 
     @GetMapping("MbookList")
     public String MbookList(Model model) throws Exception{
-        List<Mbook> mbookList = mBookService.MbookList();
+        List<Mbook> mbookList = mBookService.admMbookList();
 
         List<MbookVO> voList = new ArrayList<>();
         for (Mbook mbook:mbookList) {
@@ -936,7 +944,13 @@ public class AdminController {
         return "redirect:/admin/MbookList";
     }
 
-    @GetMapping("MbookDelete")
+    @PostMapping("MbookDelRec")  // 삭제, 복구
+    public String MbookDelRec(Mbook book) {
+        mBookService.mbookDelRec(book);
+        return "redirect:/admin/MbookList";
+    }
+
+/*    @GetMapping("MbookDelete")
     public String MbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
 
         //실제 파일 삭제 로직
@@ -952,7 +966,7 @@ public class AdminController {
         //데이터베이스의 파일 자료실과 파일의 내용 삭제
         int ck = mBookService.removeFileboard(postNo);
         return "redirect:/admin/MbookList";
-    }
+    }*/
 
     // 수정 폼 이동
     @GetMapping("MbookUpdate")
@@ -1061,7 +1075,7 @@ public class AdminController {
 
     @GetMapping("HbookList")
     public String HbookList(Model model) throws Exception{
-        List<Hbook> hbookList = hBookService.HbookList();
+        List<Hbook> hbookList = hBookService.admHbookList();
 
         List<HbookVO> voList = new ArrayList<>();
         for (Hbook hbook:hbookList) {
@@ -1153,7 +1167,13 @@ public class AdminController {
         return "redirect:/admin/HbookList";
     }
 
-    @GetMapping("HbookDelete")
+    @PostMapping("HbookDelRec")  // 삭제, 복구
+    public String HbookDelRec(Hbook book) {
+        hBookService.hbookDelRec(book);
+        return "redirect:/admin/HbookList";
+    }
+
+    /*@GetMapping("HbookDelete")
     public String HbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
 
         //실제 파일 삭제 로직
@@ -1169,7 +1189,7 @@ public class AdminController {
         //데이터베이스의 파일 자료실과 파일의 내용 삭제
         int ck = hBookService.removeFileboard(postNo);
         return "redirect:/admin/HbookList";
-    }
+    }*/
 
     // 수정 폼 이동
     @GetMapping("HbookUpdate")
@@ -1278,7 +1298,7 @@ public class AdminController {
 
     @GetMapping("TbookList")
     public String TbookList(Model model) throws Exception{
-        List<Tbook> tbookList = tBookService.TbookList();
+        List<Tbook> tbookList = tBookService.admTbookList();
 
         List<TbookVO> voList = new ArrayList<>();
         for (Tbook tbook:tbookList) {
@@ -1370,7 +1390,13 @@ public class AdminController {
         return "redirect:/admin/TbookList";
     }
 
-    @GetMapping("TbookDelete")
+    @PostMapping("TbookDelRec")  // 삭제, 복구
+    public String tbookDelRec(Tbook book) {
+        tBookService.tbookDelRec(book);
+        return "redirect:/admin/TbookList";
+    }
+
+    /*@GetMapping("TbookDelete")
     public String TbookDelete(@RequestParam("no") Integer postNo, HttpServletRequest req) throws Exception {
 
         //실제 파일 삭제 로직
@@ -1386,7 +1412,7 @@ public class AdminController {
         //데이터베이스의 파일 자료실과 파일의 내용 삭제
         int ck = tBookService.removeFileboard(postNo);
         return "redirect:/admin/TbookList";
-    }
+    }*/
 
     // 수정 폼 이동
     @GetMapping("TbookUpdate")
