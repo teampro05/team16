@@ -147,7 +147,7 @@ CREATE TABLE EbookImg(
 	originfile VARCHAR(400),
 	savefile VARCHAR(800),
 	filesize LONG,
-	uploaddate VARCHAR(100)
+	uploaddate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 중학 (Middle)
@@ -170,7 +170,7 @@ CREATE TABLE MbookImg(
 	originfile VARCHAR(400),
 	savefile VARCHAR(800),
 	filesize LONG,
-	uploaddate VARCHAR(100)
+	uploaddate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 수능 (High)
@@ -193,7 +193,7 @@ CREATE TABLE HbookImg(
 	originfile VARCHAR(400),
 	savefile VARCHAR(800),
 	filesize LONG,
-	uploaddate VARCHAR(100)
+	uploaddate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 토익 (Toeic)
@@ -216,5 +216,5 @@ CREATE TABLE TbookImg(
 	originfile VARCHAR(400),
 	savefile VARCHAR(800),
 	filesize LONG,
-	uploaddate VARCHAR(100)
+	uploaddate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
