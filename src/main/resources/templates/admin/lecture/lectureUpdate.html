@@ -50,8 +50,8 @@
 
                         <div class="form-group">
                             <label for="content" class="form-label">내용</label>
-                            <input type="text" name="content" id="content" class="form-control"
-                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="1000" th:value="${lecDto.content}" required>
+                            <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" cols="100" rows="10" maxlength="500" required>[[${lecDto.content}]]</textarea>
+                            <div class="textCount"><span>0</span>/500</div>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
                             </div>
@@ -128,3 +128,27 @@
 
 </body>
 </html>
+<script>
+    $('#content').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length == 0 || content == '') {
+            $('.textCount span').text('0');
+        } else {
+            $('.textCount span').text(content.length);
+        }
+
+        if (content.length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            alert('글자수는 500자까지 입력 가능합니다.');
+        }
+    });
+
+    $('#title').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length > 50) {
+            alert('글자수는 50자까지 입력 가능합니다.');
+        }
+    });
+</script>

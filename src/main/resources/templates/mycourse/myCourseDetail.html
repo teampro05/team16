@@ -11,21 +11,37 @@
 <th:block th:replace="include/header :: header" ></th:block>
 <section class="table-list">
     <div class="container">
-        <h2>강좌 상세</h2>
-        <ul>
-            <li>강좌 이름 : [[${course.title}]]</li>
-            <li>작성자 : [[${course.id}]]</li>
-            <li>현재수강인원 : [[${course.peo}]]</li>
-            <li>최대수강인원 : [[${course.peo_max}]]</li>
-        </ul>
+        <h2 class="con-title">강좌 상세</h2>
+        <table class="List-table">
+            <tbody>
+            <tr>
+                <th>강좌 이름</th>
+                <td style="max-width: 400px; overflow: hidden;">[[${course.title}]]</td>
+                <td style="border-bottom: none;"></td>
+            </tr>
+            <tr>
+                <th>현재수강인원</th>
+                <td>[[${course.peo}]]</td>
+                <td style="border-bottom: none;"></td>
+            </tr>
+            <tr>
+                <th>최대수강인원</th>
+                <td>[[${course.peo_max}]]</td>
+                <td style="border-bottom: none;"></td>
+            </tr>
+            </tbody>
+        </table>
         <br>
-
-        <h2>강의 목록</h2>
-        <ul>
-            <li th:text="'강의 수 : ' + ${lectureList.size()}"></li>
-            <li th:text="'수강완료 : ' + ${yCnt}"></li>
-            <li th:text="'수강중 : ' + ${lectureList.size() - yCnt}"></li>
-        </ul>
+        <h2 class="con-title">강의 목록</h2>
+        <table class="List-table">
+            <tbody>
+                <tr>
+                    <th th:text="'강의 수 : ' + ${lectureList.size()}"></th>
+                    <th th:text="'수강완료 : ' + ${yCnt}"></th>
+                    <th th:text="'수강중 : ' + ${lectureList.size() - yCnt}"></th>
+                </tr>
+            </tbody>
+        </table>
         <div class="search_from" style="text-align: center">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
@@ -37,7 +53,7 @@
             <tr>
                 <th>No</th>
                 <th>제목</th>
-                <th></th>
+                <th>수강상태</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -47,15 +63,6 @@
                 <tr>
                     <td th:text="${status.count}"></td>
                     <td><span class="title" th:text="${lecture.title}"></span></td>
-                    <td><a href="javascript:void(0);"
-                           th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a></td>
-                    <td>
-                        <!-- 강의를 다 보고 시험을 보지않은 경우 -->
-                        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'n'}">
-                            <a href="javascript:void(0);"
-                               th:onclick="'openLecTest(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">시험보기</a>
-                        </th:block>
-                    </td>
                     <td>
                         <!-- 강의를 다 보지 않았거나 시험을 보지않은 경우 -->
                         <th:block th:if="${stateList.get(status.index) eq 'n' or ansList.get(status.index) eq 'n'}">
@@ -65,6 +72,15 @@
                         <!-- 강의와 시험을 다 한 경우 -->
                         <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'y'}">
                             <span>수강완료</span>
+                        </th:block>
+                    </td>
+                    <td><a href="javascript:void(0);"
+                           th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a></td>
+                    <td>
+                        <!-- 강의를 다 보고 시험을 보지않은 경우 -->
+                        <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'n'}">
+                            <a href="javascript:void(0);"
+                               th:onclick="'openLecTest(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">시험보기</a>
                         </th:block>
                     </td>
                 </tr>
@@ -106,12 +122,12 @@
         }
 
         let windowname = "강의 플레이어";
-        let intWidth = 1150;
-        let intHeight = 720;
+        let intWidth = 1300;
+        let intHeight = 920;
         let intXOffset = 0;
         let intYOffset = 0;
 
-        let obwindow = window.open('', windowname, "toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no");
+        let obwindow = window.open('', windowname, "toolbar=no, location=no, directories=no, status=no, menubar=no, resizable=no, scrollbar=no");
         form.target = windowname;
         document.body.appendChild(form);
         form.submit();

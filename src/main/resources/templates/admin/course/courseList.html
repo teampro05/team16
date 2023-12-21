@@ -41,6 +41,7 @@
                         <tr>
                             <th>No</th>
                             <th>제목</th>
+                            <th>학년</th>
                             <th>수강현황</th>
                             <th>작성자</th>
                             <th>등록일</th>
@@ -53,7 +54,8 @@
                         <th:block th:each="course, status : ${courseList}">
                             <tr>
                                 <td th:text="${status.count}"></td>
-                                <td th:text="${course.title}"></td>
+                                <td th:text="${course.title}" style="max-width: 200px; overflow: hidden;"></td>
+                                <td th:text="${course.level}"></td>
                                 <td th:text="${course.peo} + '/' + ${course.peo_max}"></td>
                                 <td th:text="${course.id}"></td>
                                 <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>

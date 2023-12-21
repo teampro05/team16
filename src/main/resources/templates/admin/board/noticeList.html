@@ -49,7 +49,7 @@
                             <th:block th:each="noticeList, notice : ${noticeList}">
                                 <tr>
                                     <td>[[${notice.count}]]</td>
-                                    <td><a th:href="@{/admin/noticeGet_Admin(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
+                                    <td style="max-width: 200px; overflow: hidden;"><a th:href="@{/admin/noticeGet_Admin(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
                                     <td>[[${noticeList.author}]]</td>
                                     <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                                 </tr>

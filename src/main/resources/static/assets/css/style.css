@@ -2754,18 +2754,7 @@ canvas {
 
 /* 버튼 */
 .btn1 {
-  color: #fff;
-  background: var(--main);
-  padding: 10px 20px;
-  display: inline-block;
-  border: none;
-  margin-left: 10px;
-  width: 120px;
-  border-radius: 4px;
-  text-align: center;
-}
-.btn1 {
-  color: #fff;
+  color: var(--white);
   background: var(--main);
   padding: 10px 20px;
   display: inline-block;
@@ -2777,7 +2766,7 @@ canvas {
 }
 
 .btn2 {
-  color: #fff;
+  color: var(--white);
   background: var(--hover);
   padding: 10px 20px;
   display: inline-block;
@@ -2794,20 +2783,21 @@ canvas {
   color: var(--white);
   background: var(--dan);
 }
+
+
 .check_btn:hover {
   cursor: pointer;
   text-decoration: none;
   color: var(--white);
-  background: var(--dan);
+  background: var(--hover);
 }
+
 .login-btn:hover {
   cursor: pointer;
   text-decoration: none;
   color: var(--white);
-  background: var(--dan);
+  background: var(--hover);
 }
-
-
 
 .btn1:hover {
   cursor: pointer;

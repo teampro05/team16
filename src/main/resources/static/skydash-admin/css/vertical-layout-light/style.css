@@ -10672,6 +10672,11 @@ textarea.tt-hint {
   margin-bottom: 1rem;
 }
 
+.btn-team {
+    padding-right: 16rem;
+    margin-top: 8rem;
+}
+
 .form-text {
   display: block;
   margin-top: 0.25rem;
@@ -26168,7 +26173,7 @@ body.avgrund-active {
   border-radius: 4px;
 }
 
-.dataTables_wrapper .dataTable .btn, .dataTables_wrapper .dataTable .fc button, .fc .dataTables_wrapper .dataTable button, .dataTables_wrapper .dataTable .ajax-upload-dragdrop .ajax-file-upload, .ajax-upload-dragdrop .dataTables_wrapper .dataTable .ajax-file-upload, .dataTables_wrapper .dataTable .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .dataTables_wrapper .dataTable .swal2-styled, .dataTables_wrapper .dataTable .wizard > .actions a, .wizard > .actions .dataTables_wrapper .dataTable a {
+.dataTables_wrapper .dataTable .fc button, .fc .dataTables_wrapper .dataTable button, .dataTables_wrapper .dataTable .ajax-upload-dragdrop .ajax-file-upload, .ajax-upload-dragdrop .dataTables_wrapper .dataTable .ajax-file-upload, .dataTables_wrapper .dataTable .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .dataTables_wrapper .dataTable .swal2-styled, .dataTables_wrapper .dataTable .wizard > .actions a, .wizard > .actions .dataTables_wrapper .dataTable a {
   padding: 0.1rem 1rem;
   vertical-align: top;
 }
@@ -26201,9 +26206,9 @@ body.avgrund-active {
 .dataTables_wrapper .dataTable thead .sorting_desc:before,
 .dataTables_wrapper .dataTable thead .sorting_asc_disabled:before,
 .dataTables_wrapper .dataTable thead .sorting_desc_disabled:before {
-  content: "\e64b";
   right: 1.2em;
-  bottom: 0;
+    top: 0;
+  font-size: 14px;
 }
 
 .dataTables_wrapper .dataTable thead .sorting:after,
@@ -26211,9 +26216,9 @@ body.avgrund-active {
 .dataTables_wrapper .dataTable thead .sorting_desc:after,
 .dataTables_wrapper .dataTable thead .sorting_asc_disabled:after,
 .dataTables_wrapper .dataTable thead .sorting_desc_disabled:after {
-  content: "\e648";
   right: 1.2em;
-  top: 0;
+    bottom: 0;
+  font-size: 14px;
 }
 
 .dataTables_wrapper .dataTables_paginate {
@@ -30623,4 +30628,12 @@ div.tagsinput span.tag a {
 .admin-p {
     font-size: 0.775rem;
     margin-bottom: 0.5rem;
+}
+
+.main-panel h1, h2{
+    margin-bottom: 2rem;
+}
+
+.textCount{
+    float: right;
 }
