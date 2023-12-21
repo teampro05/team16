@@ -1,6 +1,7 @@
 package com.pro06.service.Book;
 
 import com.pro06.dto.MbookVO;
+import com.pro06.entity.Ebook;
 import com.pro06.entity.Mbook;
 import com.pro06.entity.MbookImg;
 import com.pro06.repository.MbookRepository;
@@ -14,6 +15,16 @@ public class MBookServiceImpl implements MBookService {
 
     @Autowired
     private MbookRepository mbookRepository;
+
+    @Override
+    public List<Mbook> admMbookList() {
+        return mbookRepository.admMbookList();
+    }
+
+    @Override
+    public int mbookDelRec(Mbook mbook) {
+        return mbookRepository.mbookDelRec(mbook);
+    }
 
     @Override
     public List<Mbook> MbookList() {

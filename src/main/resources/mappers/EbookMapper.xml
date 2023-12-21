@@ -23,6 +23,11 @@
     EbookImg thmbn(int no) throws Exception;
 -->
     <select id="EbookList" resultType="com.pro06.entity.Ebook">
+        select * from ebook where deleteyn='n' order by no desc
+    </select>
+
+    <!-- admin 용 ebookList -->
+    <select id="admEbookList" resultType="com.pro06.entity.Ebook">
         select * from ebook order by no desc
     </select>
 
@@ -31,7 +36,7 @@
     </select>
 
     <insert id="insertEbook">
-        insert into ebook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into ebook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <update id="updateEbook">
@@ -45,7 +50,7 @@
 <!--    //////////////////////////////////////////////////////     -->
 
     <insert id="fileBoardInsert">
-        insert into ebook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish})
+        insert into ebook values (default, #{id}, #{title}, #{content}, #{servecontent}, #{price}, #{publish}, default)
     </insert>
 
     <insert id="fileInsert">
@@ -63,6 +68,12 @@
     <select id="getFileGroupList" resultType="com.pro06.entity.EbookImg">
         select * from ebookImg where Ebno=#{Ebno}
     </select>
+
+    <update id="ebookDelRec">
+        update ebook
+        set deleteyn = #{deleteyn}
+        where no = #{no};
+    </update>
 
     <delete id="fileBoardDelete">
         delete from ebook where no=#{no}

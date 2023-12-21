@@ -135,7 +135,8 @@ CREATE TABLE Ebook(
 	content VARCHAR(2000), -- 내용
 	servecontent VARCHAR(1000), -- 요약 내용
 	price INT DEFAULT 10, -- 가격
-	publish VARCHAR(50)
+	publish VARCHAR(50),
+	deleteyn VARCHAR(10) DEFAULT 'n'
 );
 
 -- 초등 교재 이미지
@@ -157,7 +158,8 @@ CREATE TABLE Mbook(
 	content VARCHAR(2000), -- 내용
 	servecontent VARCHAR(1000), -- 요약 내용
 	price INT DEFAULT 10, -- 가격
-	publish VARCHAR(50)
+	publish VARCHAR(50),
+	deleteyn VARCHAR(10) DEFAULT 'n'
 );
 
 -- 중학 교재 이미지
@@ -179,7 +181,8 @@ CREATE TABLE Hbook(
 	content VARCHAR(2000), -- 내용
 	servecontent VARCHAR(1000), -- 요약 내용
 	price INT DEFAULT 10, -- 가격
-	publish VARCHAR(50)
+	publish VARCHAR(50),
+	deleteyn VARCHAR(10) DEFAULT 'n'
 );
 
 -- 수능 교재 이미지
@@ -201,7 +204,8 @@ CREATE TABLE Tbook(
 	content VARCHAR(2000), -- 내용
 	servecontent VARCHAR(1000), -- 요약 내용
 	price INT DEFAULT 10, -- 가격
-	publish VARCHAR(50)
+	publish VARCHAR(50),
+	deleteyn VARCHAR(10) DEFAULT 'n'
 );
 
 -- 토익 교재 이미지

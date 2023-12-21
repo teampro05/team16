@@ -9,6 +9,8 @@ import java.util.List;
 public interface EBookService {
 
     public List<Ebook> EbookList(); // 초등 교재 리스트
+    List<Ebook> admEbookList(); // 초등 교재 리스트, 관리자 용
+    int ebookDelRec(Ebook ebook);  // 초등 교재 삭제, 복구 기능
     public Ebook getEbook(Integer no); // 초등 교재 상세
     public int insertEbook(Ebook ebook); // 초등 교재 추가
     public int updateEbook(Ebook ebook); // 초등 교재 수정

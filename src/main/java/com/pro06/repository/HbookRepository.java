@@ -1,5 +1,6 @@
 package com.pro06.repository;
 
+import com.pro06.entity.Ebook;
 import com.pro06.entity.Hbook;
 import com.pro06.entity.HbookImg;
 import org.apache.ibatis.annotations.Mapper;
@@ -10,6 +11,8 @@ import java.util.List;
 public interface HbookRepository {
 
     List<Hbook> HbookList(); // 수능 교재 리스트
+    List<Hbook> admHbookList(); // 초등 교재 리스트, 관리자 용
+    int hbookDelRec(Hbook hbook);  // 초등 교재 삭제, 복구 기능
     Hbook getHbook(Integer no); // 수능 교재 상세
     int insertHbook(Hbook hbook); // 수능 교재 추가
     int updateHbook(Hbook hbook); // 수능 교재 수정

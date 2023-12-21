@@ -47,6 +47,7 @@
                             <th>내용</th>
                             <th>가격</th>
                             <th>출간일</th>
+                            <th>삭제여부</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -77,9 +78,21 @@
                             </td>
 
                             <td>
+                                <form th:action="@{/admin/EbookDelRec(no=${Ebook.fileBoard.no})}" method="post">
+                                    <select name="deleteyn" id="deleteyn" class="select-box">
+                                        <option value="y" th:selected="${Ebook.fileBoard.deleteyn} eq 'y'">삭제</option>
+                                        <option value="n" th:selected="${Ebook.fileBoard.deleteyn} eq 'n'">생성</option>
+                                    </select>
+                                    <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                </form>
+                            </td>
+
+                            <td>
                                 <!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
-                                <a th:href="@{/admin/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
-                                <a th:href="@{/admin/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>
+                                <th:block th:if="${Ebook.fileBoard.deleteyn} eq 'n'">
+                                    <a th:href="@{/admin/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                                </th:block>
+<!--                                <a th:href="@{/admin/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn btn-danger">삭제</a>-->
                                 <!--                    </th:block>-->
                             </td>
                         </tr>
