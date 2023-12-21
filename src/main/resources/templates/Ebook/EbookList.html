@@ -10,12 +10,29 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+
 <div class="breadcrumb">
     <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Ebook/EbookList}"> 초등 교재 </a></p>
 </div>
+
+<section class="blog-banner-area" id="category" style="background: #fff9d6">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>초등 교재</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">원하는 물건을 찾거나 파는 즐거움을 느껴보세요!</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="table-list">
     <div class="container">
-        <h2 class="con-title"> 초등 교재 </h2>
+        <h2 class="con-title">  </h2>
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
