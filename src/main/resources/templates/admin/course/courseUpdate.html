@@ -74,8 +74,9 @@
 
                         <div class="form-group">
                             <label for="content">내용</label>
-                            <input type="text" name="content" id="content" class="form-control" pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]*$"
-                                   maxlength="1000" th:value="${dto.content}" required>
+                            <textarea type="text" name="content" id="content" class="form-control"
+                                      pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]*$" maxlength="500" cols="100" rows="10" required>[[${dto.content}]]</textarea>
+                            <div class="textCount"><span>0</span>/500</div>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
                             </div>

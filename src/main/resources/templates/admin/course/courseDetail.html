@@ -28,13 +28,41 @@
             <div class="content-wrapper">
                 <h1>강좌 상세보기</h1>
                 <hr style="border-top: 1px solid #333">
+                <br>
 
-                <ul>
-                    <li><span th:text="'강좌 이름 : ' + ${course.title}"></span></li>
-                    <li><span th:text="'작성자 :  ' + ${course.id}"></span></li>
-                    <li><span th:text="'현재수강인원 : ' + ${course.peo}"></span></li>
-                    <li><span th:text="'최대수강인원 : ' + ${course.peo_max}"></span></li>
-                </ul>
+                <table class="table table-bordered mx-3">
+                    <colgroup>
+                        <col style="width:10%;">
+                        <col style="width:30%;">
+                    </colgroup >
+                    <tbody style="border: 1px solid var(--back);">
+                    <tr>
+                        <th class="text-center">제목</th>
+                        <td th:text="${course.title}"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">작성자</th>
+                        <td th:text="${course.id}"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">현재수강인원</th>
+                        <td th:text="${course.peo}"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center">최대수강인원</th>
+                        <td th:text="${course.peo_max}"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
                 <hr style="border-top: 1px solid #333">
 
                 <div class="card p-3">

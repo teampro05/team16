@@ -11,7 +11,7 @@
 <th:block th:replace="include/header :: header" ></th:block>
 <section class="table-list">
     <div class="container">
-        <h2>내 강좌 목록</h2>
+        <h2 class="con-title">내 강좌 목록</h2>
         <div class="search_from" style="text-align: center">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
@@ -32,7 +32,7 @@
             <th:block th:each="myCourse, status : ${myCourseList}">
                 <tr>
                     <td th:text="${status.count}"></td>
-                    <td th:text="${myCourse.getCourse().title}"></td>
+                    <td style="max-width: 200px; overflow: hidden;" th:text="${myCourse.getCourse().title}"></td>
                     <td th:text="${myCourse.getCourse().level}"></td>
                     <td><a th:href="@{/mycourse/detail(no=${myCourse.getCourse().no})}">강좌보기</a></td>
                 </tr>

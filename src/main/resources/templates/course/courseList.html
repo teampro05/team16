@@ -38,7 +38,7 @@
             <th:block th:each="course, status : ${courseList}">
                 <tr>
                     <td th:text="${status.count}"></td>
-                    <td><a th:href="@{/course/detail(no=${course.no})}" th:text="${course.title}"></a></td>
+                    <td style="max-width: 200px; overflow: hidden;"><a th:href="@{/course/detail(no=${course.no})}" th:text="${course.title}"></a></td>
                     <td th:text="${course.level}"></td>
                     <td th:text="${course.peo} + '/' + ${course.peo_max}"></td>
                     <td th:text="${#temporals.format(course.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
