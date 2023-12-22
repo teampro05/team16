@@ -28,7 +28,7 @@
                 <div class="owl-carousel owl-theme s_Product_carousel swiper-wrapper">
                     <div class="swiper-slide" th:each="file, status : ${fileList}">
                         <img class="title-img"
-                             th:src="|@{/upload/} + ${file.savefile}|">
+                             th:src="@{/upload/} + ${file.savefile}">
                     </div>
                 </div>
             </div>

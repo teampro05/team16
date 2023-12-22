@@ -1,6 +1,7 @@
 package com.pro06.service.course;
 
 import com.pro06.dto.course.CourseDto;
+import com.pro06.dto.course.CourseVideoDto;
 import com.pro06.entity.course.Course;
 import com.pro06.repository.course.CourseRepository;
 import jakarta.transaction.Transactional;
@@ -22,9 +23,10 @@ public class CourseServiceImpl {
     private ModelMapper modelMapper;
     
     // 강좌 등록
-    public void courseInsert(CourseDto courseDto) {
+    public CourseDto courseInsert(CourseDto courseDto) {
         Course course = modelMapper.map(courseDto, Course.class);
-        courseRepository.save(course);
+        Course res = courseRepository.save(course);
+        return modelMapper.map(res, CourseDto.class);
     }
 
     // 강좌 수정

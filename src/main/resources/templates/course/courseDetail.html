@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강좌 상세보기</title>
     <th:block th:replace="include/head :: head" ></th:block>
+    <!-- video.js api 가져오기 -->
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
@@ -14,6 +16,30 @@
 </div>
 <section class="table-list">
     <div class="container">
+        <div style="width: 777px; height: 500px; margin: 0 auto; text-align: center">
+            <th:block th:if="${cvd} ne null">
+                    <h3 class="con-title" style="margin-top: 5rem">O.T</h3>
+                    <video
+                            id="my-video"
+                            class="video-js"
+                            controls
+                            preload="auto"
+                            width="700"
+                            height="450"
+                            data-setup="{}"
+                    >
+                        <source th:src="@{/upload/} + ${cvd.savefile}" type="video/mp4" />
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a
+                            web browser that
+                            <a href="https://videojs.com/html5-video-support/" target="_blank">
+                                supports HTML5 video
+                            </a>
+                        </p>
+                    </video>
+            </th:block>
+        </div>
+
         <h2 class="con-title">강좌</h2>
         <table class="List-table">
             <tbody>
@@ -64,5 +90,7 @@
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>
+<!-- video.js 스크립트 -->
+<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
 </body>
 </html>
