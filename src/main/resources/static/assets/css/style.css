@@ -589,9 +589,9 @@ section {
   overflow: hidden;
 }
 
-.section-bg {
+/*.section-bg {
   background-color: #fff9f7;
-}
+}*/
 
 .section-title {
   text-align: center;
@@ -2843,7 +2843,7 @@ canvas {
 /* breadcrumb */
 .breadcrumb {
   clear:both;
-  padding-left: 1700px;
+  padding-left: 444px;
   margin: 0 auto;
   text-align: right;
   color:var(--sub);
