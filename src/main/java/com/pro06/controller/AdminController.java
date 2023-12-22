@@ -176,9 +176,11 @@ public class AdminController {
         // 저장된 파일 정보 log 출력
         log.warn("file.toString() : " + file.toString());
 
+        Integer no = Integer.parseInt(req.getParameter("no"));
+
         // 강좌 정보 저장
         CourseDto courseDto = new CourseDto();
-        courseDto.setNo(Integer.parseInt(req.getParameter("no")));
+        courseDto.setNo(no);
         courseDto.setId(req.getParameter("id"));
         courseDto.setTitle(req.getParameter("title"));
         courseDto.setContent(req.getParameter("content"));
@@ -207,9 +209,16 @@ public class AdminController {
 
             // 파일 저장
             File saveFile = new File(uploadFolder, saveFileName);
+            
+            // 기존 파일 이름 가져오기
+            CourseVideoDto videoDto = videoService.getCourseVideo(no);
             videoService.couVdoUpdate(data);
             try {
                 file.transferTo(saveFile); // 실제 upload 위치에 파일 저장
+                File remove = new File(uploadFolder + "/" + videoDto.getSavefile());
+                if (remove.exists()) { // 해당 파일이 존재하면
+                    remove.delete(); // 파일 삭제
+                }
             } catch (IllegalStateException | IOException e) {
                 e.printStackTrace();
                 // 예외 처리
