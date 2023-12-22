@@ -11,18 +11,22 @@
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
 
-<div class="breadcrumb">
-    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Ebook/EbookList}"> 초등 교재 </a></p>
-</div>
+
 
 <section class="blog-banner-area" id="category" style="background: #fff9d6">
     <div class="container h-100">
         <div class="blog-banner">
             <div class="text-center">
                 <h1>초등 교재</h1>
-                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <nav aria-label="breadcrumb" class="banner-breadcrumb"
+                     style="line-height: 30px; text-align: center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">원하는 물건을 찾거나 파는 즐거움을 느껴보세요!</li>
+                        <li class="breadcrumb-item active" aria-current="page"
+                            style="line-height: 30px; text-align: center">
+                            초등 영단어 학습은 언어 기초를 다지는 중요한 단계입니다. <br>
+                            WordMaster는 초등학생들을 위해 쉽고 재미있는 학습 콘텐츠를 제공하여
+                            <br> 기본 어휘 습득과 발음 향상에 중점을 둡니다.
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -30,9 +34,12 @@
     </div>
 </section>
 
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Ebook/EbookList}"> 초등 교재 </a></p>
+</div>
+
 <section class="table-list">
     <div class="container">
-        <h2 class="con-title">  </h2>
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
