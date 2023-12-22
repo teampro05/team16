@@ -56,7 +56,7 @@
                             <td th:text="${status.count}"></td>
                             <td style="width: 250px;">
                                 <th:block th:if="${Ebook != null}">
-                                    <img style="height: 243px; width: 177px;" class="pro-img" th:src="@{/upload/} + 'thumbs_' + ${Ebook.fileList[0].savefile}">
+                                    <img style="height: 243px; width: 177px; border-radius: unset;" class="pro-img" th:src="@{/upload/} + 'thumbs_' + ${Ebook.fileList[0].savefile}">
                                 </th:block>
 
                             </td>
