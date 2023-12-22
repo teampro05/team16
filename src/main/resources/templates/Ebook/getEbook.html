@@ -22,13 +22,13 @@
 
 <div class="product_image_area">
     <div class="container">
-        <h2> 초등 교재 </h2>
         <div class="row s_product_inner">
-            <div class="col-lg-6 swiper mySwiper">
+            <div class="col-lg-2 swiper mySwiper">
                 <div class="owl-carousel owl-theme s_Product_carousel swiper-wrapper">
                     <div class="swiper-slide" th:each="file, status : ${fileList}">
                         <img class="title-img"
-                             th:src="|@{/upload/} + ${file.savefile}|">
+                             th:src="@{/upload/} + ${file.savefile}"
+                             style="height: 243px; width: 177px;">
                     </div>
                 </div>
             </div>
