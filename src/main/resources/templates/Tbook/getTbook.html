@@ -21,13 +21,13 @@
 </div>
 <div class="product_image_area">
     <div class="container">
-        <h2> 상세보기 </h2>
         <div class="row s_product_inner">
-            <div class="col-lg-6 swiper mySwiper">
+            <div class="col-lg-2 swiper mySwiper">
                 <div class="owl-carousel owl-theme s_Product_carousel swiper-wrapper">
                     <div class="swiper-slide" th:each="file, status : ${fileList}">
                         <img class="title-img"
-                             th:src="@{/upload/} + ${file.savefile}">
+                             th:src="@{/upload/} + ${file.savefile}"
+                             style="height: 243px; width: 177px;">
                     </div>
                 </div>
             </div>
@@ -58,10 +58,6 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                    aria-selected="false"> 교재 소개 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                   aria-selected="false"> 상세 내용 </a>
-            </li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
@@ -79,10 +75,10 @@
                         </tr>
                         <tr>
                             <td>
-                                <h5>요약 내용</h5>
+                                <h5>교재 내용</h5>
                             </td>
                             <td>
-                                <p>[[${Tbook.fileBoard.servecontent}]]</p>
+                                <p>[[${Tbook.fileBoard.content}]]</p>
                             </td>
                         </tr>
                         <tr>
@@ -107,22 +103,6 @@
                 </div>
             </div>
 		</div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <h5>교재 내용</h5>
-                        </td>
-                        <td>
-                            <p>[[${Tbook.fileBoard.content}]]</p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>
