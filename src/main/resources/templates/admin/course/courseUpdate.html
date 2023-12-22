@@ -17,7 +17,8 @@
             <div class="content-wrapper">
                 <h1>강좌 수정하기</h1>
                 <div class="card p-3">
-                    <form th:action="@{/admin/courseUpdate}" method="post" class="text-center mb-3 was-validated">
+                    <form th:action="@{/admin/courseUpdate}" method="post" enctype="multipart/form-data"
+                          class="text-center mb-3 was-validated">
                         <div class="form-group">
                             <input type="hidden" name="no" id="no" th:value="${dto.no}">
                         </div>
@@ -86,8 +87,35 @@
                         </div>
 
                         <div class="form-group">
+                            <div class="form-group">
+                                <label for="file" class="form-label">ot 영상</label>
+                                <span th:text="'이전 영상 : ' + ${cvd.originfile}"></span>
+                                <input type="file" class="file form-control" name="file"
+                                       id="file" onchange="return validation(this);"  accept="video/mp4" required>
+                                <div class="valid-feedback">
+                                    형식에 알맞습니다.
+                                </div>
+                                <div class="invalid-feedback">
+                                    파일 타입은 mp4만 가능합니다.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="peo_max">최대 수강인원</label>
                             <input type="text" name="peo_max" id="peo_max" value="10" class="form-control" maxlength="2" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="copendate" class="form-label">개강 오픈날짜</label>
+                            <input type="hidden" name="copen" id="copen" value="0" readonly>
+                            <input type="datetime-local" name="copendate" id="copendate" class="form-control" th:value="${dto.copendate}" readonly>
+                            <div class="valid-feedback">
+                                형식에 알맞습니다.
+                            </div>
+                            <div class="invalid-feedback">
+                                개강 날짜를 입력해주세요
+                            </div>
                         </div>
 
                         <div>
@@ -103,5 +131,6 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/vdoFileVali.js}"></script>
 </body>
 </html>
