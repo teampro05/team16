@@ -10,12 +10,32 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+
+<section class="blog-banner-area" id="category" style="background: #fff9d6">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>중학 교재</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"
+                            style="line-height: 30px; text-align: center">
+                            중학생들은 문맥을 이해하고 표현력을 향상시키는 데에 초점을 맞춥니다.<br>
+                            WordMaster는 다양한 주제와 상황에 관련된 어휘를 다루며,
+                            <br> 독해 능력과 어휘력을 함께 강화합니다.
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="breadcrumb">
-    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Mbook/MbookList}"> 중학 교재 </a> > <span> 수정하기 </span></p>
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Mbook/MbookList}"> 중학 교재 </a> </p>
 </div>
 <section class="table-list">
     <div class="container">
-        <h2 class="con-title"> 중학 교재 </h2>
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>

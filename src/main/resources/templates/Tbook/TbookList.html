@@ -10,12 +10,33 @@
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
+
+<section class="blog-banner-area" id="category" style="background: #fff9d6">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>토익 교재</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page"
+                        style="line-height: 30px; text-align: center">
+                            토익은 업무 영어에 필요한 어휘력이 중요합니다. <br>
+                            WordMaster는 토익 시험에서 흔히 나오는 어휘와 표현들을 다루며,
+                            <br> 비즈니스 주제를 중심으로 학습자들이 효과적으로 습득할 수 있도록 지원합니다.
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="breadcrumb">
     <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/Tbook/TbookList}">토익 교재</a></p>
 </div>
+
 <section class="table-list">
     <div class="container">
-        <h2 class="con-title"> 토익 교재 </h2>
         <div class="search_from">
             <select name="select_filter" class="select_filter">
                 <option value="1">제목</option>
