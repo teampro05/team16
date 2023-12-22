@@ -121,4 +121,22 @@ public class MyCourseController {
         model.addAttribute("stateList", stateList);
         return "mycourse/myCourseDetail";
     }
+    
+    // 질문 목록
+    @GetMapping("lecQueList")
+    public String lecQueList(@RequestParam("cno") Integer cno,
+                             @RequestParam("lno") Integer lno,
+                             Principal principal, Model model)  {
+        try{
+            String id = principal.getName();
+            List<LecQueDto> dtoList = lectureService.myLecQueList(cno, lno, id);
+            log.warn("dtoList : " + dtoList.toString());
+            model.addAttribute("dtoList", dtoList);
+            return "mycourse/myQueList";
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
+    }
+
 }
