@@ -252,6 +252,17 @@ public class LectureServiceImpl {
                 .collect(Collectors.toList());
         return dtoList;
     }
+    
+    // user 용
+    // 내 질문 목록에서 사용할 list
+    public List<LecQueDto> myLecQueList(Integer cno, Integer lno, String id) {
+        List<LecQue> lq = lecQueRepository.myLecQueList(cno, lno, id);
+//        log.warn("lq.toString : " + lq.toString());
+        List<LecQueDto> dtoList = lq.stream().map(lecQue ->
+                modelMapper.map(lecQue, LecQueDto.class))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
 
     // 질문 입력
     public LecQueDto lecQueInsert(LecQueDto lecQueDto) {

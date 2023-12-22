@@ -47,6 +47,10 @@ public class AdminController {
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
+    // 썸네일 width, height
+    Integer thWidth = 170;
+    Integer thHeight = 240;
+
     @Autowired
     private LectureServiceImpl lectureService;
 
@@ -812,7 +816,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -928,7 +932,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     //썸네일 생성 (복사할파일, 썸네일파일, 가로, 세로)
                     File thumbsname = new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1050,7 +1054,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1164,7 +1168,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
 
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
@@ -1287,7 +1291,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
 
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
@@ -1402,7 +1406,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1524,7 +1528,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                     // 예외 처리
@@ -1638,7 +1642,7 @@ public class AdminController {
                     // 썸네일 저장 위치경로 + 이름
                     // 썸네일 생성 (복사할파일위치,썸네일생성경로,가로,세로)
                     File thumbsname= new File(uploadFolder+"\\thumbs_"+saveFileName);
-                    Thumbnailator.createThumbnail(saveFile, thumbsname,150, 150);
+                    Thumbnailator.createThumbnail(saveFile, thumbsname,thWidth, thHeight);
 
                 } catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
