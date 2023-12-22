@@ -85,6 +85,10 @@ public class AdminController {
         // 강좌 상세
         CourseDto course = courseService.getCourse(no);
         model.addAttribute("course", course);
+        
+        // ot 영상 추출
+        CourseVideoDto cvd = videoService.getCourseVideo(no);
+        model.addAttribute("cvd", cvd);
 
         // 강의 목록
         List<LectureDto> lectureList = lectureService.admlectureList(no);
@@ -102,8 +106,51 @@ public class AdminController {
 
     // 강좌 생성
     @PostMapping("courseInsert")
-    public String courseInsert(CourseDto courseDto, Model model) {
-        courseService.courseInsert(courseDto);
+    public String courseInsertPro(MultipartHttpServletRequest req) {
+
+        // 입력된 파일
+        MultipartFile file = req.getFile("file");
+        // 저장된 파일 정보 log 출력
+        log.warn("file.toString() : " + file.toString());
+
+        // 강좌 정보 저장
+        CourseDto courseDto = new CourseDto();
+        courseDto.setId(req.getParameter("id"));
+        courseDto.setTitle(req.getParameter("title"));
+        courseDto.setContent(req.getParameter("content"));
+        courseDto.setLevel(req.getParameter("level"));
+        courseDto.setPeo_max(Integer.parseInt(req.getParameter("peo_max")));
+        courseDto.setCopen(Integer.parseInt(req.getParameter("copen")));
+        courseDto.setCopendate(LocalDateTime.parse(req.getParameter("copendate")));
+        CourseDto resDto = courseService.courseInsert(courseDto);
+
+        // 파일 저장
+        // 저장위치, 실제파일이름, 저장될 파일이름, 파일크기 정보를 저장
+        CourseVideoDto data = new CourseVideoDto();
+        if (!file.isEmpty()) {
+            // 파일 처리 로직 시작
+            String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+            String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+            String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+            String saveFileName = "ot_" + randomUUID + Extension;  // 저장할 파일 이름 생성
+
+            data.setSavefolder(uploadFolder);
+            data.setOriginfile(file.getOriginalFilename());
+            data.setSavefile(saveFileName);
+            data.setFilesize(file.getSize());
+            data.setCourse(resDto);
+
+            // 파일 저장
+            File saveFile = new File(uploadFolder, saveFileName);
+            try {
+                file.transferTo(saveFile); // 실제 upload 위치에 파일 저장
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+                // 예외 처리
+            }
+            videoService.couVdoInsert(data);
+        }
+        
         return "redirect:/admin/courseList";
     }
 
@@ -112,15 +159,71 @@ public class AdminController {
     public String courseUpdate(Principal principal, @RequestParam("no") Integer no, Model model) {
         String id = principal.getName();
         CourseDto courseDto = courseService.getCourse(no);
+        CourseVideoDto cvd = videoService.getCourseVideo(no);
         model.addAttribute("dto", courseDto);
         model.addAttribute("id", id);
+        model.addAttribute("cvd", cvd);
+
         return "admin/course/courseUpdate";
     }
 
     // 강좌 생성
     @PostMapping("courseUpdate")
-    public String courseUpdate(CourseDto courseDto) {
+    public String courseUpdate(MultipartHttpServletRequest req, Model model) {
+
+        // 입력된 파일
+        MultipartFile file = req.getFile("file");
+        // 저장된 파일 정보 log 출력
+        log.warn("file.toString() : " + file.toString());
+
+        Integer no = Integer.parseInt(req.getParameter("no"));
+
+        // 강좌 정보 저장
+        CourseDto courseDto = new CourseDto();
+        courseDto.setNo(no);
+        courseDto.setId(req.getParameter("id"));
+        courseDto.setTitle(req.getParameter("title"));
+        courseDto.setContent(req.getParameter("content"));
+        courseDto.setLevel(req.getParameter("level"));
+        courseDto.setPeo_max(Integer.parseInt(req.getParameter("peo_max")));
+        courseDto.setCopen(Integer.parseInt(req.getParameter("copen")));
+        courseDto.setCopendate(LocalDateTime.parse(req.getParameter("copendate")));
         courseService.courseUpdate(courseDto);
+
+        // 저장위치, 실제파일이름, 저장될 파일이름, 파일크기 정보를 저장
+        CourseVideoDto data = new CourseVideoDto();
+
+        if(!file.isEmpty()) {      // 새로운 파일이 들어온 경우, 파일이 있는 경우
+            log.warn("!file.isEmpty() : " + !file.isEmpty());
+            // 파일 처리 로직 시작
+            String randomUUID = UUID.randomUUID().toString();  // 파일 이름 중복 방지를 위한 랜덤 UUID 생성
+            String OriginalFilename = file.getOriginalFilename();  // 실제 파일 이름
+            String Extension = OriginalFilename.substring(OriginalFilename.lastIndexOf("."));  // 파일 확장자 추출
+            String saveFileName = "ot_" + randomUUID + Extension;  // 저장할 파일 이름 생성
+
+            data.setSavefolder(uploadFolder);
+            data.setOriginfile(file.getOriginalFilename());
+            data.setSavefile(saveFileName);
+            data.setFilesize(file.getSize());
+            data.setCourse(courseDto);
+
+            // 파일 저장
+            File saveFile = new File(uploadFolder, saveFileName);
+            
+            // 기존 파일 이름 가져오기
+            CourseVideoDto videoDto = videoService.getCourseVideo(no);
+            videoService.couVdoUpdate(data);
+            try {
+                file.transferTo(saveFile); // 실제 upload 위치에 파일 저장
+                File remove = new File(uploadFolder + "/" + videoDto.getSavefile());
+                if (remove.exists()) { // 해당 파일이 존재하면
+                    remove.delete(); // 파일 삭제
+                }
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+                // 예외 처리
+            }
+        }
         return "redirect:/admin/courseList";
     }
 

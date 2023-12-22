@@ -1,15 +1,16 @@
 package com.pro06.controller.course;
 
 import com.pro06.dto.course.CourseDto;
+import com.pro06.dto.course.CourseVideoDto;
 import com.pro06.dto.course.LectureDto;
 import com.pro06.dto.course.MyCourseDto;
 import com.pro06.service.UserService;
 import com.pro06.service.course.CourseServiceImpl;
 import com.pro06.service.course.LectureServiceImpl;
 import com.pro06.service.course.MyCourseServiceImpl;
+import com.pro06.service.course.VideoServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +40,9 @@ public class CourseController {
 
     @Autowired
     private MyCourseServiceImpl myCourseService;
+
+    @Autowired
+    private VideoServiceImpl videoService;
 
     @Autowired
     private UserService userService;
@@ -77,6 +79,10 @@ public class CourseController {
         // 강좌 상세
         CourseDto course = courseService.getCourse(no);
         model.addAttribute("course", course);
+
+        // ot 영상 추출
+        CourseVideoDto cvd = videoService.getCourseVideo(no);
+        model.addAttribute("cvd", cvd);
         
         // 강의 목록
         List<LectureDto> lectureList = lectureService.lectureCnoList(no);
