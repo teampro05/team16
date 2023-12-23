@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>질문내역</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+    <style>
+        /* 질문 텍스트가 한 줄을 넘어갈 경우 ... 으로 표시되도록 설정 */
+        td .question {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 500px;
+            margin: 0;
+        }
+
+        /* 질문을 클릭할 수 있게 변경 */
+        .question:hover {
+            cursor: pointer;
+            color: red;
+        }
+
+        /* 답변의 텍스트가 td에 벗어나지 않게 조절 */
+        td .answer {
+            margin-top: 2px;
+            width: 500px;
+            margin: 0;
+            word-break:break-all;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+<section class="table-list">
+    <div class="container">
+        <h2 class="con-title">질문내역</h2>
+        <div class="search_from" style="text-align: center">
+            <select name="select_filter" class="select_filter">
+                <option value="1">제목</option>
+            </select>
+            <input type="text" name="search_filter" class="search_filter">
+        </div>
+        <table class="List-table" id="myTable">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>질문</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="dto : ${dtoList}">
+                <tr>
+                    <td th:text="${dto.no}"></td>
+                    <td>
+                        <p class="question" title="답변 보기" th:text="${dto.que}"></p>
+                        <p class="answer" th:text="${dto.ans} eq null ? '아직 답변이 달리지 않았습니다.' : ${dto.ans}" style="display:none"></p>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</section>
+
+<th:block th:replace="include/footer :: footer"></th:block>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+        // 질문 클릭 시 답변 보이기/가리기
+        $('tbody').on('click', 'tr', function() {
+            $(this).find('.answer').slideToggle();
+            $('tr').not(this).find('.answer').slideUp();
+
+            // 클릭한 행에만 해당 CSS 스타일 제거
+            $(this).find('.question').css({
+                'white-space': '',
+                'word-break':'break-all'
+            });
+        });
+    });
+</script>
+</body>
+</html>

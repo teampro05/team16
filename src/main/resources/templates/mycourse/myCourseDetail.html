@@ -75,7 +75,9 @@
                         </th:block>
                     </td>
                     <td><a href="javascript:void(0);"
-                           th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a></td>
+                           th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a>
+                        <a th:href="@{/mycourse/lecQueList(cno = ${lecture.course.no}, lno = ${lecture.no})}">질문내역</a>
+                    </td>
                     <td>
                         <!-- 강의를 다 보고 시험을 보지않은 경우 -->
                         <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'n'}">
