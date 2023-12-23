@@ -35,8 +35,11 @@
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3 class="mt-2">[[${Hbook.fileBoard.title}]]</h3>
-                    <h5>[[${Hbook.fileBoard.price}]]원</h5>
-                    <ul>
+                    <h5 style="float: right">[[${Hbook.fileBoard.price}]]원</h5>
+                    <br>
+                    <br>
+                    <h4>[[${Hbook.fileBoard.servecontent}]]</h4>
+                    <!--<ul>
                         <li>
                             <th:block sec:authorize="hasAuthority('ADMIN')">
                                 <div class="btn-team">
@@ -45,7 +48,7 @@
                                 </div>
                             </th:block>
                         </li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
         </div>
@@ -59,10 +62,6 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                    aria-selected="false"> 교재 소개 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                   aria-selected="false"> 상세 내용 </a>
-            </li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
@@ -72,7 +71,7 @@
                         <tbody>
                         <tr>
                             <td>
-                                <h5>교재 제목</h5>
+                                <h5>제목</h5>
                             </td>
                             <td>
                                 <p>[[${Hbook.fileBoard.title}]]</p>
@@ -80,10 +79,10 @@
                         </tr>
                         <tr>
                             <td>
-                                <h5>요약 내용</h5>
+                                <h5>내용</h5>
                             </td>
                             <td>
-                                <p>[[${Hbook.fileBoard.servecontent}]]</p>
+                                <p>[[${Hbook.fileBoard.content}]]</p>
                             </td>
                         </tr>
                         <tr>
@@ -108,22 +107,6 @@
                 </div>
             </div>
 		</div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <h5>교재 내용</h5>
-                        </td>
-                        <td>
-                            <p>[[${Hbook.fileBoard.content}]]</p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>
