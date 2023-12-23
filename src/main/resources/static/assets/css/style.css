@@ -2392,7 +2392,7 @@ section {
    position: sticky;
    top: 0;
    text-align: center;
-   background-color: var(--sub);
+   background-color: #e7ac11;
    background-size: cover;
    color: var(--black);
    font-weight: bold;

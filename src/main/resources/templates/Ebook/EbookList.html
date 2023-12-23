@@ -22,7 +22,7 @@
                      style="line-height: 30px; text-align: center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page"
-                            style="line-height: 30px; text-align: center">
+                            style="line-height: 30px; text-align: center; font-size: 20px;">
                             초등 영단어 학습은 언어 기초를 다지는 중요한 단계입니다. <br>
                             WordMaster는 초등학생들을 위해 쉽고 재미있는 학습 콘텐츠를 제공하여
                             <br> 기본 어휘 습득과 발음 향상에 중점을 둡니다.
@@ -45,7 +45,7 @@
                 <option value="1">제목</option>
                 <option value="2">내용</option>
                 <option value="3">가격</option>
-                <option value="4">출간일</option>
+                <!--<option value="4">출간일</option>-->
             </select>
             <input type="text" name="search_filter" class="search_filter">
         </div>
@@ -57,8 +57,8 @@
                 <th>제목</th>
                 <th>내용</th>
                 <th>가격</th>
-                <th>출간일</th>
-                <th></th>
+                <!--<th>출간일</th>-->
+                <!--<th></th>-->
             </tr>
             </thead>
             <tbody>
@@ -83,24 +83,24 @@
                     <p>[[${Ebook.fileBoard.price}]]원</p>
                 </td>
 
-                <td>
+                <!--<td>
                     <p>[[${Ebook.fileBoard.publish}]]</p>
-                </td>
+                </td>-->
 
-                <td>
+                <!--<td>
                     <th:block sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/Ebook/EbookUpdate(no=${Ebook.fileBoard.no})}" class="btn1 right1">수정</a>
                         <a th:href="@{/Ebook/EbookDelete(no=${Ebook.fileBoard.no})}" class="btn2 right1">삭제</a>
                     </th:block>
-                </td>
+                </td>-->
             </tr>
             </tbody>
         </table>
-        <th:block sec:authorize="hasAuthority('ADMIN')">
+        <!--<th:block sec:authorize="hasAuthority('ADMIN')">
             <div class="btn-team">
                 <a th:href="@{/Ebook/fileUpload}" class="btn1 right1">작성</a>
             </div>
-        </th:block>
+        </th:block>-->
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>

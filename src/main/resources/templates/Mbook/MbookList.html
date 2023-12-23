@@ -19,7 +19,7 @@
                 <nav aria-label="breadcrumb" class="banner-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page"
-                            style="line-height: 30px; text-align: center">
+                            style="line-height: 30px; text-align: center; font-size: 20px;">
                             중학생들은 문맥을 이해하고 표현력을 향상시키는 데에 초점을 맞춥니다.<br>
                             WordMaster는 다양한 주제와 상황에 관련된 어휘를 다루며,
                             <br> 독해 능력과 어휘력을 함께 강화합니다.
@@ -41,7 +41,7 @@
                 <option value="1">제목</option>
                 <option value="2">내용</option>
                 <option value="3">가격</option>
-                <option value="4">출간일</option>
+                <!--<option value="4">출간일</option>-->
             </select>
             <input type="text" name="search_filter" class="search_filter">
         </div>
@@ -53,8 +53,8 @@
                 <th>제목</th>
                 <th>내용</th>
                 <th>가격</th>
-                <th>출간일</th>
-                <th></th>
+                <<!--th>출간일</th>-->
+                <!--<th></th>-->
             </tr>
             </thead>
             <tbody>
@@ -76,23 +76,23 @@
                 <td>
                     <p>[[${Mbook.fileBoard.price}]]원</p>
                 </td>
-                <td>
+                <!--<td>
                     <p>[[${Mbook.fileBoard.publish}]]</p>
-                </td>
-                <td>
+                </td>-->
+                <!--<td>
                     <th:block sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/Mbook/MbookUpdate(no=${Mbook.fileBoard.no})}" class="btn1 right1">수정</a>
                         <a th:href="@{/Mbook/MbookDelete(no=${Mbook.fileBoard.no})}" class="btn2 right1">삭제</a>
                     </th:block>
-                </td>
+                </td>-->
             </tr>
             </tbody>
         </table>
-        <th:block sec:authorize="hasAuthority('ADMIN')">
+        <!--<th:block sec:authorize="hasAuthority('ADMIN')">
             <div class="btn-team">
                 <a th:href="@{/Mbook/fileUpload}" class="btn1 right1">작성</a>
             </div>
-        </th:block>
+        </th:block>-->
     </div>
 </section>>
 <!-- datatables -->
