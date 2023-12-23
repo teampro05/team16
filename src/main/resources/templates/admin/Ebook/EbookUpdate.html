@@ -41,28 +41,32 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="content"> 요약 내용 </label>
-                            <textarea name="servecontent" class="form-control" id="servecontent" required>[[${Ebook.servecontent}]]</textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="content" class="form-label mt-4"> 내용 </label>
-                            <textarea name="content" class="form-control" id="content" required>[[${Ebook.content}]]</textarea>
+                            <label for="content"> 교재 내용 </label>
+                            <textarea class="form-control" name="content" id="content" placeholder="교재 설명"
+                                      maxlength="1000" required rows="10">[[${Ebook.content}]]</textarea>
                             <input type="hidden" id="ck" value="no">
+                            <div class="textCount"><span id="contentTextArea">0</span>/1000</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="price" class="mt-4"> 가격 </label>
-                            <input type="text" class="form-control" name="price" id="price" placeholder="가격"
-                                   pattern="\d*" maxlength="7"
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 7);" required th:value="${Ebook.price}"/>
+                            <label for="servecontent">요약 설명</label>
+                            <textarea class="form-control" name="servecontent" id="servecontent" placeholder="교재 요약"
+                                      maxlength="100" required rows="3">[[${Ebook.servecontent}]]</textarea>
+                            <div class="textCount"><span id="serveTextArea">0</span>/100</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="publish" class="form-label mt-4"> 출판일 </label>
-                            <input type="text" name="publish" class="form-control datepicker" id="publish" required
-                                   th:value="${Ebook.publish}" readonly/>
-                            <input type="hidden" value="no">
+                            <label for="price"> 가격 </label>
+                            <input type="text" class="form-control" id="price" placeholder="가격"
+                                   maxlength="7"
+                                   oninput="formatPrice(this);" th:value="${Ebook.price}" required/>
+                            <input type="hidden" name="price" id="hiddenPrice" th:value="${Ebook.price}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="publish">출간일</label>
+                            <input type="text" class="form-control datepicker" name="publish" id="publish" placeholder="출간일"
+                                   th:value="${Ebook.publish}" required/>
                         </div>
 
 
@@ -112,6 +116,66 @@
                         changeYear: true
                     });
                 });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    // 페이지 로드 시에 콘텐츠의 글자 수 계산 및 표시
+                    var content = $('#content').val();
+                    $('#contentTextArea').text(content.length);
+
+                    // 페이지 로드 시에 요약 내용의 글자 수 계산 및 표시
+                    var servecontent = $('#servecontent').val();
+                    $('#serveTextArea').text(servecontent.length);
+                });
+
+                // 교재 설명
+                $('#content').keyup(function(e) {
+                    var content = $(this).val();
+
+                    if (content.length == 0 || content == '') {
+                        $('#contentTextArea').text('0');
+                    } else {
+                        $('#contentTextArea').text(content.length);
+                    }
+
+                    if (content.length > 1000) {
+                        $(this).val(content.substring(0, 1000));
+                        alert('글자수는 1000자까지 입력 가능합니다.');
+                    }
+                });
+
+                // 교재 요약 설명
+                $('#servecontent').keyup(function(e) {
+                    var servecontent = $(this).val();
+
+                    if (servecontent.length == 0 || servecontent == '') {
+                        $('#serveTextArea').text('0');
+                    } else {
+                        $('#serveTextArea').text(servecontent.length);
+                    }
+
+                    if (servecontent.length > 100) {
+                        $(this).val(servecontent.substring(0, 100));
+                        alert('글자수는 100자까지 입력 가능합니다.');
+                    }
+                });
+            </script>
+            <script>
+                function formatPrice(input) {
+                    // 쉼표 제외하고 숫자만 가져오기
+                    var numericValue = input.value.replace(/[^0-9]/g, '');
+                    $("#hiddenPrice").val(numericValue);
+
+                    // 쉼표 추가
+                    var formattedValue = addCommas(numericValue);
+
+                    // 입력 필드 업데이트
+                    input.value = formattedValue;
+                }
+
+                function addCommas(value) {
+                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
             </script>
         </div>
     </div>
