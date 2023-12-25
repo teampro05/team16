@@ -39,6 +39,19 @@ public class EmailController {
         return ResponseEntity.ok(emailResponseDto);
     }
 
+    @PostMapping("/otoSend")
+    public void otoSend(@RequestBody Map<String, String > map, Model model) {
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(map.get("email"))
+                .ototitle(map.get("ototitle"))
+                .otocontent(map.get("otocontent"))
+                .subject("Word Master 관리자 문의사항을 보내드립니다.")
+                .subtitle(map.get("subtitle"))
+                .message(map.get("message"))
+                .build();
+        emailService.otosendMail(emailMessage);
+    }
+
 //    @PostMapping("/insubTest")
 //    public ResponseEntity insubTest(@RequestBody String insub) {
 //        EmailMessage emailMessage = EmailMessage.builder()

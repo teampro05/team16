@@ -46,6 +46,33 @@ public class EmailService {
         }
     }
 
+    // 1대1 문의
+    public void otosendMail(EmailMessage emailMessage) {
+        String text = "";
+        text+= "<div style='margin:100px; text-align:center'>";
+        text+= "<div align='center' style='border:none; font-family:verdana';>";
+        text+= "<h3>" + emailMessage.getOtotitle() + "</h3>";
+        text+= "<h3>" + emailMessage.getOtocontent() + "</h3>";
+        text+= "<br>";
+        text+= "<h3>" + emailMessage.getSubtitle() + "</h3>";
+        text+= "<h3>" + emailMessage.getMessage() + "</h3>";
+        text+= "</div>";
+        text+= "</div>";
+        log.info("text ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" + text);
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        //if (type.equals("password")) userService.SetTempPassword(emailMessage.getTo(), authNum);
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            mimeMessageHelper.setTo(emailMessage.getTo()); // 메일 수신자
+            mimeMessageHelper.setSubject(emailMessage.getSubject()); // 메일 제목
+            mimeMessageHelper.setText(text, true); // 메일 본문 내용, HTML 여부
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            log.info("fail");
+            throw new RuntimeException(e);
+        }
+    }
+
     //인증번호 및 임시 비밀번호 생성기
     public String createCode() {
         Random random = new Random();
@@ -67,6 +94,7 @@ public class EmailService {
         context.setVariable("code", code);
         return templateEngine.process(type, context);
     }
+
 
     //회원이 개강 요청서 보내기
     @Async

@@ -44,7 +44,6 @@ public class HomeController {
     @Autowired
     private BoardService boardService;
 
-
     @GetMapping("/")
     public String Home(Model model){
         return "index";
@@ -70,10 +69,6 @@ public class HomeController {
     }
 
 
-    @GetMapping("/oto")
-    public String oto(Model model){
-        return "/board/oto";
-    }
 
 
     @GetMapping("/status")
@@ -136,11 +131,48 @@ public class HomeController {
         return "/alert";
     }
 
-    @GetMapping("/userEdit")
-    public String userEdit(Model model, Principal principal){
+    @GetMapping("/myPageEdit")
+    public String myPageForm(Model model, Principal principal){
         UserDTO user = userService.getId(principal.getName());
         model.addAttribute("user", user);
-        return "/user/userEdit";
+        return "/user/myPageEdit";
+    }
+
+    @PostMapping("/myPageEdit")
+    public String myPageEdit(Model model, UserDTO userDTO){
+        userService.userUpdate(userDTO);
+        return "redirect:/myPageEdit?id="+userDTO.getId();
+    }
+
+    @GetMapping("/changePw")
+    public String changePwForm(Model model, String id){
+        UserDTO user = userService.getId(id);
+        model.addAttribute("user", user);
+        return "/user/changePw";
+    }
+
+    @PostMapping("/changePw")
+    public String changePw(Model model, String pw, String id){
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setPw(pw);
+        userService.userchangePw(userDTO);
+        model.addAttribute("url", 2);
+        return "/alert";
+    }
+    @GetMapping("/changeEmail")
+    public String changeEmailForm(Model model, String id){
+        UserDTO user = userService.getId(id);
+        model.addAttribute("user", user);
+        return "/user/changeEmail";
+    }
+
+    @PostMapping("/changeEmail")
+    public String changeEmail(Model model, String email, String id){
+        UserDTO userDTO = userService.getId(id);
+        userDTO.setEmail(email);
+        userService.userUpdate(userDTO);
+        model.addAttribute("url", 1);
+        return "/alert";
     }
 
 
@@ -219,4 +251,18 @@ public class HomeController {
         return "redirect:/notice";
     }
 
+    //  Oto
+
+    @GetMapping("/oto")
+    public String otoForm(Model model){
+        return "/board/oto";
+    }
+
+    @PostMapping("/oto")
+    public String oto(Model model, BoardDTO boardDTO){
+         boardService.otoInsert(boardDTO);
+         model.addAttribute("url", "/oto");
+         model.addAttribute("msg", "해당 내용을 관리자에게 전송하였습니다. 답변까지 3~5일 소요될 수 있습니다^^ ");
+        return "/alert";
+    }
 }

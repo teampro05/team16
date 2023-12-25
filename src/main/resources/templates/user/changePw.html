@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="include/head :: head" ></th:block>
+    <title>비밀번호 변경</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #dad9fb;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-left: 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>비밀번호 변경</h2>
+    <form th:action="@{/changePw}" method="post" onsubmit="return joinCheck(this)">
+        <div>
+            <label class="form-label" for="pw">변경할 비밀번호</label>
+            <input type="password" name="pw" id="pw" placeholder="변경할 비밀번호 입력" class="form-control" maxlength="16" required />
+            <p class="info mb-0" ><i class="fas fa-check"></i> 비밀번호는 최소 8자리에서 최대 16자리까지 숫자, 영문, 특수문자 각 1개 이상 포함</p>
+        </div>
+        <div>
+            <label class="form-label" for="pw2">비밀번호 확인</label>
+            <input type="password" name="pw2" id="pw2" placeholder="비밀번호 확인 입력" class="form-control" maxlength="16" required />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="button" onclick="javascript=window.close()" class="btn btn-danger">닫기</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function joinCheck(f){
+        if(f.pw.value != f.pw2.value){
+            alert("변경할 비밀번호와 비밀번호 확인이 맞지 않습니다.")
+            f.pw.focus();
+            return false;
+        }
+    }
+
+
+</script>
+</body>
+</html>

@@ -1677,4 +1677,21 @@ public class AdminController {
         return "redirect:/admin/TbookList";
     }
 
+    //  Oto
+
+    @GetMapping("/otoList_Admin")
+    public String oto(Model model) {
+        List<BoardDTO> otoList = boardService.otoList();
+        model.addAttribute("otoList", otoList);
+        return "/admin/board/otoList";
+    }
+
+    @GetMapping("/otoSubmit")
+    public String otoForm(Model model, Integer no) {
+        BoardDTO oto = boardService.otoGet(no);
+        model.addAttribute("oto", oto);
+        return "/admin/board/otoSubmit";
+    }
+
+
 }

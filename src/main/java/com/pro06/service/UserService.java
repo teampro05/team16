@@ -19,4 +19,5 @@ public interface UserService {
     public void userDelete(Integer id);
     public int loginPro(String id);
     public boolean idCheck(String id);
+    public void userchangePw(UserDTO userDTO);
 }

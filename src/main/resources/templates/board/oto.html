@@ -18,7 +18,7 @@
 
         <div class="section-title">
             <h2 data-aos="fade-up">1:1 문의</h2>
-            <p data-aos="fade-up">Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            <p data-aos="fade-up">관리자에게 필요한 건의사항을 적어주세요. 해당 내용은 등록하신 이메일로 답변을 보내드립니다.</p>
         </div>
 
         <div class="row justify-content-center">
@@ -26,61 +26,85 @@
             <div class="col-xl-3 col-lg-4 mt-4" data-aos="fade-up">
                 <div class="info-box">
                     <i class="bx bx-map"></i>
-                    <h3>Our Address</h3>
-                    <p>A108 Adam Street, New York, NY 535022</p>
+                    <h3>주소</h3>
+                    <p>서울특별시 금천구 <br> 가산디지털1로 16 <br>
+                        11층 18~20층 (가산동)</p>
                 </div>
             </div>
 
             <div class="col-xl-3 col-lg-4 mt-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="info-box">
                     <i class="bx bx-envelope"></i>
-                    <h3>Email Us</h3>
-                    <p>info@example.com<br>contact@example.com</p>
+                    <h3>이메일</h3>
+                    <p></p>
+                    <p>admin@wordmaster.com</p>
+                    <p></p>
+
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 mt-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="info-box">
                     <i class="bx bx-phone-call"></i>
-                    <h3>Call Us</h3>
-                    <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+                    <h3>전화번호</h3>
+                    <p></p>
+                    <p>02-3282-2944</p>
+                    <p></p>
                 </div>
             </div>
         </div>
 
         <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
             <div class="col-xl-9 col-lg-12 mt-4">
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                <form th:action="@{/oto}" method="post" role="form" class="php-email-form">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="col-md-6 form-group mt-3 mt-md-0">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="이메일은 필수로 입력해주세요." maxlength="30" required>
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="제목" required>
                     </div>
                     <div class="form-group mt-3">
-                        <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                        <textarea type="text" name="content" id="content" placeholder="문의사항을 적어주세요." class="form-control" cols="100" rows="10" maxlength="500" required></textarea>
+                        <div class="textCount"><span>0</span>/500</div>
                     </div>
                     <div class="my-3">
                         <div class="loading">Loading</div>
                         <div class="error-message"></div>
                         <div class="sent-message">Your message has been sent. Thank you!</div>
                     </div>
-                    <div class="text-center"><button type="submit">Send Message</button></div>
+                    <div class="text-center"><button type="submit">보내기</button></div>
                 </form>
             </div>
 
         </div>
 
     </div>
-</section><!-- End Contact Section -->
-
-
-
+</section>
 <th:block th:replace="/include/footer :: footer"></th:block>
+<script>
+    $('#content').keyup(function (e) {
+        var content = $(this).val();
 
+        if (content.length == 0 || content == '') {
+            $('.textCount span').text('0');
+        } else {
+            $('.textCount span').text(content.length);
+        }
+
+        if (content.length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            alert('글자수는 500자까지 입력 가능합니다.');
+        }
+    });
+
+    $('#title').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length > 50) {
+            alert('글자수는 50자까지 입력 가능합니다.');
+        }
+    });
+</script>
 </body>
 </html>

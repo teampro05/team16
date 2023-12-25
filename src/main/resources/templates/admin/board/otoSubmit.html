@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>F.A.Q 글쓰기</title>
+  <title>O.T.O 답변하기</title>
   <th:block th:replace="/include/adminhead :: head"></th:block>
 
   <style>
@@ -52,22 +52,23 @@
 </head>
 <body>
 <div class="container">
-  <h2>F.A.Q 글쓰기</h2>
-  <form th:action="@{/admin/faqAdd_Admin}" method="post" >
+  <h2>O.T.O 답변하기</h2>
     <div>
-      <label class="form-label" for="title">제목</label>
-      <input type="text" name="title" id="title" placeholder="제목" class="form-control" maxlength="50" autofocus  />
+      <label class="form-label" for="subtitle">제목</label>
+      <input type="text" name="subtitle" id="subtitle" placeholder="제목" class="form-control" maxlength="50" autofocus  />
+      <input type="hidden" name="email" id="email" th:value="${oto.email}" readonly/>
+      <input type="hidden" name="ototitle" id="ototitle" th:value="${oto.title}" readonly/>
+      <input type="hidden" name="otocontent" id="otocontent" th:value="${oto.content}" readonly/>
     </div>
     <div>
-      <label class="form-label" for="content">내용</label>
-      <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" cols="100" rows="10" maxlength="500" required></textarea>
+      <label class="form-label" for="message">내용</label>
+      <textarea type="text" name="message" id="message" placeholder="내용" class="form-control" cols="100" rows="10" maxlength="500" required></textarea>
       <div class="textCount"><span>0</span>/500</div>
     </div>
     <div>
-      <button type="submit" class="btn btn-primary">등록</button>
+      <button type="button" onclick="PostEmail()" class="btn btn-primary">등록</button>
       <button type="button" onclick="javascript=window.close()" class="btn btn-danger">닫기</button>
     </div>
-  </form>
 </div>
 
 </body>
@@ -87,6 +88,27 @@
       alert('글자수는 500자까지 입력 가능합니다.');
     }
   });
+</script>
+<script>
 
+  function PostEmail(){
+    let params = ({"email" : $("#email").val(), "subtitle" : $("#subtitle").val(), "ototitle" : $("#ototitle").val(), "otocontent" : $("#otocontent").val(), "message" : $("#message").val(), });
+
+    $.ajax({
+      url:"/otoSend",
+      type:"post",
+      data:JSON.stringify(params),
+      dataType:"json",
+      contentType:"application/json",
+      success : function(mail) {
+        alert("이메일이 전송되었습니다.");
+        window.close();
+      }, error : function (err) {
+        alert("이메일이 전송되었습니다.");
+        window.close();
+      }
+    });
+
+  }
 
 </script>

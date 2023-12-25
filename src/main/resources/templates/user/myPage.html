@@ -54,9 +54,10 @@
                 </tbody>
             </table>
         </div>
-        <button type="button" onclick="eventremove()" class="btn1 center1"> 탈퇴하기 </button>
-        <a th:href="@{/userEdit}" class="btn1 center1">수정하기</a>
-
+        <div class="center1">
+            <button type="button" onclick="eventremove()" class="btn1 right2"> 탈퇴하기 </button>
+            <a th:href="@{/myPageEdit}" class="btn1 right2">수정하기</a>
+        </div>
     </div>
 </section>
 <th:block th:replace="include/footer :: footer" ></th:block>

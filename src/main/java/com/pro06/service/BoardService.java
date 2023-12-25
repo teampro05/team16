@@ -22,4 +22,13 @@ public interface BoardService {
     public List<BoardDTO> faqList();
     public BoardDTO faqGet(Integer no);
 
+    //Oto
+
+    public void otoInsert(BoardDTO boardDTO);
+    public void otoDelete(Integer no);
+    public List<BoardDTO> otoList();
+    public BoardDTO otoGet(Integer no);
+
+
+
 }

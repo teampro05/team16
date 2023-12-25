@@ -12,5 +12,8 @@ import lombok.ToString;
 public class EmailMessage {
     private String to;
     private String subject;
+    private String subtitle;
     private String message;
+    private String ototitle;
+    private String otocontent;
 }

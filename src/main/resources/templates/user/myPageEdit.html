@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 수정하기</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+
+</head>
+<body>
+<th:block th:replace="include/header :: header" ></th:block>
+<div class="breadcrumb">
+    <p><a th:href="@{/}"> HOME </a> &gt; <a th:href="@{/myPage}"> 회원정보 </a> > <span> 수정하기 </span></p>
+</div>
+<section id="contact" class="contact">
+    <div class="container">
+        <h2>회원정보 수정하기</h2>
+        <form th:action="@{/myPageEdit}" method="post" style="width:100%;">
+            <div class="List-table">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>아이디</th>
+                            <td th:text="${user.id}"></td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td><button type="button"  class="btn btn-main-sm" onclick="reco()">변경</button></td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <td th:text="${user.name}"></td>
+                        </tr>
+                        <tr>
+                            <th>이메일</th>
+                            <td>[[${user.email}]]<button type="button" class="btn btn-main-sm" onclick="Emailreco()">변경</button></td>
+                        </tr>
+                        <tr>
+                            <th>전화번호</th>
+                            <td><input type="text" name="tel" id="tel" class="form-control" th:value="${user.tel }" /></td>
+
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td>
+                                <input type="text" name="addr1" id=addr1 th:value="${user.addr1 }" class="form-control mb-1" />
+                                <input type="text" name="addr2" id="addr2" th:value="${user.addr2 }" class="form-control mb-1" />
+                                <input type="text" name="postcode" id="postcode" th:value="${user.postcode }" class="form-control">
+                                <button type="button" id="post_btn" onclick="findAddr()" class="btn btn-main-sm">우편번호 검색</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>권한</th>
+                            <th:block sec:authorize="hasAuthority('ADMIN')">
+                                <td>관리자</td>
+                            </th:block>
+                            <th:block sec:authorize="hasAuthority('USER')">
+                                <td>유저</td>
+                            </th:block>
+                            <th:block sec:authorize="hasAuthority('TEACHER')">
+                                <td>선생님</td>
+                            </th:block>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="center1">
+                <button type="button" onclick="eventremove()" class="btn1 right2"> 탈퇴하기 </button>
+                <button type="submit" class="btn1 right2"> 수정하기 </button>
+            </div>
+        </form>
+    </div>
+</section>
+<th:block th:replace="include/footer :: footer" ></th:block>
+
+</body>
+</html>
+<script>
+    function eventremove(){
+        if(confirm("정말 탈퇴하시겠습니까?")){
+            location.href="/remove?id=[[${user.id }]]"
+        }
+    }
+
+    function reco() {
+        let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
+        let popupUrl = "/changePw?id=[[${user.id }]]";
+        window.open(popupUrl, 'child', popupOption);
+    }
+
+    function Emailreco() {
+        let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
+        let popupUrl = "/changeEmail?id=[[${user.id }]]";
+        window.open(popupUrl, 'child', popupOption);
+    }
+
+    function findAddr(){
+        new daum.Postcode({
+            oncomplete:function(data){
+                var roadAddr = data.roadAddress;
+                var jibunAddr = data.jibunAddress;
+                var bname = data.bname;
+                document.getElementById("postcode").value = data.zonecode;
+                if(roadAddr !== ''){
+                    document.getElementById("addr1").value = roadAddr;
+                } else if(jibunAddr !== ''){
+                    document.getElementById("addr1").value = jibunAddr;
+                }
+                document.getElementById("addr3").value = bname;
+                document.getElementById("addr2").focus();
+            }
+        }).open();
+    }
+</script>

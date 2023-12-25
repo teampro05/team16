@@ -27,6 +27,9 @@ public class BoardDTO {
     @NotEmpty(message = "저자는 필수 입력 값입니다.")
     private String author;
 
+    @Column(length = 30)
+    private String email;
+
     private LocalDateTime createdTime;
 
     private LocalDateTime modifiedTime;

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="include/head :: head" ></th:block>
+    <title>이메일 변경</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #dad9fb;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-left: 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>이메일 변경</h2>
+    <form th:action="@{/changeEmail}" method="post" onsubmit="return EmailCheck(this)">
+        <div>
+            <label class="form-label blind" for="email">이메일</label>
+            <input type="email" name="email" id="email" placeholder="이메일" class="form-control" style="background-color: white;"  required>
+            <input type="hidden" id="emailCK" name="emailCK" value="no">
+            <button type="button" onclick="PostEmail()" id="PostEmailbtn" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 인증번호</button>
+            <div class="insubForm" style="display: none; ">
+                <label class="form-label blind" for="insub">인증번호</label>
+                <input type="text" id="insub" name="insub" placeholder="인증번호 입력" class="form-control">
+                <button type="button" onclick="Insub()" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 인증번호 인증</button>
+                <button type="button" onclick="Insubreset()" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 취소</button>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">등록</button>
+            <button type="button" onclick="javascript=window.close()" class="btn btn-danger">닫기</button>
+        </div>
+    </form>
+</div>
+<script>
+
+    var code = "";
+
+    function PostEmail(){
+        let params = {"email" : $("#email").val()};
+        $("#email").attr("readonly","readonly");
+        $(this).css("background-color","darkgray")
+
+        $.ajax({
+            url:"/sendTest",	//아이디가 전송되어질 곳
+            type:"post",
+            data:JSON.stringify(params),
+            dataType:"json",
+            contentType:"application/json",
+            success : function(mail) {
+                code = mail.code;
+                alert("인증번호가 전송되었습니다.");
+                $("#PostEmailbtn").css("display", "none")
+                $(".insubForm").css("display", "block");
+            }, error : function (err) {
+                alert("인증번호 전송에 실패하였습니다.");
+                $("#email").attr("readonly", false);
+                $("#email").focus();
+
+            }
+        });
+
+    }
+
+    function Insub() {
+
+        var insub = $("#insub").val();
+
+        if(insub == code){
+            alert("인증번호가 일치합니다.")
+            $("#emailCK").val("Yes")
+            $(".insubForm").css("display", "none");
+        } else {
+            alert("인증번호가 일치하지 않습니다.")
+            $("#insub").focus();
+        }
+    }
+
+    function Insubreset(){
+        $("#PostEmailbtn").css("display", "block")
+        $(".insubForm").css("display", "none");
+        $("#email").attr("readonly", false);
+
+    }
+</script>
+<script>
+    function EmailCheck(f) {
+        if (f.emailCK.value != "Yes") {
+            alert("이메일 인증을 하지 않으셨습니다.");
+            $("#email").focus();
+            return false;
+        } else {
+
+        }
+    }
+
+</script>
+</body>
+</html>

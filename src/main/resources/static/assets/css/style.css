@@ -2827,7 +2827,12 @@ canvas {
 .right1{
   float: right;
 }
+.rigth2 {
+  float: right;
+  margin: 1rem;
+}
 .center1{
+  padding: 0;
   float: right;
   margin-right: 16rem;
 }

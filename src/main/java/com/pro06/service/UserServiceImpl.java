@@ -111,4 +111,12 @@ public class UserServiceImpl implements UserService {
         }
         return pass;
     }
+
+    @Override
+    public void userchangePw(UserDTO userDTO) {
+            String ppw = passwordEncoder.encode(userDTO.getPw());
+            userDTO.setPw(ppw);
+            User user = modelMapper.map(userDTO, User.class);
+            userRepository.save(user);
+        }
 }

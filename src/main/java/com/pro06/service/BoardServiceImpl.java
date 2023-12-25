@@ -3,8 +3,10 @@ package com.pro06.service;
 import com.pro06.dto.BoardDTO;
 import com.pro06.entity.Faq;
 import com.pro06.entity.Notice;
+import com.pro06.entity.Oto;
 import com.pro06.repository.FaqRepository;
 import com.pro06.repository.NoticeRepository;
+import com.pro06.repository.OtoRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private OtoRepository otoRepository;
+    //  Notice
 
     @Override
     public void NoticeDelete(Integer no) {
@@ -60,6 +66,9 @@ public class BoardServiceImpl implements BoardService {
         BoardDTO boardDTO = modelMapper.map(notice, BoardDTO.class);
         return boardDTO; }
 
+    //  Faq
+
+
     @Override
     public void faqInsert(BoardDTO boardDTO) {
         Faq faq = modelMapper.map(boardDTO, Faq.class);
@@ -91,6 +100,36 @@ public class BoardServiceImpl implements BoardService {
         Optional<Faq> result = faqRepository.findById(no);
         Faq faq = result.orElseThrow();
         BoardDTO boardDTO = modelMapper.map(faq, BoardDTO.class);
+        return boardDTO;
+    }
+
+    //  Oto
+
+    @Override
+    public void otoInsert(BoardDTO boardDTO) {
+        Oto oto = modelMapper.map(boardDTO, Oto.class);
+        otoRepository.save(oto);
+    }
+
+    @Override
+    public void otoDelete(Integer no) {
+        otoRepository.deleteById(no);
+    }
+
+    @Override
+    public List<BoardDTO> otoList() {
+        List<Oto> otoList = otoRepository.findAll();
+        List<BoardDTO> boardDTOList = otoList.stream().map(oto ->
+                        modelMapper.map(oto, BoardDTO.class))
+                .collect(Collectors.toList());
+        return boardDTOList;
+    }
+
+    @Override
+    public BoardDTO otoGet(Integer no) {
+        Optional<Oto> result = otoRepository.findById(no);
+        Oto oto = result.orElseThrow();
+        BoardDTO boardDTO = modelMapper.map(oto, BoardDTO.class);
         return boardDTO;
     }
 }
