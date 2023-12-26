@@ -35,12 +35,19 @@ public class SecurityConfig {
                 // 특정 URL에 대한 권한 설정.
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests
-                            .requestMatchers("/course/**", "/error/**").permitAll()
-                            .requestMatchers("/Ebook/**", "/Mbook/**", "/Hbook/**", "/Tbook/**").permitAll()
-                            .requestMatchers("/user/**", "/board/**", "/mycourse/**", "/video/**", "/myvideo/**").authenticated() // 인증된, 로그인 한 사람만 접근 가능
-                            .requestMatchers("/admin/**").hasAuthority("ADMIN") // admin만 접근 가능
-                            .requestMatchers("/css/**", "/js/**", "/upload/**", "/cleditor/**", "/scss/**",
-                                    "/vendors/**", "/ckeditor/**", "/webfonts/**", "/resource/**", "/assets/**", "/shop/**")
+                            .requestMatchers(new AntPathRequestMatcher("/course/**"), new AntPathRequestMatcher("/error/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/Ebook/**"), new AntPathRequestMatcher("/Mbook/**"),
+                                    new AntPathRequestMatcher("/Hbook/**"), new AntPathRequestMatcher("/Tbook/**")).permitAll()
+                            .requestMatchers(new AntPathRequestMatcher("/user/**"), new AntPathRequestMatcher("/board/**"),
+                                    new AntPathRequestMatcher("/mycourse/**"), new AntPathRequestMatcher("/video/**"),
+                                    new AntPathRequestMatcher("/myvideo/**")).authenticated() // 인증된, 로그인 한 사람만 접근 가능
+                            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority("ADMIN") // admin만 접근 가능
+                            .requestMatchers(new AntPathRequestMatcher("/css/**"), new AntPathRequestMatcher("/js/**"),
+                                    new AntPathRequestMatcher("/upload/**"), new AntPathRequestMatcher("/cleditor/**"),
+                                    new AntPathRequestMatcher("/scss/**"), new AntPathRequestMatcher("/vendors/**"),
+                                    new AntPathRequestMatcher("/ckeditor/**"), new AntPathRequestMatcher("/webfonts/**"),
+                                    new AntPathRequestMatcher("/resource/**"), new AntPathRequestMatcher("/assets/**"),
+                                    new AntPathRequestMatcher("/shop/**"))
                             .permitAll() // 모두 접근 가능
                             .anyRequest().permitAll();
                 })
