@@ -37,12 +37,20 @@
                 </div>
                 <div class="card p-3">
                     <table id="myTable" class="table text-center mb-3">
+                        <colgroup>
+                            <col style="width:10%;">
+                            <col style="width:auto;">
+                            <col style="width:10%;">
+                            <col style="width:20%;">
+                            <col style="width:20%;">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th style="width: 40%">제목</th>
                                 <th>작성자</th>
                                 <th>등록일</th>
+                                <th>삭제여부</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,6 +64,15 @@
                                     </td>
                                     <td>[[${noticeList.author}]]</td>
                                     <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
+                                    <td>
+                                        <form th:action="@{/admin/noticeDelete_List(no=${noticeList.no})}" method="post">
+                                            <select name="deleteyn" id="deleteyn" class="select-box">
+                                                <option value="y" th:selected="${noticeList.deleteyn} eq 'y'">삭제</option>
+                                                <option value="n" th:selected="${noticeList.deleteyn} eq 'n'">생성</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-primary" >상태 변경</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </th:block>
                         </tbody>

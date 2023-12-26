@@ -30,6 +30,8 @@ public class BoardDTO {
     @Column(length = 30)
     private String email;
 
+    private String deleteyn; // 삭제 여부
+
     private LocalDateTime createdTime;
 
     private LocalDateTime modifiedTime;

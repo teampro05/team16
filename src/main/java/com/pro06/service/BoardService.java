@@ -12,6 +12,7 @@ public interface BoardService {
     public void NoticeUpdate(BoardDTO boardDTO);
     public void NoticeDelete(Integer no);
     public List<BoardDTO> NoticeList();
+    public List<BoardDTO> usernoticeList();
     public BoardDTO NoticeGet(Integer no);
 
 

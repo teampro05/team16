@@ -644,7 +644,6 @@ public class AdminController {
         return "/admin/board/noticeGet";
     }
 
-
     @GetMapping("/noticeAdd_Admin")
     public String noticeForm(Model model, Principal principal) {
         model.addAttribute("boardDTO", new BoardDTO());
@@ -672,11 +671,24 @@ public class AdminController {
         return "redirect:/admin/noticeGet_Admin?no="+no;
     }
 
-    @GetMapping("/noticeDelete_Admin")
-    public String noticeDelete(Model model, Integer no) {
-        boardService.NoticeDelete(no);
+    @PostMapping("/noticeDelete_List")
+    public String noticeDelete_List(Model model, Integer no, String deleteyn) {
+        BoardDTO notice = boardService.NoticeGet(no);
+        notice.setDeleteyn(deleteyn);
+        boardService.NoticeUpdate(notice);
         return "redirect:/admin/notice_Admin";
     }
+
+    @PostMapping("/noticeDelete_Get")
+    public String noticeDelete_Get(Model model, Integer no, String deleteyn) {
+        BoardDTO notice = boardService.NoticeGet(no);
+        notice.setDeleteyn(deleteyn);
+        boardService.NoticeUpdate(notice);
+        return "redirect:/admin/notice_Admin?no="+no;
+
+    }
+
+
 
 
     // Faq
