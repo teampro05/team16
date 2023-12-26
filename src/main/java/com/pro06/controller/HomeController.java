@@ -82,19 +82,19 @@ public class HomeController {
         int pass = userService.loginPro(id);
         if (pass == 1) {
             model.addAttribute("msg", "환영합니다! 로그인되었습니다 \uD83E\uDD13");
-            model.addAttribute("url", "/");
+            model.addAttribute("url", "/team16");
             return "/alert";
         } else if (pass == 2) {
             model.addAttribute("msg", "해당 계정은 휴면계정입니다. 휴면을 풀어주세요.");
-            model.addAttribute("url", "/active");
+            model.addAttribute("url", "/team16/active");
             return "/alert";
         } else if (pass==3){
             model.addAttribute("msg", "해당 계정은 탈퇴한 계정입니다.");
-            model.addAttribute("url", "/logout");
+            model.addAttribute("url", "/team16/logout");
             return "/alert";
         } else {
             model.addAttribute("msg", "로그인 정보가 맞지 않습니다.");
-            model.addAttribute("url", "/login");
+            model.addAttribute("url", "/team16/login");
             return "/alert";
         }
     }
@@ -268,7 +268,7 @@ public class HomeController {
     @PostMapping("/oto")
     public String oto(Model model, BoardDTO boardDTO){
          boardService.otoInsert(boardDTO);
-         model.addAttribute("url", "/oto");
+         model.addAttribute("url", "/team16/oto");
          model.addAttribute("msg", "해당 내용을 관리자에게 전송하였습니다. 답변까지 3~5일 소요될 수 있습니다^^ ");
         return "/alert";
     }

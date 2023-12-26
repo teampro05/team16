@@ -71,4 +71,12 @@ public class User extends BaseEntity {
         this.email = dto.getEmail();
     }
 
+    public void stateUpdate(UserDTO dto) {
+        this.status = dto.getStatus();
+    }
+
+    public void roleUpdate(UserDTO dto) {
+        this.role = dto.getRole();
+    }
+
 }

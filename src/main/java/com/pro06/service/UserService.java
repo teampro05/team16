@@ -17,6 +17,8 @@ public interface UserService {
     public User LoginId(String id);
     public void userUpdate(UserDTO userDTO);
     public void emailUpdate(UserDTO userDTO);
+    public void stateUpdate(UserDTO userDTO);
+    public void roleUpdate(UserDTO userDTO);
     public void userDelete(Integer id);
     public int loginPro(String id);
     public boolean idCheck(String id);

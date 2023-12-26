@@ -565,7 +565,7 @@ public class AdminController {
     public String out1(String id, Model model, Status status){
         UserDTO userDTO = userService.getId(id);
         userDTO.setStatus(status);
-        userService.userUpdate(userDTO);
+        userService.stateUpdate(userDTO);
         return "redirect:/admin/userList";
     }
 
@@ -580,7 +580,7 @@ public class AdminController {
     public String role1(String id, Model model, Role role){
         UserDTO userDTO = userService.getId(id);
         userDTO.setRole(role);
-        userService.userUpdate(userDTO);
+        userService.roleUpdate(userDTO);
         return "redirect:/admin/userList";
     }
 
