@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <label for="content" class="form-label">내용</label>
                             <textarea type="text" name="content" id="content" class="form-control"
-                                      pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]*$" maxlength="500" cols="100" rows="10" required></textarea>
+                                      pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z$@!%*#?&.,\s]*$" maxlength="500" cols="100" rows="10" required></textarea>
                             <div class="textCount"><span>0</span>/500</div>
 
                             <div class="valid-feedback">
@@ -117,6 +117,12 @@
 </body>
 </html>
 <script>
+    $(document).ready(function() {
+        // 페이지 로드 시에 콘텐츠의 글자 수 계산 및 표시
+        var content = $('#content').val();
+        $('#contentTextArea').text(content.length);
+    });
+
     $('#content').keyup(function (e) {
         var content = $(this).val();
 
@@ -135,8 +141,8 @@
     $('#title').keyup(function (e) {
         var content = $(this).val();
 
-        if (content.length > 50) {
-            alert('글자수는 50자까지 입력 가능합니다.');
+        if (content.length > 100) {
+            alert('글자수는 100자까지 입력 가능합니다.');
         }
     });
 </script>

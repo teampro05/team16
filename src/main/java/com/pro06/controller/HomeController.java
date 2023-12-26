@@ -108,7 +108,9 @@ public class HomeController {
     @PostMapping("/joinPro")
     public String Join(Model model, UserDTO userDTO){
         userService.userInsert(userDTO);
-        return "redirect:/";
+        model.addAttribute("msg", "가족이 되신걸 환영합니다.");
+        model.addAttribute("url", "/team16/");
+        return "/alert";
     }
 
     @PostMapping("idCheckPro")
