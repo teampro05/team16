@@ -117,10 +117,10 @@
             width: 1300px;
             height: 800px;
             margin: 0;
-            padding: 0;
+            padding: 1rem;
         }
         .video-play {
-            width: 850px;
+            width: 800px;
             float: left;
             margin: 0;
             padding: 0;
@@ -178,7 +178,7 @@
     </style>
 
 </head>
-<body>
+<body >
 <div class="video-body">
     <div class="video-play" >
         <video
@@ -186,7 +186,7 @@
                 class="video-js"
                 controls
                 preload="auto"
-                width="850"
+                width="800"
                 height="500"
                 data-setup="{}"
         >
@@ -335,8 +335,9 @@
                     <input type="hidden" id="vno" th:value="${page}">
                     <textarea id="que" class="form-control mb-2 video-input"></textarea>
                     <span id="warn" style="color: red;"></span>
-                    <br>
-                    <button onclick="question()" class="btn1 right1" style="margin-top: 0.5rem;">질문하기</button>
+                    <div style="text-align: right">
+                        <button onclick="question()" class="btn1 " style="margin-top: 0.5rem;">질문하기</button>
+                    </div>
                 </div>
             </th:block>
         </div>

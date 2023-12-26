@@ -16,18 +16,17 @@
             <tbody>
             <tr>
                 <th>강좌 이름</th>
-                <td style="max-width: 400px; overflow: hidden;">[[${course.title}]]</td>
-                <td style="border-bottom: none;"></td>
+                <td style="text-align: left;">
+                    <p class="overDot" style="width: 450px; margin: 0;" th:text="${course.title}"></p>
+                </td>
             </tr>
             <tr>
                 <th>현재수강인원</th>
-                <td>[[${course.peo}]]</td>
-                <td style="border-bottom: none;"></td>
+                <td style="width: 500px; text-align: left;">[[${course.peo}]]</td>
             </tr>
             <tr>
                 <th>최대수강인원</th>
-                <td>[[${course.peo_max}]]</td>
-                <td style="border-bottom: none;"></td>
+                <td style="width: 500px; text-align: left;">[[${course.peo_max}]]</td>
             </tr>
             </tbody>
         </table>
@@ -56,13 +55,14 @@
                 <th>수강상태</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <th:block th:each="lecture, status : ${lectureList}">
                 <tr>
                     <td th:text="${status.count}"></td>
-                    <td><span class="title" th:text="${lecture.title}"></span></td>
+                    <td><p class="title overDot" style="width: 110px;" th:text="${lecture.title}"></p></td>
                     <td>
                         <!-- 강의를 다 보지 않았거나 시험을 보지않은 경우 -->
                         <th:block th:if="${stateList.get(status.index) eq 'n' or ansList.get(status.index) eq 'n'}">
@@ -71,11 +71,13 @@
 
                         <!-- 강의와 시험을 다 한 경우 -->
                         <th:block th:if="${stateList.get(status.index) eq 'y' and ansList.get(status.index) eq 'y'}">
-                            <span>수강완료</span>
+                            <span style="color: red">수강완료</span>
                         </th:block>
                     </td>
                     <td><a href="javascript:void(0);"
                            th:onclick="'openLecture(' + ${lecture.course.no} + ', ' + ${lecture.no} + ')'">강의보기</a>
+                    </td>
+                    <td>
                         <a th:href="@{/mycourse/lecQueList(cno = ${lecture.course.no}, lno = ${lecture.no})}">질문내역</a>
                     </td>
                     <td>
