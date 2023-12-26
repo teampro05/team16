@@ -85,8 +85,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void userUpdate(UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        userRepository.save(user);
+        Optional<User> user = userRepository.getUser(userDTO.getId());
+        User user2 = user.orElseThrow();
+        user2.change(userDTO);
+        userRepository.save(user2);
+    }
+
+    @Override
+    public void emailUpdate(UserDTO userDTO) {
+        Optional<User> user = userRepository.getUser(userDTO.getId());
+        User user2 = user.orElseThrow();
+        user2.emailUpdate(userDTO);
+        userRepository.save(user2);
     }
 
     @Override
