@@ -15,7 +15,7 @@
             font-weight: bold;
         }
 
-        p {
+        .tp {
             margin: 0 auto;
         }
     </style>
@@ -64,19 +64,19 @@
                             </td>
 
                             <td>
-                                <p class="overDot" style="width: 90px;"><a th:href="@{/Hbook/getHbook(no=${Hbook.fileBoard.no})}">[[${Hbook.fileBoard.title}]]</a></p>
+                                <p class="overDot tp" style="width: 90px;"><a th:href="@{/Hbook/getHbook(no=${Hbook.fileBoard.no})}">[[${Hbook.fileBoard.title}]]</a></p>
                             </td>
 
                             <td>
-                                <p class="overDot" style="width: 90px;">[[${Hbook.fileBoard.servecontent}]]</p>
+                                <p class="overDot tp" style="width: 90px;">[[${Hbook.fileBoard.servecontent}]]</p>
                             </td>
 
                             <td>
-                                <p th:text="${#numbers.formatInteger(Hbook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
+                                <p class="tp" th:text="${#numbers.formatInteger(Hbook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
                             </td>
 
                             <td>
-                                <p>[[${Hbook.fileBoard.publish}]]</p>
+                                <p class="tp">[[${Hbook.fileBoard.publish}]]</p>
                             </td>
 
                             <td>

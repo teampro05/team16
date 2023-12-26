@@ -14,6 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     String uploadPath = "file:///c:/shop/";
 
+
     private final long MAX_AGE_SECS = 3600;
 
     @Override
@@ -29,7 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8085")
+                .allowedOrigins("http://localhost:8082")
                 .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
