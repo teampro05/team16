@@ -27,7 +27,7 @@
                         <div  class="form-group">
                             <label for="title" class="form-label">제목</label>
                             <input type="text" name="title" id="title" class="form-control"
-                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="100" th:value="${lecDto.title}" required>
+                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z$@!%*#?&.,\s]*$" maxlength="100" th:value="${lecDto.title}" required>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
                             </div>
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="keyword" class="form-label">키워드</label>
                             <input type="text" name="keyword" id="keyword" class="form-control"
-                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" maxlength="100" th:value="${lecDto.keyword}" required>
+                                   pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z$@!%*#?&.,\s]*$" maxlength="100" th:value="${lecDto.keyword}" required>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
                             </div>
@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label for="content" class="form-label">내용</label>
-                            <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z\s]+$" cols="100" rows="10" maxlength="500" required>[[${lecDto.content}]]</textarea>
+                            <textarea type="text" name="content" id="content" placeholder="내용" class="form-control" pattern="^[ㄱ-ㅎ가-힣0-9a-zA-Z$@!%*#?&.,\s]*$" cols="100" rows="10" maxlength="500" required>[[${lecDto.content}]]</textarea>
                             <div class="textCount"><span>0</span>/500</div>
                             <div class="valid-feedback">
                                 형식에 알맞습니다.
@@ -129,6 +129,11 @@
 </body>
 </html>
 <script>
+    $(document).ready(function() {
+        var content = $('#content').val();
+        $('#contentTextArea').text(content.length);
+    });
+
     $('#content').keyup(function (e) {
         var content = $(this).val();
 

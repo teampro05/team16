@@ -37,6 +37,11 @@
 </body>
 </html>
 <script>
+    $(document).ready(function() {
+        var content = $('#content').val();
+        $('#contentTextArea').text(content.length);
+    });
+
     $('#content').keyup(function (e) {
         var content = $(this).val();
 

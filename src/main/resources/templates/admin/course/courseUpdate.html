@@ -132,5 +132,35 @@
     </div>
 </div>
 <script th:src="@{/js/vdoFileVali.js}"></script>
+<script>
+    $(document).ready(function() {
+        // 페이지 로드 시에 콘텐츠의 글자 수 계산 및 표시
+        var content = $('#content').val();
+        $('#contentTextArea').text(content.length);
+    });
+
+    $('#content').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length == 0 || content == '') {
+            $('.textCount span').text('0');
+        } else {
+            $('.textCount span').text(content.length);
+        }
+
+        if (content.length > 500) {
+            $(this).val($(this).val().substring(0, 500));
+            alert('글자수는 500자까지 입력 가능합니다.');
+        }
+    });
+
+    $('#title').keyup(function (e) {
+        var content = $(this).val();
+
+        if (content.length > 100) {
+            alert('글자수는 100자까지 입력 가능합니다.');
+        }
+    });
+</script>
 </body>
 </html>
