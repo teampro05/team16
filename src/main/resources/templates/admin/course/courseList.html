@@ -54,7 +54,9 @@
                         <th:block th:each="course, status : ${courseList}">
                             <tr>
                                 <td th:text="${status.count}"></td>
-                                <td th:text="${course.title}" style="max-width: 200px; overflow: hidden;"></td>
+                                <td>
+                                    <p class="overDot" style="width: 160px;" th:text="${course.title}"></p>
+                                </td>
                                 <td th:text="${course.level}"></td>
                                 <td th:text="${course.peo} + '/' + ${course.peo_max}"></td>
                                 <td th:text="${course.id}"></td>
