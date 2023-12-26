@@ -210,7 +210,7 @@ public class HomeController {
 
     @GetMapping("/notice")
     public String notice(Model model) {
-        List<BoardDTO> noticeList = boardService.NoticeList();
+        List<BoardDTO> noticeList = boardService.usernoticeList();
         model.addAttribute("noticeList", noticeList);
         return "/board/notice";
     }

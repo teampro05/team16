@@ -31,6 +31,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Autowired
     private OtoRepository otoRepository;
+
     //  Notice
 
     @Override
@@ -64,8 +65,17 @@ public class BoardServiceImpl implements BoardService {
         Optional<Notice> result = noticeRepository.findById(no);
         Notice notice = result.orElseThrow();
         BoardDTO boardDTO = modelMapper.map(notice, BoardDTO.class);
-        return boardDTO; }
+        return boardDTO;
+    }
 
+    @Override
+    public List<BoardDTO> usernoticeList() {
+        List<Notice> noticeList = noticeRepository.usernoticeList();
+        List<BoardDTO> boardDTOList = noticeList.stream().map(notice ->
+                        modelMapper.map(notice, BoardDTO.class))
+                .collect(Collectors.toList());
+        return boardDTOList;
+    }
     //  Faq
 
 

@@ -2,7 +2,9 @@ package com.pro06.entity;
 
 import com.pro06.dto.BoardDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter @Setter
@@ -25,13 +27,8 @@ public class Notice extends BaseEntity {
     @Column(nullable = false)
     private String author;  //저자
 
+    @ColumnDefault("'n'")
+    private String deleteyn; // 삭제 여부
 
 
-    public static Notice create(BoardDTO boardDTO) {
-        Notice notice = new Notice();
-        notice.setTitle(boardDTO.getTitle());
-        notice.setContent(boardDTO.getContent());
-        notice.setAuthor(boardDTO.getAuthor());
-        return notice;
-    }
 }
