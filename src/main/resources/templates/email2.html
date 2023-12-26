@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div style="margin: 3rem;padding-left: 10rem">
+    <h1 style="font-size: 3rem; font-weight: bold;">Word Master</h1>
+    <br>
+    <div style='border:none; text-align: left;'>
+        <h2>문의하신 내용</h2>
+        <h3 th:text="${message.ototitle}"></h3>
+        <h3 th:text="${message.otocontent}"></h3>
+        <br>
+        <br>
+        <h2>관리자 답변</h2>
+        <h3 th:text="${message.subtitle}"></h3>
+        <h3 th:text="${message.message}"></h3>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+        <h2> 추가 문의가 필요하실 경우 </h2>
+        <a href="http://localhost:8085/oto" style="border: none; text-decoration: none; background-color: #e7ac11; color: white; padding: 10px; font-size: 16px; border-radius: 5px; vertical-align: center;"> 1 대 1 문의하기</a>
+    </div>
+</div>
+</body>
+</html>

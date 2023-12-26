@@ -2,12 +2,15 @@ package com.pro06.controller;
 
 import com.pro06.dto.BoardDTO;
 import com.pro06.dto.UserDTO;
+import com.pro06.dto.email.EmailMessage;
 import com.pro06.entity.*;
 import com.pro06.service.BoardService;
+import com.pro06.service.EmailService;
 import com.pro06.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Controller
+@RequiredArgsConstructor
 //@RequestMapping("/")
 public class HomeController {
 
@@ -141,7 +146,7 @@ public class HomeController {
     @PostMapping("/myPageEdit")
     public String myPageEdit(Model model, UserDTO userDTO){
         userService.userUpdate(userDTO);
-        return "redirect:/myPageEdit?id="+userDTO.getId();
+        return "redirect:/myPage";
     }
 
     @GetMapping("/changePw")

@@ -12,6 +12,7 @@
   --sub1: #D0B987;
   --sub2: #AFB3BC;
   --sub3: #39312f;
+  --sub4: #d0b98782;
   --white: white;
   --black: black;
   --hover: #ff6b3b;
@@ -2804,10 +2805,6 @@ canvas {
   text-decoration: none;
   color: var(--white);
   background: var(--hover);
-}
-
-.right1{
-  float: right;
 }
 
 .button {

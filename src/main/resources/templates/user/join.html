@@ -51,7 +51,7 @@
                                     <label class="form-label blind" for="email">이메일</label>
                                     <input type="email" name="email" id="email" placeholder="이메일" class="form-control" style="background-color: white;"  required>
                                     <input type="hidden" id="emailCK" name="emailCK" value="no">
-                                    <button type="button" onclick="PostEmail()" id="PostEmailbtn" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 인증번호</button>
+                                    <button type="button" onclick="PostEmail()" id="PostEmailbtn" class="btn1" style="width: 160px; margin-top: 10px; margin-left: 0"> 인증번호 보내기 </button>
                                         <div class="insubForm" style="display: none; ">
                                             <label class="form-label blind" for="insub">인증번호</label>
                                             <input type="text" id="insub" name="insub" placeholder="인증번호 입력" class="form-control">
@@ -175,6 +175,8 @@
                                 var code = "";
 
                                 function PostEmail(){
+                                    alert("이메일이 전송중입니다. 잠시만 기다려주세요.")
+
                                     let params = {"email" : $("#email").val()};
                                     $("#email").attr("readonly","readonly");
                                     $(this).css("background-color","darkgray")

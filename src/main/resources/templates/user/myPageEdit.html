@@ -15,7 +15,7 @@
 </div>
 <section id="contact" class="contact">
     <div class="container">
-        <h2>회원정보 수정하기</h2>
+        <h2 class="con-title">회원정보 수정하기</h2>
         <form th:action="@{/myPageEdit}" method="post" style="width:100%;">
             <div class="List-table">
                 <table>
@@ -26,7 +26,7 @@
                         </tr>
                         <tr>
                             <th>비밀번호</th>
-                            <td><button type="button"  class="btn btn-main-sm" onclick="reco()">변경</button></td>
+                            <td><button type="button" style="color: var(--main)" class="btn btn-main-sm" onclick="reco()">변경</button></td>
                         </tr>
                         <tr>
                             <th>이름</th>
@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <th>이메일</th>
-                            <td>[[${user.email}]]<button type="button" class="btn btn-main-sm" onclick="Emailreco()">변경</button></td>
+                            <td>[[${user.email}]]<button type="button" style="color: var(--main)" class="btn btn-main-sm" onclick="Emailreco()">변경</button></td>
                         </tr>
                         <tr>
                             <th>전화번호</th>
@@ -66,8 +66,8 @@
                 </table>
             </div>
             <div class="center1">
-                <button type="button" onclick="eventremove()" class="btn1 right2"> 탈퇴하기 </button>
                 <button type="submit" class="btn1 right2"> 수정하기 </button>
+                <button type="button" onclick="eventremove()" class="btn2 right2"> 탈퇴하기 </button>
             </div>
         </form>
     </div>
@@ -95,21 +95,24 @@
         window.open(popupUrl, 'child', popupOption);
     }
 
-    function findAddr(){
-        new daum.Postcode({
-            oncomplete:function(data){
-                var roadAddr = data.roadAddress;
-                var jibunAddr = data.jibunAddress;
-                var bname = data.bname;
-                document.getElementById("postcode").value = data.zonecode;
-                if(roadAddr !== ''){
-                    document.getElementById("addr1").value = roadAddr;
-                } else if(jibunAddr !== ''){
-                    document.getElementById("addr1").value = jibunAddr;
-                }
-                document.getElementById("addr3").value = bname;
-                document.getElementById("addr2").focus();
-            }
-        }).open();
-    }
+</script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function findAddr(){
+new daum.Postcode({
+oncomplete:function(data){
+var roadAddr = data.roadAddress;
+var jibunAddr = data.jibunAddress;
+var bname = data.bname;
+document.getElementById("postcode").value = data.zonecode;
+if(roadAddr !== ''){
+document.getElementById("addr1").value = roadAddr;
+} else if(jibunAddr !== ''){
+document.getElementById("addr1").value = jibunAddr;
+}
+document.getElementById("addr3").value = bname;
+document.getElementById("addr2").focus();
+}
+}).open();
+}
 </script>

@@ -16,7 +16,7 @@
         .container {
             width: 80%;
             margin: 50px auto;
-            background-color: #dad9fb;
+            background-color: var(--sub4);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -46,15 +46,18 @@
         <div>
             <label class="form-label" for="pw">변경할 비밀번호</label>
             <input type="password" name="pw" id="pw" placeholder="변경할 비밀번호 입력" class="form-control" maxlength="16" required />
+            <input type="hidden" name="id" id="id" maxlength="16" th:value="${user.id}" readonly />
             <p class="info mb-0" ><i class="fas fa-check"></i> 비밀번호는 최소 8자리에서 최대 16자리까지 숫자, 영문, 특수문자 각 1개 이상 포함</p>
         </div>
         <div>
             <label class="form-label" for="pw2">비밀번호 확인</label>
             <input type="password" name="pw2" id="pw2" placeholder="비밀번호 확인 입력" class="form-control" maxlength="16" required />
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">등록</button>
-            <button type="button" onclick="javascript=window.close()" class="btn btn-danger">닫기</button>
+        <br>
+        <br>
+        <div style="text-align: right">
+            <button type="submit" class="btn1">등록</button>
+            <button type="button" onclick="javascript=window.close()" class="btn2">닫기</button>
         </div>
     </form>
 </div>

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:replace="/include/adminhead :: head"></th:block>
-    <title>O.T.O 관리</title>
+    <title>1 대 1 문의관리</title>
     <style>
         .table-faq {
             border: none;
@@ -34,7 +34,7 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{@{/admin/userList}}"> HOME </a> &gt; <span> O.T.O </span></p>
+                <p><a th:href="@{@{/admin/userList}}"> HOME </a> &gt; <span> 1 대 1 문의 </span></p>
             </div>
             <div class="content-wrapper">
                 <h1>1 대 1 문의사항</h1>
@@ -55,7 +55,7 @@
                             <th:block th:each="oto, num: ${otoList}">
                                 <tr>
                                     <td th:text="${num.count}" style="text-align: left; width: 200px"></td>
-                                    <td colspan="2" style="text-align: left">
+                                    <td style="text-align: left">
                                         <a th:href="'#faqCon'+${num.count}">[[${oto.title}]]</a>
                                     </td>
                                     <td th:text="${oto.email}" style="text-align: left; "></td>
