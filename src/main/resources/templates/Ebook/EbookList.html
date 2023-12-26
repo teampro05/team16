@@ -80,7 +80,7 @@
                 </td>
 
                 <td>
-                    <p>[[${Ebook.fileBoard.price}]]원</p>
+                    <p th:text="${#numbers.formatInteger(Ebook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
                 </td>
 
                 <!--<td>
