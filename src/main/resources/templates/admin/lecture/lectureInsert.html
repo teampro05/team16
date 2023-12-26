@@ -145,8 +145,9 @@
     });
 
     $('#title').keyup(function (e) {
-        var content = $(this).val();
-
+        let content = $(this).val();
+        console.log(content);
+        console.log(content.length);
         if (content.length > 50) {
             alert('글자수는 50자까지 입력 가능합니다.');
         }

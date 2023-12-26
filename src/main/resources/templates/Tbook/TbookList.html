@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>토익 교재</title>
     <th:block th:replace="include/head :: head" ></th:block>
-
+    <style>
+        p {
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
 <th:block th:replace="include/header :: header" ></th:block>
@@ -50,9 +55,9 @@
             <colgroup>
                 <col style="width: 5%;">
                 <col style="width: 20%;">
+                <col style="width: 20%;">
+                <col style="width: 40%;">
                 <col style="width: 15%;">
-                <col style="width: 50%;">
-                <col style="width: 10%;">
             </colgroup>
             <thead class="thead-light">
             <tr>
@@ -75,10 +80,10 @@
 
                 </td>
                 <td>
-                    <p><a th:href="@{/Tbook/getTbook(no=${Tbook.fileBoard.no})}">[[${Tbook.fileBoard.title}]]</a></p>
+                    <p class="overDot" style="width: 250px;"><a th:href="@{/Tbook/getTbook(no=${Tbook.fileBoard.no})}">[[${Tbook.fileBoard.title}]]</a></p>
                 </td>
                 <td>
-                    <p>[[${Tbook.fileBoard.servecontent}]]</p>
+                    <p class="overDot" style="width: 300px;">[[${Tbook.fileBoard.servecontent}]]</p>
                 </td>
 
                 <td>

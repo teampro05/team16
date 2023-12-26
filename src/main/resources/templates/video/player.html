@@ -229,15 +229,7 @@
                                            th:id="'btn' + ${i}" th:value="'강의' + ${i + 1} + '번'">
                                 </form>
                             </th:block>
-                            <!--<th:block th:if="${user_page == i and i != page}">
-                                <form th:action="@{/video/player}" method="post">
-                                    <input type="hidden" name="cno" th:value="${cno}">
-                                    <input type="hidden" name="lno" th:value="${lno}">
-                                    <input type="hidden" name="page" th:value="${i}">
-                                    <input type="submit" class="idx-btn-now" title="해당 영상으로 넘어가기, 현재 여기까지 수강했습니다."
-                                           th:id="'btn' + ${i}" th:value="${i + 1} + '번 영상'">
-                                </form>
-                            </th:block>-->
+
                             <th:block th:if="${user_page < i or i == page}">
                                 <span th:id="'btn' + ${i}" th:text="'강의' + ${i + 1} + '번'" ></span>
                             </th:block>
@@ -250,7 +242,7 @@
             <div>
                 <!-- 이전 영상으로 넘어가기 -->
                 <th:block th:if="${page > 0}">
-                    <form th:action="@{/video/player}" method="post" style="display: inline-block" onsubmit="return videoBack()">
+                    <form th:action="@{/video/player}" method="post" class="video-btn" onsubmit="return videoBack()">
                         <input type="hidden" name="cno" id="cno1" th:value="${cno}">
                         <input type="hidden" name="lno" id="lno1" th:value="${lno}">
                         <input type="hidden" name="page" id="page1" th:value="${page - 1}">
@@ -261,11 +253,11 @@
 
                 <!-- 다음 영상으로 넘어가기 -->
                 <th:block th:if="${page < total_size - 1 and user_page <= page}">
-                    <form th:action="@{/video/player}" method="post" style="display: inline-block" class="video-btn" onsubmit="return videoNext()">
+                    <form th:action="@{/video/player}" method="post" class="complete" onsubmit="return videoNext()">
                         <input type="hidden" name="cno" id="cno2" th:value="${cno}">
                         <input type="hidden" name="lno" id="lno2" th:value="${lno}">
                         <input type="hidden" name="page" id="page2" th:value="${page + 1}">
-                        <input type="submit" class="complete vdo-btn btn1"
+                        <input type="submit" class="vdo-btn btn1"
                                title="다음 영상으로 넘어가기" value="다음 영상">
                     </form>
                 </th:block>
@@ -273,7 +265,7 @@
                 <!-- 다음 영상으로 넘어가기 -->
                 <!-- 이미 해당 영상을 수강한 경우 -->
                 <th:block th:if="${page < total_size - 1 and user_page > page}">
-                    <form th:action="@{/video/player}" method="post" style="display: inline-block" class="video-btn">
+                    <form th:action="@{/video/player}" method="post" class="video-btn">
                         <input type="hidden" name="cno" id="cno4" th:value="${cno}">
                         <input type="hidden" name="lno" id="lno4" th:value="${lno}">
                         <input type="hidden" name="page" id="page4" th:value="${page + 1}">
@@ -284,11 +276,11 @@
 
                 <!-- 수강 완료 해당 영상을 처음듣는 경우 -->
                 <th:block th:if="${page == total_size - 1 and user_page <= page}">
-                    <form th:action="@{/video/complete}" method="post" style="display: inline-block" class="video-btn" onsubmit="return videoNext()">
+                    <form th:action="@{/video/complete}" method="post" class="complete" onsubmit="return videoNext()">
                         <input type="hidden" name="cno" id="cno5" th:value="${cno}">
                         <input type="hidden" name="lno" id="lno5" th:value="${lno}">
                         <input type="hidden" name="page" id="page5" th:value="${page+1}">
-                        <input type="submit"  class="complete vdo-btn btn1"
+                        <input type="submit"  class="vdo-btn btn1"
                                title="수강 완료 확인" value="수강 완료">
                     </form>
                 </th:block>
@@ -442,7 +434,7 @@
         console.log('inter : ' + Math.floor(video.duration) + ' = ' + Math.floor(video.currentTime));
         if(Math.floor(video.duration) === Math.floor(video.currentTime)) {
             setTimeout(()=> {
-                $(".complete").css("display", "block");
+                $(".complete").css("display", "inline-block");
             }, 500);
             clearInterval(intervalID);
         }
@@ -506,12 +498,6 @@
                         <p class="answer" style="display:none">아직 답변이 등록되지 않았습니다.</p>
                         </td></tr>`);
         $('tbody').prepend(newRow);
-        showPage(currentPage);
-    }
-
-    // 질문 삭제, 추가 예정
-    function delRow() {
-        que_size--;
         showPage(currentPage);
     }
 

@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>시험</title>
   <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <style>
+    .btn {
+      margin: 30px 0 30px 30px;
+      color: white;
+      background-color: #7e7e51;
+      border-style: none;
+      padding: 13px;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+
+    .btn:hover {
+      cursor: pointer;
+      color: white;
+      background-color: #e7ac11;
+    }
+  </style>
 </head>
 <body>
 <h1>시험</h1>
@@ -18,7 +35,7 @@
     <!-- 해당 문제 동안 반복 -->
     <th:block th:each="exam, status : ${examList}">
       <div>
-        <h3 th:text="${status.count} + '번 문제'"></h3>
+        <h3 th:text="${status.count} + '. 문제'"></h3>
         <p th:text="${exam}"></p>
         <fieldset>
           <legend>정답 선택</legend>
@@ -51,7 +68,7 @@
       </div>
     </th:block>
 
-    <input type="submit" value="답안 제출">
+    <input type="submit" class="btn btn1" value="답안 제출">
   </form>
   <script th:inline="javascript">
     /*<![CDATA[*/
@@ -116,11 +133,10 @@
 
       $("#ansCnt").val(answerCnt);
 
-      let hint = '과반수 이상 맞히지 못해서 아직 수정을 더 해야 합니다.' +
-              '\n통과하지 못할 경우 해당 강의를 처음부터 다시 공부해야 합니다.\n';
+      let hint = '';
       if(answerCnt >= 3) {
         hint = '과반수 이상 맞아서 통과가 가능합니다.\n';
-        return confirm(hint + `답안을 제출하시겠습니까? \n맞은 답안의 개수 : ${answerCnt} \n선택 : ${selectArr} \n정답 : ${answers}`);
+        return confirm(hint + `답안을 제출하시겠습니까? \n맞은 답안의 개수 : ${answerCnt}`);
       } else if(selectArr.length === 5 && answerCnt <=2) {
         alert(`아직 과반수 이상 맞추지 못 했습니다. \n맞은 답안의 개수 : ${answerCnt}`)
         return false;

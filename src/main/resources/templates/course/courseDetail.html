@@ -66,7 +66,9 @@
             <tbody>
             <tr>
                 <th>강좌 이름</th>
-                <td style="width: 500px; text-align: left;">[[${course.title}]]</td>
+                <td style="width: 500px; text-align: left;">
+                    <p class="overDot" style="width: 490px; margin: 0;" th:text="${course.title}"></p>
+                </td>
             </tr>
             <tr>
                 <th>현재수강인원</th>
@@ -97,7 +99,9 @@
             <th:block th:each="lecture, status : ${lectureList}">
                 <tr>
                     <td th:text="${status.count}"></td>
-                    <td th:text="${lecture.title}"></td>
+                    <td>
+                        <p class="overDot" style="width: 300px;" th:text="${lecture.title}"></p>
+                    </td>
                 </tr>
             </th:block>
             </tbody>
