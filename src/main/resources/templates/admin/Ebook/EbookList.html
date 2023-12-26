@@ -15,6 +15,9 @@
             font-weight: bold;
         }
 
+        p{
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -62,15 +65,15 @@
                             </td>
 
                             <td>
-                                <p><a th:href="@{/Ebook/getEbook(no=${Ebook.fileBoard.no})}">[[${Ebook.fileBoard.title}]]</a></p>
-                            </td>
-
-                            <td style="max-width: 200px; overflow: hidden;">
-                                <p>[[${Ebook.fileBoard.servecontent}]]</p>
+                                <p class="overDot" style="width: 90px;"><a th:href="@{/Ebook/getEbook(no=${Ebook.fileBoard.no})}">[[${Ebook.fileBoard.title}]]</a></p>
                             </td>
 
                             <td>
-                                <p>[[${Ebook.fileBoard.price}]]원</p>
+                                <p class="overDot" style="width: 90px;">[[${Ebook.fileBoard.servecontent}]]</p>
+                            </td>
+
+                            <td>
+                                <p th:text="${#numbers.formatInteger(Ebook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
                             </td>
 
                             <td>
