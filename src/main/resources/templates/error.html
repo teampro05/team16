@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>알림창</title>
+    <title>에러페이지</title>
+    <th:block th:replace="include/head :: head" ></th:block>
+    <style>
+        .errorP {
+            text-align: center;
+            margin: 14rem;
+        }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 3rem
+        }
+        h2 {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
-<script th:inline="javascript">
-    var msg = [[${msg}]]
-    var url = [[${url}]]
+<div class="errorP">
+    <h1> *  E r r o r  * </h1>
 
-    if(url == 1){
-        window.close();
-        opener.location.reload()
-    } else {
-        alert(msg);
-        location.href = url;
-    }
-
-</script>
+    <h2 th:text="${code}"></h2>
+    <h2 th:text="${msg}"></h2>
+</div>
 </body>
 </html>
 
