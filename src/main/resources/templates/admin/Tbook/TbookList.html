@@ -71,9 +71,7 @@
                             </td>
 
                             <td>
-                                <p>[[${Tbook.fileBoard.price}]]원</p>
-                            </td>
-
+                                <p th:text="${#numbers.formatInteger(Tbook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
                             <td>
                                 <p>[[${Tbook.fileBoard.publish}]]</p>
                             </td>
