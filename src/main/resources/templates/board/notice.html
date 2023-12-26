@@ -15,7 +15,12 @@
     </div>
     <section class="table-list">
         <div class="container">
-            <h2 class="con-title">공지사항</h2>
+
+            <div class="section-title">
+                <h2 data-aos="fade-up">공지사항</h2>
+                <p data-aos="fade-up">WordMaster의 중요소식을 공지사항을 통해 만나보세요!</p>
+            </div>
+
             <table class="List-table" id="myTable">
                 <thead>
                     <tr>
@@ -36,9 +41,9 @@
                 </th:block>
                 </tbody>
             </table>
-            <th:block sec:authorize="hasAuthority('ADMIN')">
+            <!--<th:block sec:authorize="hasAuthority('ADMIN')">
                 <a th:href="@{/noticeadd}" class="btn1 center1">글쓰기</a>
-            </th:block>
+            </th:block>-->
         </div>
     </section>
     <th:block th:replace="include/footer :: footer" ></th:block>

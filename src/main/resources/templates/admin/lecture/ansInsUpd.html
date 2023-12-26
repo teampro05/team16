@@ -18,10 +18,11 @@
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper">
         <th:block th:replace="/include/adminheader :: header"></th:block>
-        <div class="breadcrumb">
-            <p><a th:href="@{/admin/userList}"> HOME </a> &gt; <a th:href="@{/admin/lecQueList}"> 질문 </a> > <span> 답변등록 / 수정 </span></p>
-        </div>
+
         <div class="main-panel">
+            <div class="breadcrumb">
+                <p><a th:href="@{/admin/userList}"> HOME </a> &gt; <a th:href="@{/admin/lecQueList}"> 질문 </a> > <span> 답변등록 / 수정 </span></p>
+            </div>
             <div class="content-wrapper">
                 <h1>질문 답변등록 / 수정</h1>
                 <hr style="border-top: 1px solid #333">

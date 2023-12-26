@@ -16,7 +16,7 @@
         .container {
             width: 80%;
             margin: 50px auto;
-            background-color: #dad9fb;
+            background-color: var(--sub4);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -45,19 +45,22 @@
     <form th:action="@{/changeEmail}" method="post" onsubmit="return EmailCheck(this)">
         <div>
             <label class="form-label blind" for="email">이메일</label>
-            <input type="email" name="email" id="email" placeholder="이메일" class="form-control" style="background-color: white;"  required>
+            <input type="email" name="email" id="email" placeholder="변경할 이메일을 입력해주세요." class="form-control" style="background-color: white;"  required>
+            <input type="hidden" name="id" id="id" maxlength="16" th:value="${user.id}" readonly />
             <input type="hidden" id="emailCK" name="emailCK" value="no">
-            <button type="button" onclick="PostEmail()" id="PostEmailbtn" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 인증번호</button>
+            <button type="button" onclick="PostEmail()" id="PostEmailbtn" class="btn1" style="width: 160px; margin-top: 10px; margin-left: 0"> 인증번호 보내기 </button>
             <div class="insubForm" style="display: none; ">
                 <label class="form-label blind" for="insub">인증번호</label>
                 <input type="text" id="insub" name="insub" placeholder="인증번호 입력" class="form-control">
                 <button type="button" onclick="Insub()" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 인증번호 인증</button>
-                <button type="button" onclick="Insubreset()" class="btn1" style="width: 150px; margin-top: 10px; margin-left: 0"> 취소</button>
+                <button type="button" onclick="Insubreset()" class="btn2" style="width: 150px; margin-top: 10px; margin-left: 0"> 취소</button>
             </div>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">등록</button>
-            <button type="button" onclick="javascript=window.close()" class="btn btn-danger">닫기</button>
+        <br>
+        <br>
+        <div style="text-align: right">
+            <button type="submit" class="btn1">등록</button>
+            <button type="button" onclick="javascript=window.close()" class="btn2">닫기</button>
         </div>
     </form>
 </div>

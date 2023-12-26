@@ -25,7 +25,6 @@ public class EmailController {
     private final EmailService emailService;
 
 
-
     // 이메일 테스트
     @PostMapping("/sendTest")
     public ResponseEntity sendTest(@RequestBody Map<String, String > map) {
@@ -45,11 +44,11 @@ public class EmailController {
                 .to(map.get("email"))
                 .ototitle(map.get("ototitle"))
                 .otocontent(map.get("otocontent"))
-                .subject("Word Master 관리자 문의사항을 보내드립니다.")
+                .subject("Word Master 문의사항을 보내드립니다.")
                 .subtitle(map.get("subtitle"))
                 .message(map.get("message"))
                 .build();
-        emailService.otosendMail(emailMessage);
+        emailService.otosendMail(emailMessage, "email2");
     }
 
 //    @PostMapping("/insubTest")
