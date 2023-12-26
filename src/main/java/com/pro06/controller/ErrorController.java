@@ -27,7 +27,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
                 return "/error";
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 model.addAttribute("code", "403");
-                model.addAttribute("msg", "허용되지 않는 메소드입니다.");
+                model.addAttribute("msg", "허용되지 않는 기능입니다.");
                 return "/error";
             } else if (statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
                 model.addAttribute("code", "405");
