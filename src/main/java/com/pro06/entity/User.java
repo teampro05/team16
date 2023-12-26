@@ -60,4 +60,15 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;          //회원 권한
 
+    public void change(UserDTO userDTO) {
+        this.tel = userDTO.getTel();
+        this.addr1 = userDTO.getAddr1();
+        this.addr2 = userDTO.getAddr2();
+        this.postcode = userDTO.getPostcode();
+    }
+
+    public void emailUpdate(UserDTO dto) {
+        this.email = dto.getEmail();
+    }
+
 }

@@ -144,7 +144,8 @@ public class HomeController {
     }
 
     @PostMapping("/myPageEdit")
-    public String myPageEdit(Model model, UserDTO userDTO){
+    public String myPageEdit(UserDTO userDTO){
+        log.warn("id" + userDTO.getId());
         userService.userUpdate(userDTO);
         return "redirect:/myPage";
     }
@@ -173,9 +174,10 @@ public class HomeController {
 
     @PostMapping("/changeEmail")
     public String changeEmail(Model model, String email, String id){
-        UserDTO userDTO = userService.getId(id);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(id);
         userDTO.setEmail(email);
-        userService.userUpdate(userDTO);
+        userService.emailUpdate(userDTO);
         model.addAttribute("url", 1);
         return "/alert";
     }

@@ -22,7 +22,10 @@
                     <tbody>
                         <tr>
                             <th>아이디</th>
-                            <td th:text="${user.id}"></td>
+                            <td>
+                                [[${user.id}]]
+                                <input type="hidden" name="id" id="id" th:value="${user.id}" readonly>
+                            </td>
                         </tr>
                         <tr>
                             <th>비밀번호</th>
