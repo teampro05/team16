@@ -34,10 +34,10 @@
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3 class="mt-2">[[${Tbook.fileBoard.title}]]</h3>
-                    <h5 style="float: right;">[[${Tbook.fileBoard.price}]]원</h5>
+                    <h5 style="float: right;" th:text="${#numbers.formatInteger(Tbook.fileBoard.price, 3, 'COMMA') + '원'}"></h5>
                     <br>
                     <br>
-                    <h4>[[${Tbook.fileBoard.servecontent}]]</h4>
+                    <h4 style="word-break:break-all;">[[${Tbook.fileBoard.servecontent}]]</h4>
                     <!--<ul>
                         <li>
                             <th:block sec:authorize="hasAuthority('ADMIN')">
@@ -89,7 +89,7 @@
                                 <h5>가격</h5>
                             </td>
                             <td>
-                                <p>[[${Tbook.fileBoard.price}]]원</p>
+                                <p th:text="${#numbers.formatInteger(Tbook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
                             </td>
                         </tr>
 

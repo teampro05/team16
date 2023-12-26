@@ -32,9 +32,8 @@
 
             <div class="content-wrapper">
                 <h1>토익 교재</h1>
-                <div class="search_from" style="text-align: center">
+                <div class="search_from" style="text-align: right">
                     <select name="select_filter" class="select_filter">
-                        <option value="1">교재</option>
                         <option value="2">제목</option>
                         <option value="3">가격</option>
                         <option value="4">출간일</option>
@@ -88,14 +87,14 @@
                                         <option value="y" th:selected="${Tbook.fileBoard.deleteyn} eq 'y'">삭제</option>
                                         <option value="n" th:selected="${Tbook.fileBoard.deleteyn} eq 'n'">생성</option>
                                     </select>
-                                    <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                    <button type="submit" class="btn btn-primary" >상태 변경</button>
                                 </form>
                             </td>
 
                             <td>
                                 <!--                    <th:block sec:authorize="hasAuthority('ADMIN')">-->
                                 <th:block th:if="${Tbook.fileBoard.deleteyn} eq 'n'">
-                                    <a th:href="@{/admin/TbookUpdate(no=${Tbook.fileBoard.no})}" class="btn btn-primary">수정</a>
+                                    <a th:href="@{/admin/TbookUpdate(no=${Tbook.fileBoard.no})}" class="btn btn-success">수정</a>
                                 </th:block>
 <!--                                <a th:href="@{/admin/TbookDelete(no=${Tbook.fileBoard.no})}" class="btn btn-danger">삭제</a>-->
                                 <!--                    </th:block>-->

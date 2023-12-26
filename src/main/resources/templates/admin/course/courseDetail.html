@@ -85,7 +85,9 @@
                                 <td style="text-align: center">
                                     <p class="overDot" style="width: 400px;" th:text="${lecture.title}"></p>
                                 </td>
-                                <td th:text="${lecture.keyword}"></td>
+                                <td style="text-align: center">
+                                    <p class="overDot" style="width: 200px;" th:text="${lecture.keyword}"></p>
+                                </td>
                                 <td th:text="${lecture.id}"></td>
                                 <td th:text="${#temporals.format(lecture.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
                                 <td>
@@ -94,7 +96,7 @@
                                             <option value="y" th:selected="${lecture.deleteYn} eq 'y'">삭제</option>
                                             <option value="n" th:selected="${lecture.deleteYn} eq 'n'">생성</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                        <button type="submit" class="btn btn-primary" >상태 변경</button>
                                     </form>
                                 </td>
                                 <td><a th:href="@{/admin/lectureUpdate(cno=${course.no}, lno=${lecture.no})}" class="btn btn-primary">강의수정</a></td>

@@ -26,7 +26,7 @@
             </div>
             <div class="content-wrapper">
                 <h1>질문관리</h1>
-                <div class="search_from" style="text-align: center">
+                <div class="search_from" style="text-align: right">
                     <select name="select_filter" class="select_filter">
                         <option value="1">강좌</option>
                         <option value="2">질문</option>
@@ -67,7 +67,7 @@
                                             <option value="y" th:selected="${dto.deleteYn} eq 'y'">삭제</option>
                                             <option value="n" th:selected="${dto.deleteYn} eq 'n'">생성</option>
                                         </select>
-                                        <button type="submit" class="btn2 btn-primary" >상태 변경</button>
+                                        <button type="submit" class="btn btn-primary" >상태 변경</button>
                                     </form>
                                 </td>
                                 <td>
