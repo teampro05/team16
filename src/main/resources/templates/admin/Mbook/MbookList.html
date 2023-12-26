@@ -15,6 +15,9 @@
             font-weight: bold;
         }
 
+        p {
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -62,15 +65,16 @@
                             </td>
 
                             <td>
-                                <p><a th:href="@{/Mbook/getMbook(no=${Mbook.fileBoard.no})}">[[${Mbook.fileBoard.title}]]</a></p>
+                                <p class="overDot" style="width: 90px;"><a th:href="@{/Mbook/getMbook(no=${Mbook.fileBoard.no})}">[[${Mbook.fileBoard.title}]]</a></p>
                             </td>
 
-                            <td style="max-width: 200px; overflow: hidden;">
-                                <p>[[${Mbook.fileBoard.servecontent}]]</p>
+                            <td>
+                                <p class="overDot" style="width: 90px;">[[${Mbook.fileBoard.servecontent}]]</p>
                             </td>
 
                             <td>
                                 <p th:text="${#numbers.formatInteger(Mbook.fileBoard.price, 3, 'COMMA') + '원'}"></p>
+                            </td>
 
                             <td>
                                 <p>[[${Mbook.fileBoard.publish}]]</p>

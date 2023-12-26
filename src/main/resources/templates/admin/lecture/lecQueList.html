@@ -52,8 +52,12 @@
                         <th:block th:each="dto, status : ${dtoList}">
                             <tr>
                                 <td th:text="${dto.no}"></td>
-                                <td th:text="${dto.course.title}"></td>
-                                <td th:text="${dto.que}"></td>
+                                <td>
+                                    <p class="overDot" style="width: 250px;" th:text="${dto.course.title}"></p>
+                                </td>
+                                <td>
+                                    <p class="overDot" style="width: 250px;" th:text="${dto.que}"></p>
+                                </td>
                                 <td th:text="${#temporals.format(dto.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>
                                 <td th:text="${dto.ans} eq null ? '미답변' : '답변완료' " th:style="${dto.ans} eq null ? 'color:red' : 'color:blue'"></td>
 <!--                                <td th:text="${dto.deleteYn} eq 'y' ? '삭제' : ''" style="color:red;"></td>-->

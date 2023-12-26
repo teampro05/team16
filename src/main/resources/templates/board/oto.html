@@ -54,14 +54,15 @@
                 <form th:action="@{/oto}" method="post" role="form" class="php-email-form">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="이메일은 필수로 입력해주세요." maxlength="30" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="이메일" maxlength="30"
+                                   style="width: 905px;" required>
                         </div>
                     </div>
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" name="title" id="title" placeholder="제목" required>
                     </div>
                     <div class="form-group mt-3">
-                        <textarea type="text" name="content" id="content" placeholder="문의사항을 적어주세요." class="form-control" cols="100" rows="10" maxlength="500" required></textarea>
+                        <textarea type="text" name="content" id="content" placeholder="○○○을 개선해주세요!  /  △△△가 필요해요!" class="form-control" cols="100" rows="10" maxlength="500" required></textarea>
                         <div class="textCount"><span>0</span>/500</div>
                     </div>
                     <div class="my-3">

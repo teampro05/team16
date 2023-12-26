@@ -47,7 +47,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>제목</th>
+                                <th style="width: 40%">제목</th>
                                 <th>작성자</th>
                                 <th>등록일</th>
                                 <th>삭제여부</th>
@@ -57,7 +57,11 @@
                             <th:block th:each="noticeList, notice : ${noticeList}">
                                 <tr>
                                     <td>[[${notice.count}]]</td>
-                                    <td style="max-width: 200px; overflow: hidden;"><a th:href="@{/admin/noticeGet_Admin(no=${noticeList.no})}">[[${noticeList.title}]]</a></td>
+                                    <td>
+                                        <p class="overDot" style="width: 400px;">
+                                            <a th:href="@{/admin/noticeGet_Admin(no=${noticeList.no})}">[[${noticeList.title}]]</a>
+                                        </p>
+                                    </td>
                                     <td>[[${noticeList.author}]]</td>
                                     <td th:text="${#temporals.format(noticeList.createdTime, 'yyyy-MM-dd hh:mm')}"></td>
                                     <td>

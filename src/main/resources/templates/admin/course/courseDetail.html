@@ -82,7 +82,9 @@
                         <th:block th:each="lecture, status : ${lectureList}">
                             <tr>
                                 <td th:text="${status.count}"></td>
-                                <td th:text="${lecture.title}"></td>
+                                <td style="text-align: center">
+                                    <p class="overDot" style="width: 400px;" th:text="${lecture.title}"></p>
+                                </td>
                                 <td th:text="${lecture.keyword}"></td>
                                 <td th:text="${lecture.id}"></td>
                                 <td th:text="${#temporals.format(lecture.getCreatedTime(), 'yyyy-MM-dd hh:mm')}"></td>

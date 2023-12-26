@@ -54,7 +54,7 @@
                             <th:block th:each="faq, num: ${faqList}">
                                 <tr>
                                     <td th:text="${num.count}" style="text-align: left; width: 200px"></td>
-                                    <td colspan="2" style="text-align: left">
+                                    <td colspan="2" class="overDot" style="text-align: left; width: 900px;">
                                         <a th:href="'#faqCon'+${num.count}">[[${faq.title}]]</a>
                                     </td>
                                     <td></td>
