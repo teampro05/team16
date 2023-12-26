@@ -100,6 +100,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void stateUpdate(UserDTO userDTO) {
+        Optional<User> user = userRepository.getUser(userDTO.getId());
+        User user2 = user.orElseThrow();
+        user2.stateUpdate(userDTO);
+        userRepository.save(user2);
+    }
+
+    @Override
+    public void roleUpdate(UserDTO userDTO) {
+        Optional<User> user = userRepository.getUser(userDTO.getId());
+        User user2 = user.orElseThrow();
+        user2.roleUpdate(userDTO);
+        userRepository.save(user2);
+    }
+
+    @Override
     public int loginPro(String id) {
         int pass = 0;
         User user = userRepository.getId(id);

@@ -425,7 +425,7 @@
             data.append("page", page);
             data.append("cno", cno);
             data.append("lno", lno);
-            navigator.sendBeacon("/video/closeVideo", data);
+            navigator.sendBeacon("/team16/video/closeVideo", data);
         }
     });
 
@@ -471,7 +471,7 @@
 
         $.ajax({
             method: 'POST',
-            url:'/lecture/lecQueInsert',
+            url:'/team16/lecture/lecQueInsert',
             type: "post",
             data: JSON.stringify(obj),
             dataType: "json",

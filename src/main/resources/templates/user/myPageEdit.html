@@ -82,19 +82,19 @@
 <script>
     function eventremove(){
         if(confirm("정말 탈퇴하시겠습니까?")){
-            location.href="/remove?id=[[${user.id }]]"
+            location.href="/team16/remove?id=[[${user.id }]]"
         }
     }
 
     function reco() {
         let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
-        let popupUrl = "/changePw?id=[[${user.id }]]";
+        let popupUrl = "/team16/changePw?id=[[${user.id }]]";
         window.open(popupUrl, 'child', popupOption);
     }
 
     function Emailreco() {
         let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
-        let popupUrl = "/changeEmail?id=[[${user.id }]]";
+        let popupUrl = "/team16/changeEmail?id=[[${user.id }]]";
         window.open(popupUrl, 'child', popupOption);
     }
 

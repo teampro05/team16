@@ -34,7 +34,7 @@
         <th:block th:replace="/include/adminheader :: header"></th:block>
         <div class="main-panel">
             <div class="breadcrumb">
-                <p><a th:href="@{@{/admin/userList}}"> HOME </a> &gt; <span> 1 대 1 문의 </span></p>
+                <p><a th:href="@{/admin/userList}"> HOME </a> &gt; <span> 1 대 1 문의 </span></p>
             </div>
             <div class="content-wrapper">
                 <h1>1 대 1 문의사항</h1>
@@ -86,7 +86,7 @@
 
     function reco(no) {
         let popupOption = "width=700px, height=700px, top=150px, left=300px, scrollbar=yes, resizable=no";
-        let popupUrl = '/admin/otoSubmit?no='+no;
+        let popupUrl = '/team16/admin/otoSubmit?no='+no;
         window.open(popupUrl, 'child', popupOption);
     }
 
