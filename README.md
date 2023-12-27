@@ -1,3 +1,4 @@
+## team16 Project
 ![WordMaster](./발표자료/1.png)
 ![WordMaster](./발표자료/2.png)
 ![WordMaster](./발표자료/3.png)
@@ -26,3 +27,6 @@
 ![WordMaster](./발표자료/26.png)
 ![WordMaster](./발표자료/27.png)
 ![WordMaster](./발표자료/28.png)
+
+## 시연 영상
+![video](./산출물/team16.gif)
