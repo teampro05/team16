@@ -30,6 +30,8 @@
 
 
 ## 시연 영상
+### 1
 ![video](./산출물/gif/team16-1.gif) 
 
+### 2
 ![video](./산출물/gif/team16-2.gif)
